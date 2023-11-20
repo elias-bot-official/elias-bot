@@ -5,6 +5,7 @@ import { Command } from "../structure/Command";
 module.exports = {
 
    data: new SlashCommandBuilder().setName("ping").setDescription("Pings elias bot."),
+   
    onCommandInteraction(interaction): void {
        
       interaction.reply({embeds: [new Embed({color: 0x22b1fc, title: "Ping"}).addFields(

@@ -8,6 +8,7 @@ module.exports = {
       .addUserOption(new SlashCommandUserOption().setName("user").setDescription("The user to ban.").setRequired(true))
       .addStringOption(new SlashCommandStringOption().setName("reason").setDescription("The reason for the ban."))
       .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers),
+      
    onCommandInteraction(interaction: ChatInputCommandInteraction) {
       
       const user = interaction.options.getUser("user");

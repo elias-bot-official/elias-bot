@@ -6,6 +6,7 @@ import jokes from "../json/jokes.json";
 module.exports = {
 
    data: new SlashCommandBuilder().setName("joke").setDescription("Tells you a joke."),
+   
    onCommandInteraction(interaction) {
 
       interaction.reply({embeds: [new Embed({color: 0x22b1fc, title: 'Joke', description: jokes[Math.floor(Math.random() * jokes.length)]})]});

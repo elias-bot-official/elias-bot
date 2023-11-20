@@ -1,0 +1,127 @@
+[
+   {
+      "question": "The classic 1877 novel \"Black Beauty\" is about what kind of animal?",
+      "answer": "Horse",
+      "options": ["Horse", "Dog", "Cat", "Rabbit"]
+   },
+   {
+      "question": "How long is an Olympic swimming pool (in meters)?",
+      "answer": "50",
+      "options": ["50", "100", "75", "25"]
+   },
+   {
+      "question": "Which horror author penned the apocalyptic novel \"The Stand\"?",
+      "answer": "Stephen King",
+      "options": ["Stephen King", "Bram Stoker", "Shirley Jackson", "Clive Barker"]
+   },
+   {
+      "question": "Which book about a band of rabbits became a bestseller in 1972?",
+      "answer": "Watership Down",
+      "options": ["Watership Down", "The Book Thief", "Vagabonding", "On the Road"]
+   },
+   {
+      "question": "Who was the first author to use a \"typemachine\" or typewriter in writing a manuscript?",
+      "answer": "Mark Twain",
+      "options": ["Mark Twain", "Dr. Seuss", "Jane Austen", "Edgar Allan Poe"]
+   },
+   {
+      "question": "Which mystery writer holds the Guinness World Record for the most translated works?",
+      "answer": "Agatha Christie",
+      "options": ["Agatha Christie", "Arthur Conan Doyle", "Dorothy L. Sayers", "Stephen King"]
+   },
+   {
+      "question": "Who was the first president to visit all 50 states?",
+      "answer": "Richard Nixon",
+      "options": ["Richard Nixon", "John F. Kennedy", "Theodore Roosevelt", "Dwight D. Eisenhower"]
+   },
+   {
+      "question": "Who was the youngest U.S. president?",
+      "answer": "Theodore Roosevelt",
+      "options": ["Theodore Roosevelt", "Bill Clinton", "John F. Kennedy", "Barack Obama"]
+   },
+   {
+      "question": "What was America's first national park?",
+      "answer": "Yellowstone",
+      "options": ["Yellowstone", "Zion", "Yosemite", "Grand Canyon"]
+   },
+   {
+      "question": "How many floors does the Eiffel Tower have?",
+      "answer": "3",
+      "options": ["3", "7", "5", "2"]
+   },
+   {
+      "question": "Which country produces the most tea?",
+      "answer": "China",
+      "options": ["China", "Great Britain", "India", "America"]
+   },
+   {
+      "question": "Which country do cities of Perth, Adelade & Brisbane belong to?",
+      "answer": "Australia",
+      "options": ["Australia", "Greece", "America", "England"]
+   },
+   {
+      "question": "What is \"cynophobia\"?",
+      "answer": "fear of dogs",
+      "options": ["fear of dogs", "fear of cars", "fear of the dark", "fear of horses"]
+   },
+   {
+      "question": "Who named the Pacific Ocean?",
+      "answer": "Ferdinand Magellan",
+      "options": ["Ferdinand Magellan", "Vasco de Balboa", "Francisco de Coronado", "John Smith"]
+   },
+   {
+      "question": "How many languages are written from right to left?",
+      "answer": "12",
+      "options": ["12", "10", "20", "2"]
+   },
+   {
+      "question": "What is the name of the biggest technology company in South Korea?",
+      "answer": "Samsung",
+      "options": ["Samsung", "LG", "Hyundai", "Air Mekong"]
+   },
+   {
+      "question": "Which monarch officially made Valentine's Day a holiday in 1537?",
+      "answer": "King Henry VIII",
+      "options": ["King Henry VIII", "Queen Victoria", "Queen Elizabeth I", "King Henry V"]
+   },
+   {
+      "question": "What is the name of the World's largest ocean?",
+      "answer": "Pacific Ocean",
+      "options": ["Pacific Ocean", "Atlantic Ocean", "Indian Ocean", "Arctic Ocean"]
+   },
+   {
+      "question": "Who was the first woman pilot to fly solo across the Atlantic?",
+      "answer": "Amelia Earhart",
+      "options": ["Amelia Earhart", "Betty Miller", "Jerrie Mock's", "Jacqueline Cochran"]
+   },
+   {
+      "question": "What is the rarest M&M color?",
+      "answer": "Brown",
+      "options": ["Brown", "Green", "Blue", "Yellow"]
+   },
+   {
+      "question": "What was the first soft drink that went to space?",
+      "answer": "Coca Cola",
+      "options": ["Coca Cola", "Pepsi", "Fanta", "Dr Pepper"]
+   },
+   {
+      "question": "What part of the atom has no electric charge?",
+      "answer": "neutron",
+      "options": ["neutron", "proton", "electron", "nucleus"]
+   },
+   {
+      "question": "What is the symbol for potassium?",
+      "answer": "K",
+      "options": ["K", "X", "S", "H"]
+   },
+   {
+      "question": "Which planet is the hottest in the solar system?",
+      "answer": "Venus",
+      "options": ["Venus", "Mercury", "Earth", "Jupiter"]
+   },
+   {
+      "question": "How many molecules of oxygen does ozone have?",
+      "answer": "3",
+      "options": ["3", "2", "4", "12"]
+   }
+]

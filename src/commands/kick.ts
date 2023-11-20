@@ -8,6 +8,7 @@ module.exports = {
       .addUserOption(new SlashCommandUserOption().setName("user").setDescription("The user to kick.").setRequired(true))
       .addStringOption(new SlashCommandStringOption().setName("reason").setDescription("The reason for the kick."))
       .setDefaultMemberPermissions(PermissionFlagsBits.KickMembers),
+      
    onCommandInteraction(interaction: ChatInputCommandInteraction) {
       
       const user = interaction.options.getUser("user");
