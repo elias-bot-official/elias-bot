@@ -7,6 +7,7 @@ import { DiscordEvent } from "./structure/DiscordEvent";
 
 config(); // configures dotenv module to be able to use env variables
 
+// merges a Client interface with the Client class
 declare module "discord.js" {
 
    interface Client {
@@ -21,6 +22,7 @@ const client = new Client({intents: GatewayIntentBits.GuildMembers | GatewayInte
 client.rest = new REST(); // creates a rest client
 client.commands = []; // initializes the client's commands
 
+// loads the commands
 fs.readdirSync(path.join(__dirname, 'commands')).forEach(file => {
 
 	const command = require(path.join(path.join(__dirname, 'commands'), file));
@@ -28,6 +30,7 @@ fs.readdirSync(path.join(__dirname, 'commands')).forEach(file => {
 
 });
 
+// loads the events
 fs.readdirSync(path.join(__dirname, 'events')).forEach(file => {
 
 	const event = require(path.join(path.join(__dirname, 'events'), file)) as DiscordEvent;
@@ -40,6 +43,7 @@ fs.readdirSync(path.join(__dirname, 'events')).forEach(file => {
 
 });
 
+// catches any uncaught exceptions
 process.on("uncaughtException", exception => {
 
    console.log(exception.stack);
