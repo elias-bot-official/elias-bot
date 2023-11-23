@@ -9,7 +9,7 @@ module.exports = {
    onCommandInteraction(interaction) {
        
       interaction.reply({embeds: [new Embed({color: 0x22b1fc, title: "Coin Flip",
-         description: `The coin is ${Math.round(Math.random()) == 0? "heads" : "tails"}!`})]})
+         description: `The coin is ${Math.round(Math.random()) == 0? "heads" : "tails"}!`})]});
 
    },
 

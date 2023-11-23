@@ -22,7 +22,7 @@ module.exports = {
                new Button({id: "1", emoji: '📄', style: ButtonStyle.Primary}),
                new Button({id: "2", emoji: '✂️', style: ButtonStyle.Primary}));
       
-            interaction.reply({embeds: [new Embed({color: 0x22b1fc, title: 'RPS', description: 'Select your move.'})],
+            interaction.reply({embeds: [new Embed({color: 0x22b1fc, title: 'RPS', description: 'Click your move.'})],
                components: [row]});
             return;
 
@@ -31,13 +31,13 @@ module.exports = {
             const questionObject = trivia[Math.floor(Math.random() * trivia.length)];
             const options = shuffle(questionObject.options);
             const optionsRow = new ActionRowBuilder<ButtonBuilder>();
-            let formattedQuestion = questionObject.question + "\n\n";
 
+            let formattedQuestion = questionObject.question + "\n\n";
             options.forEach((option, index) => {
 
                const letter = String.fromCharCode(index.toString().charCodeAt(0) + 17);
-               formattedQuestion += `${letter}. ${option}\n`;
 
+               formattedQuestion += `${letter}. ${option}\n`;
                optionsRow.addComponents(new Button({id: `${option}|${questionObject.answer}`, label: letter, style: ButtonStyle.Primary}));
 
             });
@@ -55,63 +55,64 @@ module.exports = {
 
          case 'minigame rps': {
 
-            if (interaction.user.id == interaction.message.interaction.user.id) {
+            if (interaction.user.id != interaction.message.interaction.user.id) {
 
-               let outcome = Math.floor(Math.random() * 3);
-               let message = rps[outcome][Math.floor(Math.random() * rps[outcome].length)];
-         
-               interaction.message.edit({embeds: [new Embed({color: 0x22b1fc, title: 'RPS',
-                  description: message, footer: {text: (outcome == 0)? "You won!" : (outcome == 1)? "You tied!" : "You Lost"}})],
-                  components: []});
-
-               return;
-      
-            }
-            
-            interaction.reply({embeds: [new Embed({color: 0xED4245, title: 'Error',
+               interaction.reply({embeds: [new Embed({color: 0xED4245, title: 'Error',
                   description: 'You are not allowed to use this button!'})], ephemeral: true});
+               return;
+
+            }
+
+            let outcome = Math.floor(Math.random() * 3);
+            let message = rps[outcome][Math.floor(Math.random() * rps[outcome].length)];
+      
+            interaction.message.edit({embeds: [new Embed({color: 0x22b1fc, title: 'RPS',
+               description: message, footer: {text: (outcome == 0)? "You won!" : (outcome == 1)? "You tied!" : "You Lost"}})],
+               components: []});
+
             return;
 
          }
 
          case 'minigame trivia': {
 
-            if (interaction.user.id == interaction.message.interaction.user.id) {
+            if (interaction.user.id != interaction.message.interaction.user.id) {
 
-               const segments = interaction.customId.split('|');
-
-               if (segments[0] == segments[1]) {
-
-                  interaction.reply({embeds: [new Embed({color: 0x6DE194, title: 'Trivia',
-                     description: 'That is the correct answer!'})]});
-
-               }
-
-               else {
-
-                  interaction.reply({embeds: [new Embed({color: 0xED4245, title: 'Trivia',
-                     description: `Incorrect. The correct answer is \`\`${segments[1]}\`\`.`})]});
-
-               }
-
-               let editedRow = new ActionRowBuilder<ButtonBuilder>();
-
-               (interaction.message.components[0] as unknown as ActionRow<ButtonComponent>).components.forEach(button => {
-
-                  const segments = button.customId.split('|');
-
-                  editedRow.addComponents(new Button({id: button.customId, label: button.label, disabled: true,
-                     style: (segments[0] == segments[1])? ButtonStyle.Success : (interaction.customId == button.customId)? ButtonStyle.Danger : ButtonStyle.Secondary}))
-
-               });
-
-               interaction.message.edit({components: [editedRow]});
+               interaction.reply({embeds: [new Embed({color: 0xED4245, title: 'Error',
+                  description: 'You are not allowed to use this button!'})], ephemeral: true});
                return;
 
             }
 
-            interaction.reply({embeds: [new Embed({color: 0xED4245, title: 'Error',
-               description: 'You are not allowed to use this button!'})], ephemeral: true});
+            const segments = interaction.customId.split('|');
+
+            if (segments[0] == segments[1]) {
+
+               interaction.reply({embeds: [new Embed({color: 0x6DE194, title: 'Trivia',
+                  description: 'That is the correct answer!'})]});
+
+            }
+
+            else {
+
+               interaction.reply({embeds: [new Embed({color: 0xED4245, title: 'Trivia',
+                  description: `Incorrect. The correct answer is \`\`${segments[1]}\`\`.`})]});
+
+            }
+
+            let editedRow = new ActionRowBuilder<ButtonBuilder>();
+
+            (interaction.message.components[0] as unknown as ActionRow<ButtonComponent>).components.forEach(button => {
+
+               const segments = button.customId.split('|');
+
+               editedRow.addComponents(new Button({id: button.customId, label: button.label, disabled: true,
+                  style: (segments[0] == segments[1])? ButtonStyle.Success :
+                     (interaction.customId == button.customId)? ButtonStyle.Danger : ButtonStyle.Secondary}));
+
+            });
+
+            interaction.message.edit({components: [editedRow]});
          
          }
 

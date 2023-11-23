@@ -28,6 +28,7 @@ module.exports = {
       
       const user = interaction.options.getUser("user");
       const reason = interaction.options.getString("reason", false);
+      const time = (interaction.options.getInteger("time") ?? 5);
 
       interaction.guild.members.fetch(user.id).then(member => {
 
@@ -47,17 +48,18 @@ module.exports = {
    
          }
    
-         member.timeout((interaction.options.getInteger("time") ?? 5) * 60000, reason);
+         member.timeout(time * 60000, reason);
 
          let embed = new Embed({color: 0x22b1fc, title: 'Mute'})
-            .addField({name: 'User', value: user.toString()});
+            .addField({name: 'User', value: user.toString()})
+            .addField({name: 'Time', value: mapChoice(time)});
 
          if (reason)
             embed.addField({name: 'Reason', value: reason});
    
          interaction.reply({embeds: [embed]});
 
-      }).catch(error => {
+      }).catch(() => {
 
          interaction.reply({embeds: [new Embed({color: 0xED4245, title: 'Error',
             description: 'Can not find this user in this server.'})], ephemeral: true});
@@ -68,3 +70,25 @@ module.exports = {
    },
 
 } satisfies Command
+
+function mapChoice(value: number) {
+
+   switch (value) {
+
+      case 1: return "1 minute"
+      case 5: return "5 minutes"
+      case 10: return "10 minutes"
+      case 15: return "15 minutes"
+      case 30: return "30 minutes"
+      case 45: return "45 minutes"
+      case 60: return "1 hour"
+      case 300: return "5 hours"
+      case 600: return "10 hours"
+      case 1440: return "1 day"
+      case 7200: return "5 days"
+      case 14400: return "10 days"
+      case 40320: return "28 days"
+
+   }
+
+}

@@ -9,7 +9,8 @@ module.exports = {
    
    onCommandInteraction(interaction) {
        
-      interaction.reply({embeds: [new Embed({color: 0x22b1fc, title: "Would You Rather", description: wyr[Math.floor(Math.random() * wyr.length)]})]});
+      interaction.reply({embeds: [new Embed({color: 0x22b1fc, title: "Would You Rather",
+         description: wyr[Math.floor(Math.random() * wyr.length)]})]});
 
    },
 

@@ -1,4 +1,4 @@
-import { ApplicationCommandType, ChatInputCommandInteraction, ContextMenuCommandBuilder, Interaction, SlashCommandBuilder } from "discord.js";
+import { ApplicationCommandType, ChatInputCommandInteraction, ContextMenuCommandBuilder, Interaction } from "discord.js";
 import { DiscordEvent } from "../structure/DiscordEvent";
 
 module.exports = {
