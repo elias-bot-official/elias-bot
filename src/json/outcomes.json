@@ -1,0 +1,17 @@
+{
+   "beg": {
+      "success": [
+         "Oh, the poor thing, here, have ${money}.",
+         "Have ${money}, it's the least I can do.",
+         "You begged and got ${money}.",
+         "**Elon Musk**: Here, have ${money}.",
+         "**Jeff Bezos**: Here is ${money}, go spend it on Amazon."
+      ],
+      "fail": [
+         "Go beg somewhere else.",
+         "Sorry, I didn't bring my wallet.",
+         "Go get a job for ounce.",
+         "Imagine begging lol."
+      ]
+   }
+}

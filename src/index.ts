@@ -4,6 +4,7 @@ import path from "path";
 import fs from "fs";
 import { Command } from "./structure/Command";
 import { DiscordEvent } from "./structure/DiscordEvent";
+import mongoose from "mongoose";
 
 config(); // configures dotenv module to be able to use env variables
 
@@ -18,7 +19,7 @@ declare module "discord.js" {
 
 }
 
-const client = new Client({intents: GatewayIntentBits.GuildMembers | GatewayIntentBits.GuildPresences | GatewayIntentBits.Guilds}); // creates discord client
+const client = new Client({intents: GatewayIntentBits.GuildMembers | GatewayIntentBits.GuildPresences | GatewayIntentBits.Guilds | GatewayIntentBits.GuildMessageReactions}); // creates discord client
 client.rest = new REST(); // creates a rest client
 client.commands = []; // initializes the client's commands
 
@@ -52,3 +53,5 @@ process.on("uncaughtException", exception => {
 
 client.login(process.env.token);
 client.rest.setToken(process.env.token);
+
+mongoose.connect(process.env.db).then(() => console.log("Connected to MongoDB!"));

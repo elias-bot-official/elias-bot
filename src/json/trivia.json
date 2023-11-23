@@ -123,5 +123,130 @@
       "question": "How many molecules of oxygen does ozone have?",
       "answer": "3",
       "options": ["3", "2", "4", "12"]
+   },
+   {
+      "question": "Which natural disaster is measured with a Richter scale?",
+      "answer": "earthquake",
+      "options": ["earthquake", "hurricane", "tornado", "drought"]
+   },
+   {
+      "question": "What is Hawkeye's real name?",
+      "answer": "Clint Barton",
+      "options": ["Clint Barton", "Tony Stark", "Peter Parker", "Steve Rogers"]
+   },
+   {
+      "question": "How many films did Sean Connery play James Bond in?",
+      "answer": "7",
+      "options": ["7", "3", "5", "1"]
+   },
+   {
+      "question": "Which auto brand was the first to offer seat belts?",
+      "answer": "Nash Motors",
+      "options": ["Nash Motors", "Ford", "Toyota", "BMW"]
+   },
+   {
+      "question": "Bill Gates is the founder of which company?",
+      "answer": "Microsoft",
+      "options": ["Microsoft", "Google", "Apple", "Samsung"]
+   },
+   {
+      "question": "Richard Branson is the owner of which airline?",
+      "answer": "Virgin Atlantic",
+      "options": ["Virgin Atlantic", "United Airlines", "American Airlines", "Spirit Airlines"]
+   },
+   {
+      "question": "What was X's (Twitter's) original name?",
+      "answer": "",
+      "options": ["twttr", "Birdie", "Hoot", "tweeter"]
+   },
+   {
+      "question": "What is the most used programming language according to Stack Overflow?",
+      "answer": "JavaScript",
+      "options": ["JavaScript", "Go", "Java", "Rust"]
+   },
+   {
+      "question": "How many Lord of the Rings films are there?",
+      "answer": "3",
+      "options": ["3", "1", "5", "4"]
+   },
+   {
+      "question": "What president was a licensed bartender?",
+      "answer": "Abraham Lincoln",
+      "options": ["Abraham Lincoln", "George Washington", "Donald Trump", "Ulysses S. Grant"]
+   },
+   {
+      "question": "What year was the first Barbie doll released?",
+      "answer": "1959",
+      "options": ["1959", "2000", "2015", "1899"]
+   },
+   {
+      "question": "Which country gives students the longest summer holiday?",
+      "answer": "Italy",
+      "options": ["Italy", "America", "France", "Spain"]
+   },
+   {
+      "question": "Which blood type is a universal donor?",
+      "answer": "O-",
+      "options": ["O-", "O+", "A+", "B-"]
+   },
+   {
+      "question": "What is the largest bone in the human body?",
+      "answer": "femur",
+      "options": ["femur", "humerus", "tibia", "skull"]
+   },
+   {
+      "question": "How many colors are in a rainbow?",
+      "answer": "7",
+      "options": ["7", "8", "10", "6"]
+   },
+   {
+      "question": "How many planets make up the solar system?",
+      "answer": "8",
+      "options": ["8", "6", "7", "5"]
+   },
+   {
+      "question": "How many pounds are in a ton?",
+      "answer": "2,000",
+      "options": ["2,000", "1,000", "1,760", "1,050"]
+   },
+   {
+      "question": "What musician was awarded the first gold record?",
+      "answer": "Perry Como",
+      "options": ["Perry Como", "Elvis Presley", "Jimi Hendrix", "Prince Rogers Nelson"]
+   },
+   {
+      "question": "What year did MTV launch?",
+      "answer": "1981",
+      "options": ["1981", "1970", "1999", "1993"]
+   },
+   {
+      "question": "What country does \"The Jungle Book\" take place in?",
+      "answer": "India",
+      "options": ["India", "South Africa", "Pakistan", "Arabia"]
+   },
+   {
+      "question": "What is the Grinch's dog's name?",
+      "answer": "Max",
+      "options": ["Max", "Oliver", "Spot", "Simba"]
+   },
+   {
+      "question": "What is the name of Boba Fett's ship in \"Star Wars\"?",
+      "answer": "Slave 1",
+      "options": ["Slave 1", "Millennium Falcon", "Home One", "Imperial Star Destroyer"]
+   },
+   {
+      "question": "Who was the first Disney princess?",
+      "answer": "Snow White",
+      "options": ["Snow White", "Beauty", "Cinderella", "Moana"]
+   },
+   {
+      "question": "In \"Star Wars,\" who built C-3P0?",
+      "answer": "Anakin Skywalker",
+      "options": ["Anakin Skywalker", "Luke Skywalker", "Darth Vader", "Obi-Wan Kenobi"]
+   },
+   {
+      "question": "How many ghosts show up in \"A Christmas Carol\"?",
+      "answer": "4",
+      "options": ["4", "3", "10", "1"]
    }
 ]

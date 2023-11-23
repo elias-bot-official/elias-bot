@@ -7,10 +7,10 @@ module.exports = {
 
       if (interaction.isChatInputCommand()) {
    
-         interaction.client.commands.forEach(command => {
+         interaction.client.commands.forEach(async command => {
    
-            if (command.data instanceof SlashCommandBuilder && interaction.commandName == command.data.name)
-               command.onCommandInteraction(interaction as ChatInputCommandInteraction)
+            if (interaction.commandName == command.data.name)
+               await command.onCommandInteraction(interaction as ChatInputCommandInteraction)
    
          });
    

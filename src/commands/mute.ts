@@ -1,8 +1,6 @@
-import { ButtonComponent, ButtonStyle, ChatInputCommandInteraction, PermissionFlagsBits, SlashCommandBuilder, SlashCommandIntegerOption, SlashCommandStringOption, SlashCommandUserOption } from "discord.js";
+import { ChatInputCommandInteraction, PermissionFlagsBits, SlashCommandBuilder, SlashCommandIntegerOption, SlashCommandStringOption, SlashCommandUserOption } from "discord.js";
 import { Command } from "../structure/Command";
 import { Embed } from "../structure/Embed";
-import { time } from "console";
-import { Button } from "../structure/Button";
 
 module.exports = {
 

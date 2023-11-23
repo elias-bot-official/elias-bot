@@ -6,6 +6,7 @@ declare global {
 
          token: string;
          guild: string;
+         db: string;
 
       }
 
