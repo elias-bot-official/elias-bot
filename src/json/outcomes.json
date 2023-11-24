@@ -1,4 +1,27 @@
 {
+   "rps": {
+      "0": [
+         "Wow! You're so good you beat a robot!",
+         "Hey! You finally won for ounce!",
+         "The people that thought robots will take over the world.",
+         "Never give up!",
+         "Robot mind reader.",
+         "Yeah, I'm special."
+      ],
+      "1": [
+         "Hey, at least you didn't lose.",
+         "Phew, that was close.",
+         "Let's not try that again.",
+         "Boring."
+      ],
+      "2": [
+         "How did you lose to a robot?",
+         "Hey, did you know if you stop playing you will stop losing?",
+         "Oh come on!",
+         "So close!",
+         "I hate robots anyway."
+      ]
+   },
    "beg": {
       "success": [
          "Oh, the poor thing, here, have ${money}.",

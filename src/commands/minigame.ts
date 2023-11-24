@@ -1,6 +1,6 @@
 import { ActionRow, ActionRowBuilder, ButtonBuilder, ButtonComponent, ButtonInteraction, ButtonStyle, ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandSubcommandBuilder } from "discord.js";
 import { Command } from "../structure/Command";
-import rps from "../json/rps.json";
+import outcomes from "../json/outcomes.json";
 import { Embed } from "../structure/Embed";
 import { Button } from "../structure/Button";
 import trivia from "../json/trivia.json";
@@ -64,7 +64,7 @@ module.exports = {
             }
 
             let outcome = Math.floor(Math.random() * 3);
-            let message = rps[outcome][Math.floor(Math.random() * rps[outcome].length)];
+            let message = outcomes.rps[outcome][Math.floor(Math.random() * outcomes.rps[outcome].length)];
       
             interaction.message.edit({embeds: [new Embed({color: 0x22b1fc, title: 'RPS',
                description: message, footer: {text: (outcome == 0)? "You won!" : (outcome == 1)? "You tied!" : "You Lost"}})],
