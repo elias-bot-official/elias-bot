@@ -1,4 +1,4 @@
-import mongoose, { Model, Schema } from "mongoose";
+import mongoose from "mongoose";
 
 export interface Item {
 
