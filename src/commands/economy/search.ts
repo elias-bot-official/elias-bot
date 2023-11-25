@@ -57,7 +57,7 @@ module.exports = {
       }
       
       const user = await User.findById(interaction.user.id.toString());
-      const money = Math.round(Math.random() * 100 + 100);
+      const money = Math.round(Math.random() * 500 + 500);
       const outcome = outcomes.search.success[Math.floor(Math.random() * outcomes.search.success.length)];
 
       interaction.reply({embeds: [new Embed({color: 0x22b1fc, title: 'Search',

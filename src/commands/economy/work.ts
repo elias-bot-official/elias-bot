@@ -25,7 +25,7 @@ module.exports = {
    
       }
 
-      const money = Math.round(Math.random() * 1000 + 1000);
+      const money = Math.round(Math.random() * 2000 + 5000);
 
       interaction.reply({embeds: [new Embed({color: 0x22b1fc, title: 'Work',
          description: `You earned ${money.toLocaleString()} ${emojis.coin} for your shift.`})]});

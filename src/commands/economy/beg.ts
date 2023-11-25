@@ -30,7 +30,7 @@ module.exports = {
 
       if (random == 0) {
 
-         const money = Math.round(Math.random() * 100 + 50);
+         const money = Math.round(Math.random() * 200 + 300);
 
          user.balance += money;
    
