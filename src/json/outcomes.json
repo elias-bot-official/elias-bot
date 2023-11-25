@@ -36,5 +36,17 @@
          "Go get a job for ounce.",
          "Imagine begging lol."
       ]
+   },
+   "search": {
+      "success": [
+         "You searched high and low and found ${money}.",
+         "After looking a bit you found a wallet with ${money} in it!",
+         "You found ${money}. Maybe try searching there again."
+      ],
+      "fail": [
+         "You searched and found nothing, amazing!",
+         "You found nothing lol.",
+         "Imagine failing to find something."
+      ]
    }
 }

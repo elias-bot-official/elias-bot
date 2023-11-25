@@ -17,10 +17,16 @@ const UserSchema = new mongoose.Schema({
       required: true
    },
    cooldowns: {
+      daily: {
+         type: Number
+      },
+      work: {
+         type: Number
+      },
       beg: {
          type: Number
       },
-      daily: {
+      search: {
          type: Number
       }
    },

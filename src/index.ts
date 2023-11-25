@@ -24,10 +24,16 @@ client.rest = new REST(); // creates a rest client
 client.commands = []; // initializes the client's commands
 
 // loads the commands
-fs.readdirSync(path.join(__dirname, 'commands')).forEach(file => {
+fs.readdirSync(path.join(__dirname, 'commands')).forEach(folder => {
 
-	const command = require(path.join(path.join(__dirname, 'commands'), file));
-   client.commands.push(command);
+   const folderPath = path.join(path.join(__dirname, 'commands'), folder);
+
+   fs.readdirSync(folderPath).forEach(file => {
+
+      const command = require(path.join(folderPath, file));
+      client.commands.push(command);
+
+   });
 
 });
 
@@ -47,7 +53,7 @@ fs.readdirSync(path.join(__dirname, 'events')).forEach(file => {
 // catches any uncaught exceptions
 process.on("uncaughtException", exception => {
 
-   console.log(exception.stack);
+   console.log(exception);
 
 });
 

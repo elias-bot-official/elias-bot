@@ -1,6 +1,6 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandStringOption } from "discord.js";
-import { Command } from "../structure/Command";
-import { Embed } from "../structure/Embed";
+import { Command } from "../../structure/Command";
+import { Embed } from "../../structure/Embed";
 
 module.exports = {
 

@@ -1,10 +1,10 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandSubcommandBuilder } from "discord.js";
-import { Command } from "../structure/Command";
-import { Embed } from "../structure/Embed";
-import jokes from "../json/jokes.json";
-import wyr from "../json/wyr.json";
-import trivia from "../json/trivia.json";
-import { Button } from "../structure/Button";
+import { Command } from "../../structure/Command";
+import { Embed } from "../../structure/Embed";
+import jokes from "../../json/jokes.json";
+import wyr from "../../json/wyr.json";
+import trivia from "../../json/trivia.json";
+import { Button } from "../../structure/Button";
 
 module.exports = {
 

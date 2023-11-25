@@ -1,9 +1,9 @@
 import { ActionRow, ActionRowBuilder, ButtonBuilder, ButtonComponent, ButtonInteraction, ButtonStyle, ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandSubcommandBuilder } from "discord.js";
-import { Command } from "../structure/Command";
-import outcomes from "../json/outcomes.json";
-import { Embed } from "../structure/Embed";
-import { Button } from "../structure/Button";
-import trivia from "../json/trivia.json";
+import { Command } from "../../structure/Command";
+import outcomes from "../../json/outcomes.json";
+import { Embed } from "../../structure/Embed";
+import { Button } from "../../structure/Button";
+import trivia from "../../json/trivia.json";
 
 module.exports = {
 

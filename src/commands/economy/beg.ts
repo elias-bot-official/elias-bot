@@ -1,9 +1,9 @@
 import { SlashCommandBuilder } from "discord.js";
-import { Command } from "../structure/Command";
-import { User } from "../structure/User";
-import { Embed } from "../structure/Embed";
-import emojis from "../json/emojis.json";
-import outcomes from "../json/outcomes.json";
+import { Command } from "../../structure/Command";
+import { User } from "../../structure/User";
+import { Embed } from "../../structure/Embed";
+import emojis from "../../json/emojis.json";
+import outcomes from "../../json/outcomes.json";
 
 module.exports = {
 
@@ -20,7 +20,7 @@ module.exports = {
 
       if (user.cooldowns.beg > now) {
 
-         interaction.reply({embeds: [new Embed({color: 0x22b1fc, title: 'Beg',
+         interaction.reply({embeds: [new Embed({color: 0xED4245, title: 'Beg',
             description: `You are on cooldown! Come back <t:${user.cooldowns.beg}:R>`})], ephemeral: true});
          return;
 

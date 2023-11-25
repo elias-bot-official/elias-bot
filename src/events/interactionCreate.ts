@@ -54,6 +54,17 @@ module.exports = {
          });
    
       }
+
+      if (interaction.isAnySelectMenu()) {
+
+         interaction.client.commands.forEach(command => {
+
+            if (interaction.message.interaction.commandName.split(" ")[0] == command.data.name)
+               command.onSelectMenuInteraction(interaction);
+
+         });
+
+      }
    
    }
 

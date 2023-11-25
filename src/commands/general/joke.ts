@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from "discord.js";
-import { Command } from "../structure/Command";
-import { Embed } from "../structure/Embed";
-import jokes from "../json/jokes.json";
+import { Command } from "../../structure/Command";
+import { Embed } from "../../structure/Embed";
+import jokes from "../../json/jokes.json";
 
 module.exports = {
 
