@@ -1,6 +1,6 @@
 import { ChatInputCommandInteraction, SlashCommandSubcommandBuilder, SlashCommandUserOption } from "discord.js";
 import { Command } from "../../structure/Command";
-import { User } from "../../structure/User";
+import { User } from "../../schemas/User";
 import { Embed } from "../../structure/Embed";
 import emojis from "../../json/emojis.json";
 

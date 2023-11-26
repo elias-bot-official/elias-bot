@@ -4,7 +4,7 @@ import { Embed } from "../../structure/Embed";
 import emojis from "../../json/emojis.json";
 import { ActionRowBuilder, SelectMenuBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from "@discordjs/builders";
 import outcomes from "../../json/outcomes.json";
-import { User } from "../../structure/User";
+import { User } from "../../schemas/User";
 
 const selectMenu = new StringSelectMenuBuilder().setPlaceholder("Select a place.").setCustomId("place").addOptions(
    new StringSelectMenuOptionBuilder().setLabel("garage").setDescription("Search the garage.").setValue("garage"),
