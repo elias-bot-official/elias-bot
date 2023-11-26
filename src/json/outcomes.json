@@ -2,14 +2,14 @@
    "rps": {
       "0": [
          "Wow! You're so good you beat a robot!",
-         "Hey! You finally won for ounce!",
-         "The people that thought robots will take over the world.",
+         "You finally won for ounce!",
+         "The people that thought robots would take over the world.",
          "Never give up!",
          "Robot mind reader.",
          "Yeah, I'm special."
       ],
       "1": [
-         "Hey, at least you didn't lose.",
+         "At least you didn't lose.",
          "Phew, that was close.",
          "Let's not try that again.",
          "Boring."
@@ -17,9 +17,9 @@
       "2": [
          "How did you lose to a robot?",
          "Hey, did you know if you stop playing you will stop losing?",
-         "Oh come on!",
-         "So close!",
-         "I hate robots anyway."
+         "Maybe next time.",
+         "I hate robots anyway.",
+         "Just walk away."
       ]
    },
    "beg": {
@@ -28,25 +28,30 @@
          "Have ${money}, it's the least I can do.",
          "You begged and got ${money}.",
          "**Elon Musk**: Here, have ${money}.",
-         "**Jeff Bezos**: Here is ${money}, go spend it on Amazon."
+         "**Jeff Bezos**: Here is ${money}, go spend it on Amazon.",
+         "**Mr.Beast**: I just gave this homeless man ${money}."
       ],
       "fail": [
          "Go beg somewhere else.",
          "Sorry, I didn't bring my wallet.",
          "Go get a job for ounce.",
-         "Imagine begging lol."
+         "Imagine begging lol.",
+         "Ewwww, poor people."
       ]
    },
    "search": {
       "success": [
          "You searched high and low and found ${money}.",
          "After looking a bit you found a wallet with ${money} in it!",
-         "You found ${money}. Maybe try searching there again."
+         "You found ${money}. Maybe try searching there again.",
+         "You found ${money}! How did that get there?",
+         "You found ${money} just lying around. Finders keepers."
       ],
       "fail": [
          "You searched and found nothing, amazing!",
          "You found nothing lol.",
-         "Imagine failing to find something."
+         "You searched in vain and left empty handed. Oh man.",
+         "Nothing, what a waste of time."
       ]
    }
 }
