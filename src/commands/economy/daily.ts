@@ -10,7 +10,7 @@ module.exports = {
 
    async onCommandInteraction(interaction) {
        
-      let user = await User.findById(interaction.user.id.toString());
+      let user = await User.findById(interaction.user.id);
 
       if (!user)
          user = await User.create({_id: interaction.user.id, balance: 0});
@@ -25,11 +25,11 @@ module.exports = {
 
       }
 
-      user.balance += 1000;
+      user.balance += 10000;
       user.cooldowns.daily = Math.ceil(now / 86400) * 86400;
 
       interaction.reply({embeds: [new Embed({color: 0x22b1fc, title: 'Daily',
-      description: `You got 1,000 ${emojis.coin}`})]});
+      description: `You got 10,000 ${emojis.coin}`})]});
       user.save();
 
    },

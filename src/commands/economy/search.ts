@@ -18,7 +18,7 @@ module.exports = {
 
    async onCommandInteraction(interaction) {
 
-      let user = await User.findById(interaction.user.id.toString());
+      let user = await User.findById(interaction.user.id);
 
       if (!user)
          user = await User.create({_id: interaction.user.id, balance: 0});
@@ -43,6 +43,14 @@ module.exports = {
 
    async onSelectMenuInteraction(interaction) {
 
+      if (interaction.user.id != interaction.message.interaction.user.id) {
+
+         interaction.reply({embeds: [new Embed({color: 0xED4245, title: 'Error',
+            description: 'You are not allowed to use this select menu!'})], ephemeral: true});
+         return;
+
+      }
+
       interaction.message.edit({components: [new ActionRowBuilder<SelectMenuBuilder>()
          .addComponents(selectMenu.setDisabled(true))]});
 
@@ -56,12 +64,12 @@ module.exports = {
 
       }
       
-      const user = await User.findById(interaction.user.id.toString());
+      const user = await User.findById(interaction.user.id);
       const money = Math.round(Math.random() * 500 + 500);
       const outcome = outcomes.search.success[Math.floor(Math.random() * outcomes.search.success.length)];
 
       interaction.reply({embeds: [new Embed({color: 0x22b1fc, title: 'Search',
-         description: outcome.replaceAll("${money}", `${money} ${emojis.coin}`)})]});
+         description: outcome.replaceAll("${money}", `${money.toLocaleString()} ${emojis.coin}`)})]});
          
       user.balance += money;
       user.save();

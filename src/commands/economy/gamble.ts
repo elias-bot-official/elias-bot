@@ -7,18 +7,28 @@ import emojis from "../../json/emojis.json";
 module.exports = {
 
    data: new SlashCommandBuilder().setName("gamble").setDescription("Gamble away your life's savings.")
-      .addIntegerOption(new SlashCommandIntegerOption().setName("amount").setDescription("The amount you want to gamble.").setRequired(true))
+      .addIntegerOption(new SlashCommandIntegerOption().setName("amount").setDescription("The amount you want to gamble.")
+         .setMinValue(1).setMaxValue(50000).setRequired(true))
       .addStringOption(new SlashCommandStringOption().setName("color").setDescription("The color you want to bet on.")
          .setChoices({name: 'black', value: 'black'}, {name: 'red', value: 'red'}).setRequired(true)),
 
    async onCommandInteraction(interaction: ChatInputCommandInteraction) {
 
-      let user = await User.findById(interaction.user.id.toString());
+      let user = await User.findById(interaction.user.id);
 
       if (!user)
          user = await User.create({_id: interaction.user.id, balance: 0});
        
       const amount = interaction.options.getInteger("amount");
+
+      if (amount > user.balance) {
+
+         interaction.reply({embeds: [new Embed({color: 0xED4245, title: 'Gamble',
+            description: "You can not gamble more money than you own. Try using </work:1177662316414783518> to earn some more."})], ephemeral: true});
+         return;
+
+      }
+
       const random = Math.round(Math.random());
 
       if (random == 0) {

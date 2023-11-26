@@ -63,7 +63,6 @@ module.exports = {
 
          interaction.reply({embeds: [new Embed({color: 0xED4245, title: 'Error',
             description: 'Can not find this user in this server.'})], ephemeral: true});
-         return;
 
       });
 

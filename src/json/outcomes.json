@@ -24,7 +24,7 @@
    },
    "beg": {
       "success": [
-         "Oh, the poor thing, here, have ${money}.",
+         "Oh, you poor thing, here, have ${money}.",
          "Have ${money}, it's the least I can do.",
          "You begged and got ${money}.",
          "**Elon Musk**: Here, have ${money}.",

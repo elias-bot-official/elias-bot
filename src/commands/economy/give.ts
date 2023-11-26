@@ -22,7 +22,7 @@ module.exports = {
 
       }
        
-      let user = await User.findById(interaction.user.id.toString());
+      let user = await User.findById(interaction.user.id);
 
       if (!user || user.balance == 0) {
 

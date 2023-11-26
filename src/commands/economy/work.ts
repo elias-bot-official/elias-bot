@@ -10,7 +10,7 @@ module.exports = {
 
    async onCommandInteraction(interaction) {
        
-      let user = await User.findById(interaction.user.id.toString());
+      let user = await User.findById(interaction.user.id);
 
       if (!user)
          user = await User.create({_id: interaction.user.id, balance: 0});
