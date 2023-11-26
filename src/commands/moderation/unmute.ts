@@ -1,10 +1,11 @@
-import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandUserOption } from "discord.js";
+import { ChatInputCommandInteraction, PermissionFlagsBits, SlashCommandBuilder, SlashCommandUserOption } from "discord.js";
 import { Command } from "../../structure/Command";
 import { Embed } from "../../structure/Embed";
 
 module.exports = {
 
    data: new SlashCommandBuilder().setName("unmute").setDescription("Unmutes a muted user.")
+      .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers)
       .addUserOption(new SlashCommandUserOption().setName("user").setDescription("The user to unmute.").setRequired(true)),
 
    onCommandInteraction(interaction: ChatInputCommandInteraction) {

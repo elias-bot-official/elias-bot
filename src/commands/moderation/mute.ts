@@ -5,6 +5,7 @@ import { Embed } from "../../structure/Embed";
 module.exports = {
 
    data: new SlashCommandBuilder().setName("mute").setDescription("Mutes a user.")
+      .setDefaultMemberPermissions(PermissionFlagsBits.MuteMembers)
       .addUserOption(new SlashCommandUserOption().setName("user").setDescription("The user to mute.").setRequired(true))
       .addIntegerOption(new SlashCommandIntegerOption().setName("time").setDescription("The amount of time to mute a user.")
          .addChoices(
@@ -21,8 +22,7 @@ module.exports = {
                {name: '5 day', value: 7200},
                {name: '10 day', value: 14400},
                {name: '28 day', value: 40320}))
-      .addStringOption(new SlashCommandStringOption().setName("reason").setDescription("The reason for the mute."))
-      .setDefaultMemberPermissions(PermissionFlagsBits.MuteMembers),
+      .addStringOption(new SlashCommandStringOption().setName("reason").setDescription("The reason for the mute.")),
       
    onCommandInteraction(interaction: ChatInputCommandInteraction) {
       

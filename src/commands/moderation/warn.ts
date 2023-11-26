@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandStringOption, SlashCommandUserOption } from "discord.js";
+import { ChatInputCommandInteraction, PermissionFlagsBits, SlashCommandBuilder, SlashCommandStringOption, SlashCommandUserOption } from "discord.js";
 import { Command } from "../../structure/Command";
 import { Guild, Warn } from "../../schemas/Guild";
 import { Embed } from "../../structure/Embed";
@@ -6,6 +6,7 @@ import { Embed } from "../../structure/Embed";
 module.exports = {
 
    data: new SlashCommandBuilder().setName("warn").setDescription("Warns a user.")
+      .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers)
       .addUserOption(new SlashCommandUserOption().setName("user").setDescription("The user to warn.").setRequired(true))
       .addStringOption(new SlashCommandStringOption().setName("reason").setDescription("The reason for the warn.")),
 

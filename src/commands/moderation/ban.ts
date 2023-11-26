@@ -5,9 +5,9 @@ import { Embed } from "../../structure/Embed";
 module.exports = {
 
    data: new SlashCommandBuilder().setName("ban").setDescription("Bans a user")
+      .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers)
       .addUserOption(new SlashCommandUserOption().setName("user").setDescription("The user to ban.").setRequired(true))
-      .addStringOption(new SlashCommandStringOption().setName("reason").setDescription("The reason for the ban."))
-      .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers),
+      .addStringOption(new SlashCommandStringOption().setName("reason").setDescription("The reason for the ban.")),
       
    onCommandInteraction(interaction: ChatInputCommandInteraction) {
       
