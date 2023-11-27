@@ -23,7 +23,7 @@ module.exports = {
 
       if (amount > user.balance) {
 
-         interaction.reply({embeds: [new Embed({color: 0xED4245, title: 'Gamble',
+         interaction.reply({embeds: [new Embed({color: 0xED4245, title: 'Error',
             description: "You can not gamble more money than you own. Try using </work:1177662316414783518> to earn some more."})], ephemeral: true});
          return;
 

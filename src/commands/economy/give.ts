@@ -16,7 +16,7 @@ module.exports = {
 
       if (receiver.bot) {
 
-         interaction.reply({embeds: [new Embed({color: 0xED4245, title: 'Give',
+         interaction.reply({embeds: [new Embed({color: 0xED4245, title: 'Error',
             description: "You can not give money to a bot!"})], ephemeral: true});
          return;
 
@@ -24,7 +24,7 @@ module.exports = {
 
       if (interaction.user.id == receiver.id) {
 
-         interaction.reply({embeds: [new Embed({color: 0xED4245, title: 'Give',
+         interaction.reply({embeds: [new Embed({color: 0xED4245, title: 'Error',
             description: "You can not give money to yourself!"})], ephemeral: true});
          return;
 
@@ -34,7 +34,7 @@ module.exports = {
 
       if (!user || user.balance == 0) {
 
-         interaction.reply({embeds: [new Embed({color: 0xED4245, title: 'Give',
+         interaction.reply({embeds: [new Embed({color: 0xED4245, title: 'Error',
             description: "You do not have any money to give. Try using </work:1177662316414783518> to earn some."})], ephemeral: true});
          return;
 
@@ -44,7 +44,7 @@ module.exports = {
 
       if (user.balance < amount) {
 
-         interaction.reply({embeds: [new Embed({color: 0xED4245, title: 'Give',
+         interaction.reply({embeds: [new Embed({color: 0xED4245, title: 'Error',
             description: "You do not have this much money!"})], ephemeral: true});
          return;
 

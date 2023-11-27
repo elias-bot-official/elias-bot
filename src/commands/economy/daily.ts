@@ -19,7 +19,7 @@ module.exports = {
 
       if (user.cooldowns.daily > now) {
 
-         interaction.reply({embeds: [new Embed({color: 0xED4245, title: 'Daily',
+         interaction.reply({embeds: [new Embed({color: 0xED4245, title: 'Error',
             description: `You have already claimed today's rewards! Come back <t:${user.cooldowns.daily}:R>`})], ephemeral: true});
          return;
 

@@ -27,7 +27,7 @@ module.exports = {
 
       if (user.cooldowns.search > now) {
 
-         interaction.reply({embeds: [new Embed({color: 0xED4245, title: 'Search',
+         interaction.reply({embeds: [new Embed({color: 0xED4245, title: 'Error',
             description: `You are on cooldown! Come back <t:${user.cooldowns.search}:R>`})], ephemeral: true});
          return;
 
