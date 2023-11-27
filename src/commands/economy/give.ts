@@ -14,6 +14,14 @@ module.exports = {
 
       let receiver = interaction.options.getUser("user");
 
+      if (receiver.bot) {
+
+         interaction.reply({embeds: [new Embed({color: 0xED4245, title: 'Give',
+            description: "You can not give money to a bot!"})], ephemeral: true});
+         return;
+
+      }
+
       if (interaction.user.id == receiver.id) {
 
          interaction.reply({embeds: [new Embed({color: 0xED4245, title: 'Give',
