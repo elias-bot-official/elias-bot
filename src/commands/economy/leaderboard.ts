@@ -6,18 +6,18 @@ import emojis from "../../json/emojis.json";
 
 module.exports = {
 
-   data: new SlashCommandBuilder().setName("leaderboard").setDescription("Shows you the top 5 of the leaderboard."),
+   data: new SlashCommandBuilder().setName("leaderboard").setDescription("Shows you the top 10 of the leaderboard."),
 
    async onCommandInteraction(interaction) {
 
       let description = '';
        
-      const dbUsers = await User.find().sort({'balance': -1}).limit(5);
+      const dbUsers = await User.find().sort({'balance': -1}).limit(10);
       await dbUsers.forEach(async (dbUser, index) => {
 
          const user = await interaction.client.users.fetch(dbUser.id);
 
-         description += `#${++index} ${user.displayName}: ${dbUser.balance.toLocaleString()} ${emojis.coin}\n`;
+         description += `**#${++index} ${user.displayName}**: ${dbUser.balance.toLocaleString()} ${emojis.coin}\n`;
 
       });
 
