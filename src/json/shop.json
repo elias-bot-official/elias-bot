@@ -1,0 +1,10 @@
+[
+   {
+      "name": "lock",
+      "price": 1000
+   },
+   {
+      "name": "lockpick",
+      "price": 500
+   }
+]
