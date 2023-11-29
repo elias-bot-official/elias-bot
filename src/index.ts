@@ -19,7 +19,8 @@ declare module "discord.js" {
 
 }
 
-const client = new Client({intents: GatewayIntentBits.GuildMembers | GatewayIntentBits.GuildPresences | GatewayIntentBits.Guilds | GatewayIntentBits.GuildMessageReactions}); // creates discord client
+const client = new Client({intents: GatewayIntentBits.GuildMembers | GatewayIntentBits.GuildPresences
+   | GatewayIntentBits.Guilds | GatewayIntentBits.GuildMessageReactions}); // creates discord client
 client.rest = new REST(); // creates a rest client
 client.commands = []; // initializes the client's commands
 

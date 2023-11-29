@@ -17,7 +17,7 @@ module.exports = {
 
          const user = await interaction.client.users.fetch(dbUser.id);
 
-         description += `**#${++index} ${user.displayName}**: ${dbUser.balance.toLocaleString()} ${emojis.coin}\n`;
+         description += `#${++index} ${user.displayName}: ${dbUser.balance.toLocaleString()} ${emojis.coin}\n`;
 
       });
 
