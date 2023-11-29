@@ -1,12 +1,5 @@
 import mongoose from "mongoose";
 
-export interface Item {
-
-   name: string,
-   amount: number
-
-}
-
 const UserSchema = new mongoose.Schema({
    _id: {
       type: String,
@@ -31,7 +24,12 @@ const UserSchema = new mongoose.Schema({
       }
    },
    inventory: {
-      type: Array<Item>
+      lock: {
+         type: Number
+      },
+      lockpick: {
+         type: Number
+      }
    }
 });
 
