@@ -14,7 +14,7 @@ module.exports = {
    onCommandInteraction(interaction: ChatInputCommandInteraction) {
 
       interaction.reply({embeds: [new Embed({color: 0x22b1fc, title: 'Bot Info'})
-         .addField({name: 'Servers', value: interaction.client.guilds.cache.size.toString(), inline: true})
+         .addField({name: 'Servers', value: interaction.client.guilds.cache.size.toLocaleString(), inline: true})
          .addField({name: 'Commands', value: interaction.client.commands.length.toString(), inline: true})
          .addField({name: 'Ping', value: interaction.client.ws.ping.toString(), inline: true})
          .addField({name: 'Jokes', value: jokes.length.toString(), inline: true})

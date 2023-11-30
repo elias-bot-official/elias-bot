@@ -17,7 +17,7 @@ module.exports = {
             value: `${interaction.guild.memberCount.toString()}\n${await formatStatuses(interaction.guild)}`})
          .addField({name: 'Created', value: `<t:${Math.floor(interaction.guild.createdTimestamp / 1000)}:d>`, inline: true})
          .addField({name: 'Boost Tier', value: interaction.guild.premiumTier.toString(), inline: true})
-         .addField({name: 'Boosts', value: interaction.guild.premiumSubscriptionCount.toString(), inline: true})
+         .addField({name: 'Boosts', value: interaction.guild.premiumSubscriptionCount.toLocaleString(), inline: true})
          .setThumbnail(interaction.guild.iconURL())]});
 
    },
