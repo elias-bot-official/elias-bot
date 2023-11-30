@@ -13,13 +13,13 @@ module.exports = {
       let description = '';
        
       const dbUsers = await User.find().sort({'balance': -1}).limit(10);
-      await dbUsers.forEach(async (dbUser, index) => {
+
+      for (const [index, dbUser] of dbUsers.entries()) {
 
          const user = await interaction.client.users.fetch(dbUser.id);
+         description += `#${index + 1} ${user.displayName}: ${dbUser.balance.toLocaleString()} ${emojis.coin}\n`;
 
-         description += `#${++index} ${user.displayName}: ${dbUser.balance.toLocaleString()} ${emojis.coin}\n`;
-
-      });
+      }
 
       interaction.reply({embeds: [new Embed({color: 0x22b1fc, title: 'Leaderboard', description: description})]});
 

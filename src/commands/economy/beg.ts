@@ -11,11 +11,7 @@ module.exports = {
 
    async onCommandInteraction(interaction) {
 
-      let user = await User.findById(interaction.user.id);
-
-      if (!user)
-         user = await User.create({_id: interaction.user.id, balance: 0});
-
+      const user = await User.findById(interaction.user.id) ?? await User.create({_id: interaction.user.id, balance: 0});
       const now = Math.floor(Date.now() / 1000);
 
       if (user.cooldowns.beg > now) {

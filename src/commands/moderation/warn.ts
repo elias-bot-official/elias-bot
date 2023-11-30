@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, PermissionFlagsBits, SlashCommandBuilder, SlashCommandStringOption, SlashCommandUserOption } from "discord.js";
+import { ChatInputCommandInteraction, GuildMember, PermissionFlagsBits, SlashCommandBuilder, SlashCommandStringOption, SlashCommandUserOption } from "discord.js";
 import { Command } from "../../structure/Command";
 import { Guild, Warn } from "../../schemas/Guild";
 import { Embed } from "../../structure/Embed";
@@ -25,10 +25,10 @@ module.exports = {
    
          }
 
-         if (!member.manageable) {
+         if ((interaction.member as GuildMember).roles.highest.position <= member.roles.highest.position) {
 
             interaction.reply({embeds: [new Embed({color: 0xED4245, title: 'Error',
-               description: 'I can not warn a user with a higher or equal role.'})], ephemeral: true});
+               description: 'You do not have a higher role than the target member.'})], ephemeral: true});
             return;
    
          }
