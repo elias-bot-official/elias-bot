@@ -6,5 +6,9 @@
    {
       "name": "lockpick",
       "price": 500
+   },
+   {
+      "name": "shovel",
+      "price": 10000
    }
 ]

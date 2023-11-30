@@ -29,6 +29,9 @@ const UserSchema = new mongoose.Schema({
       },
       lockpick: {
          type: Number
+      },
+      shovel: {
+         type: Number
       }
    }
 });
