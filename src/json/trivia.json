@@ -156,7 +156,7 @@
    },
    {
       "question": "What was X's (Twitter's) original name?",
-      "answer": "",
+      "answer": "twttr",
       "options": ["twttr", "Birdie", "Hoot", "tweeter"]
    },
    {
@@ -248,5 +248,130 @@
       "question": "How many ghosts show up in \"A Christmas Carol\"?",
       "answer": "4",
       "options": ["4", "3", "10", "1"]
+   },
+   {
+      "question": "Who is the villain in \"Peter Pan\"?",
+      "answer": "Captain Hook",
+      "options": ["Captain Hook", "Scar", "Cruella de Vil", "Ursula"]
+   },
+   {
+      "question": "Which city is “101 Dalmatians” set in?",
+      "answer": "London",
+      "options": ["London", "New York City", "Orlando", "Syndney"]
+   },
+   {
+      "question": "Play-Doh was originally invented for what purpose?",
+      "answer": "cleaning wallpaper",
+      "options": ["cleaning wallpaper", "cooking", "ironing", "sculpting"]
+   },
+   {
+      "question": "What game is generally considered to have ushered in the video game era?",
+      "answer": "Pong",
+      "options": ["Pong", "Space Invaders", "Pac-Man", "Spacewar!"]
+   },
+   {
+      "question": "What toy is created by mixing silicone oil and boric acid?",
+      "answer": "Silly Putty",
+      "options": ["Silly Putty", "Play-Doh", "Finger Paints", "Crayola Crayons"]
+   },
+   {
+      "question": "Which famous soft drink company was founded in 1892?",
+      "answer": "Coca Cola",
+      "options": ["Coca Cola", "Sprite", "Dr Pepper", "Pepsi"]
+   },
+   {
+      "question": "What is \"rotisserie\" food cooked on?",
+      "answer": "a spit",
+      "options": ["a spit", "a barbecue", "a fryer", "a stove"]
+   },
+   {
+      "question": "What is the most expensive spice (by weight) in the world?",
+      "answer": "saffron",
+      "options": ["saffron", "black pepper", "vanilla bean", "mahlab", "fennel pollen"]
+   },
+   {
+      "question": "What nutrient comes from meat, eggs, and fish?",
+      "answer": "protein",
+      "options": ["protein", "fiber", "vitamins", "minerals"]
+   },
+   {
+      "question": "What is the smallest planet in our solar system?",
+      "answer": "Mercury",
+      "options": ["Mercury", "Earth", "Mars", "Saturn"]
+   },
+   {
+      "question": "What is the largest planet in our solar system?",
+      "answer": "Jupiter",
+      "options": ["Jupiter", "Earth", "Uranus", "Neptune"]
+   },
+   {
+      "question": "The moon called Titan orbits which planet?",
+      "answer": "Saturn",
+      "options": ["Saturn", "Jupiter", "Venus", "Mars"]
+   },
+   {
+      "question": "Which is the brightest planet in the night's sky?",
+      "answer": "Venus",
+      "options": ["Venus", "Mars", "Mercury", "Neptune"]
+   },
+   {
+      "question": "How many of our planets can be seen without a telescope?",
+      "answer": "5",
+      "options": ["5", "7", "2", "1"]
+   },
+   {
+      "question": "Which planet has the most moons?",
+      "answer": "Saturn",
+      "options": ["Saturn", "Jupiter", "Neptune", "Mercury"]
+   },
+   {
+      "question": "Which planet has the fastest rotation?",
+      "answer": "Jupiter",
+      "options": ["Jupiter", "Earth", "Venus", "Uranus"]
+   },
+   {
+      "question": "Which planet is known as the Morning Star and Evening Star?",
+      "answer": "Venus",
+      "options": ["Venus", "Saturn", "Mercury", "Uranus"]
+   },
+   {
+      "question": "Which planet spins backward relative to the others?",
+      "answer": "Venus",
+      "options": ["Venus", "Neptune", "Uranus", "Mars"]
+   },
+   {
+      "question": "The atmosphere protects the earth from radiation.",
+      "answer": "true",
+      "options": ["true", "false"]
+   },
+   {
+      "question": "Mercury has no moons.",
+      "answer": "true",
+      "options": ["true", "false"]
+   },
+   {
+      "question": "Neptune is the closest planet to the sun.",
+      "answer": "false",
+      "options": ["false", "true"]
+   },
+   {
+      "question": "It takes a sloth two weeks to digest a meal.",
+      "answer": "true",
+      "options": ["true", "false"]
+   },
+   {
+      "question": "When exiting a cave, bats always go in the direction of the wind.",
+      "answer": "false",
+      "options": ["false", "true"]
+   },
+   {
+      "question": "What animals have the thickest fur of any mammals?",
+      "answer": "sea otters",
+      "options": ["sea otters", "dogs", "mice", "racoons"]
+   },
+   {
+      "question": "Bats are blind.",
+      "answer": "false",
+      "options": ["false", "true"]
    }
 ]
