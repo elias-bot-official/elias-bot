@@ -24,16 +24,10 @@ const UserSchema = new mongoose.Schema({
       }
    },
    inventory: {
-      lock: {
-         type: Number
-      },
-      lockpick: {
-         type: Number
-      },
-      shovel: {
-         type: Number
-      }
+      type: Map<string, number>,
+      required: true
    }
 });
 
 export const User = mongoose.model('User', UserSchema);
+export const defaultUser = {balance: 0, cooldowns: {}, inventory: {}};

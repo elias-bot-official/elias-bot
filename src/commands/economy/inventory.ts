@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from "discord.js";
+import { SlashCommandBuilder, SlashCommandUserOption } from "discord.js";
 import { Command } from "../../structure/Command";
 import { User } from "../../schemas/User";
 import { Embed } from "../../structure/Embed";
@@ -6,32 +6,35 @@ import emojis from "../../json/emojis.json";
 
 module.exports = {
 
-   data: new SlashCommandBuilder().setName("inventory").setDescription("View your inventory"),
+   data: new SlashCommandBuilder().setName("inventory").setDescription("View your inventory")
+      .addUserOption(new SlashCommandUserOption().setName("user").setDescription("The user's inventory you want to view.")),
 
    async onCommandInteraction(interaction) {
 
-      let user = await User.findById(interaction.user.id);
+      const user = interaction.options.getUser("user", false);
+      const dbUser = await User.findById((user ?? interaction.user).id);
        
-      if (!user || Object.values(user.inventory).filter(value => value != undefined && value != 0).length == 0) {
+      if (!dbUser || Array.from(dbUser.inventory.values()).filter(item => item != 0).length == 0) {
 
-         interaction.reply({embeds: [new Embed({color: 0xED4245, title: 'Error',
-            description: 'You do not have any items. Try using </shop buy:1178802858360057946> to get some.'})], ephemeral: true});
+         interaction.reply({embeds: [new Embed({color: 0x22b1fc, title: `${(user ?? interaction.user).displayName}'s Inventory`,
+            image: {url: 'https://i.imgur.com/yrhOAPx.png'}})]});
          return;
 
       }
 
       let description = '';
-      Object.keys(user.inventory).forEach(key => {
+      dbUser.inventory.forEach((value: number, key: string) => {
 
-         if (user.inventory[key] != undefined && user.inventory[key] != 0) {
+         if (dbUser.inventory[key] != 0) {
 
-            description += `${emojis[key]} ${key}: ${user.inventory[key]}\n`;
+            description += `**${emojis[key]} ${key}** - **${value.toLocaleString()}x**\n\n`;
 
          }
 
       });
 
-      interaction.reply({embeds: [new Embed({color: 0x22b1fc, title: 'Inventory', description: description})]});
+      interaction.reply({embeds: [new Embed({color: 0x22b1fc, title: `${(user ?? interaction.user).displayName}'s Inventory`,
+         description: description})]});
 
    },
 

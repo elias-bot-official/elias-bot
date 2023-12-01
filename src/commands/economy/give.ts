@@ -56,17 +56,17 @@ module.exports = {
       user.balance -= amount;
       user.save();
 
-      await User.findById(receiver.id).then(receiverDB => {
+      await User.findById(receiver.id).then(dbReceiver => {
 
-         if (!receiverDB) {
+         if (!dbReceiver) {
 
-            User.create({_id: receiver.id, balance: amount});
+            User.create({_id: interaction.user.id, balance: amount, inventory: new Map()});
             return;
 
          }
 
-         receiverDB.balance += amount;
-         receiverDB.save();
+         dbReceiver.balance += amount;
+         dbReceiver.save();
 
       });
 

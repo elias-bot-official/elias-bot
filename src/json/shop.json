@@ -1,14 +1,14 @@
 [
    {
-      "name": "lock",
+      "name": "Lock",
       "price": 1000
    },
    {
-      "name": "lockpick",
+      "name": "Lockpick",
       "price": 500
    },
    {
-      "name": "shovel",
+      "name": "Shovel",
       "price": 10000
    }
 ]

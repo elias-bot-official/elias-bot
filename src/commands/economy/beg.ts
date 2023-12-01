@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from "discord.js";
 import { Command } from "../../structure/Command";
-import { User } from "../../schemas/User";
+import { User, defaultUser } from "../../schemas/User";
 import { Embed } from "../../structure/Embed";
 import emojis from "../../json/emojis.json";
 import outcomes from "../../json/outcomes.json";
@@ -11,7 +11,8 @@ module.exports = {
 
    async onCommandInteraction(interaction) {
 
-      const user = await User.findById(interaction.user.id) ?? await User.create({_id: interaction.user.id, balance: 0});
+      const user = await User.findById(interaction.user.id) ??
+         await User.create({_id: interaction.user.id, balance: 0, inventory: new Map()});
       const now = Math.floor(Date.now() / 1000);
 
       if (user.cooldowns.beg > now) {

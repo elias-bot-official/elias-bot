@@ -11,9 +11,9 @@ module.exports = {
       .addSubcommand(new SlashCommandSubcommandBuilder().setName("view").setDescription("View the items in the shop."))
       .addSubcommand(new SlashCommandSubcommandBuilder().setName("buy").setDescription("Buys an item from the shop.")
          .addStringOption(new SlashCommandStringOption().setName("item").setDescription("The name of the item you want to buy.")
-            .addChoices({name: 'lock', value: 'lock'},
-               {name: 'lockpick', value: 'lockpick'},
-               {name: 'shovel', value: 'shovel'}).setRequired(true))
+            .addChoices({name: 'Lock', value: 'Lock'},
+               {name: 'Lockpick', value: 'Lockpick'},
+               {name: 'Shovel', value: 'Shovel'}).setRequired(true))
          .addIntegerOption(new SlashCommandIntegerOption().setName("amount").setDescription("The amount you want to buy.").setMinValue(1))),
 
    async onCommandInteraction(interaction: ChatInputCommandInteraction) {
@@ -23,9 +23,9 @@ module.exports = {
          case 'view': {
 
             let description = '';
-            shop.forEach(item => description += `${emojis[item.name]} ${item.name}: ${item.price.toLocaleString()} ${emojis.coin}\n`);
+            shop.forEach(item => description += `**${emojis[item.name]} ${item.name}** - ${item.price.toLocaleString()} ${emojis.coin}\n`);
 
-            interaction.reply({embeds: [new Embed({color: 0x22b1fc, title: "Items", description: description})]});
+            interaction.reply({embeds: [new Embed({color: 0x22b1fc, title: "Shop", description: description})]});
             return;
 
          }
@@ -46,9 +46,9 @@ module.exports = {
             }
 
             interaction.reply({embeds: [new Embed({color: 0x22b1fc, title: "Buy",
-               description: `You bought **${amount}x** ${emojis[itemName]} ${itemName}!`})]});
-            
-            user.inventory[itemName] = (user.inventory[itemName] ?? 0) + amount;
+               description: `You bought **${amount}x ${emojis[itemName]} ${itemName}**!`})]});
+
+            user.inventory.set(itemName, (user.inventory.get(itemName) as number ?? 0) + amount);
             user.balance -= item.price * amount;
             user.save();
             return;
