@@ -30,7 +30,7 @@ module.exports = {
 
       }
        
-      let user = await User.findById(interaction.user.id);
+      const user = await User.findById(interaction.user.id);
 
       if (!user || user.balance == 0) {
 
@@ -60,7 +60,7 @@ module.exports = {
 
          if (!dbReceiver) {
 
-            User.create({_id: interaction.user.id, balance: amount, inventory: new Map()});
+            User.create({_id: receiver.id, balance: amount});
             return;
 
          }
