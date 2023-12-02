@@ -13,8 +13,9 @@ const GuildSchema = new mongoose.Schema({
       required: true,
    },
    warns: {
-      type: Array<Warn>
+      type: Array<Warn>,
+      default: new Array()
    }
-});
+}, { minimize: false });
 
 export const Guild = mongoose.model('Guild', GuildSchema);

@@ -7,7 +7,8 @@ const UserSchema = new mongoose.Schema({
    },
    balance: {
       type: Number,
-      required: true
+      required: true,
+      default: 0
    },
    cooldowns: {
       daily: {
@@ -25,9 +26,9 @@ const UserSchema = new mongoose.Schema({
    },
    inventory: {
       type: Map<string, number>,
-      required: true
+      required: true,
+      default: new Map()
    }
-});
+}, {minimize: false});
 
 export const User = mongoose.model('User', UserSchema);
-export const defaultUser = {balance: 0, cooldowns: {}, inventory: {}};
