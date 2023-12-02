@@ -10,9 +10,9 @@ module.exports = {
 
    async onCommandInteraction(interaction: ChatInputCommandInteraction) {
        
-      const message = await interaction.reply({embeds: [new Embed({color: 0x22b1fc, title: 'Suggestion', description:
-         interaction.options.getString("suggestion"), footer: {text: interaction.user.displayName, iconURL: interaction.user.avatarURL()}})],
-         fetchReply: true});
+      const message = await interaction.reply({embeds: [new Embed({color: 0x22b1fc, title: 'Suggestion',
+         author: {name: interaction.user.displayName, iconURL: interaction.user.avatarURL()},
+         description: interaction.options.getString("suggestion")})], fetchReply: true});
 
       message.react(emojis.upvote);
       message.react(emojis.downvote);

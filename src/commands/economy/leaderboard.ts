@@ -9,11 +9,10 @@ module.exports = {
    data: new SlashCommandBuilder().setName("leaderboard").setDescription("Shows you the top 10 of the leaderboard."),
 
    async onCommandInteraction(interaction) {
-
-      let description = '';
        
       const dbUsers = await User.find().sort({'balance': -1}).limit(10);
 
+      let description = '';
       for (const [index, dbUser] of dbUsers.entries()) {
 
          const user = await interaction.client.users.fetch(dbUser.id);
