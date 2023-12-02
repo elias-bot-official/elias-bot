@@ -1,4 +1,4 @@
-import { APIEmbedField, EmbedBuilder, EmbedData, RestOrArray } from "discord.js";
+import { APIEmbedField, EmbedBuilder, EmbedData } from "discord.js";
 
 export class Embed extends EmbedBuilder {
 
