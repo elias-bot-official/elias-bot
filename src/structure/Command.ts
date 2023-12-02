@@ -3,8 +3,8 @@ import { AnySelectMenuInteraction, ButtonInteraction, CommandInteraction } from 
 export interface Command {
 
    data: any;
-   onCommandInteraction(interaction: CommandInteraction);
-   onButtonInteraction?(interaction: ButtonInteraction);
-   onSelectMenuInteraction?(interaction: AnySelectMenuInteraction);
+   onCommandInteraction(interaction: CommandInteraction): Promise<void>;
+   onButtonInteraction?(interaction: ButtonInteraction): Promise<void>;
+   onSelectMenuInteraction?(interaction: AnySelectMenuInteraction): Promise<void>;
 
 }
