@@ -11,7 +11,7 @@ module.exports = {
       .addSubcommand(new SlashCommandSubcommandBuilder().setName("rps").setDescription("Play rock paper scissors."))
       .addSubcommand(new SlashCommandSubcommandBuilder().setName("trivia").setDescription("Asks you a trivia question.")),
 
-   onCommandInteraction(interaction: ChatInputCommandInteraction) {
+   async onCommandInteraction(interaction: ChatInputCommandInteraction) {
 
       switch(interaction.options.getSubcommand()) {
 
@@ -49,7 +49,7 @@ module.exports = {
 
    },
 
-   onButtonInteraction(interaction: ButtonInteraction) {
+   async onButtonInteraction(interaction: ButtonInteraction) {
 
       switch(interaction.message.interaction.commandName) {
 
@@ -67,7 +67,7 @@ module.exports = {
             let message = outcomes.rps[outcome][Math.floor(Math.random() * outcomes.rps[outcome].length)];
       
             interaction.message.edit({embeds: [new Embed({color: 0x22b1fc, title: 'RPS',
-               description: message, footer: {text: (outcome == 0)? "You won!" : (outcome == 1)? "You tied!" : "You Lost"}})],
+               description: message, footer: {text: (outcome == 0)? "You Won" : (outcome == 1)? "You Tied" : "You Lost"}})],
                components: []});
 
             return;

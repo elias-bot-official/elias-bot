@@ -9,7 +9,7 @@ module.exports = {
       .addUserOption(new SlashCommandUserOption().setName("user").setDescription("The user to ban.").setRequired(true))
       .addStringOption(new SlashCommandStringOption().setName("reason").setDescription("The reason for the ban.")),
       
-   onCommandInteraction(interaction: ChatInputCommandInteraction) {
+   async onCommandInteraction(interaction: ChatInputCommandInteraction) {
       
       const user = interaction.options.getUser("user");
       const reason = interaction.options.getString("reason", false);

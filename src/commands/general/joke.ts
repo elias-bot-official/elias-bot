@@ -7,9 +7,10 @@ module.exports = {
 
    data: new SlashCommandBuilder().setName("joke").setDescription("Tells you a joke."),
    
-   onCommandInteraction(interaction) {
+   async onCommandInteraction(interaction) {
 
-      interaction.reply({embeds: [new Embed({color: 0x22b1fc, title: 'Joke', description: jokes[Math.floor(Math.random() * jokes.length)]})]});
+      interaction.reply({embeds: [new Embed({color: 0x22b1fc, title: 'Joke',
+         description: jokes[Math.floor(Math.random() * jokes.length)]})]});
 
    },
 

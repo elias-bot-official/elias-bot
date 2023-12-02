@@ -11,7 +11,7 @@ module.exports = {
    data: new SlashCommandBuilder().setName("bot").setDescription("Commands related to elias bot.")
       .addSubcommand(new SlashCommandSubcommandBuilder().setName("info").setDescription("Gives info about elias bot.")),
       
-   onCommandInteraction(interaction: ChatInputCommandInteraction) {
+   async onCommandInteraction(interaction: ChatInputCommandInteraction) {
 
       interaction.reply({embeds: [new Embed({color: 0x22b1fc, title: 'Bot Info'})
          .addField({name: 'Servers', value: interaction.client.guilds.cache.size.toLocaleString(), inline: true})

@@ -6,7 +6,7 @@ module.exports = {
 
    data: new SlashCommandBuilder().setName("coin-flip").setDescription("Flips a coin."),
    
-   onCommandInteraction(interaction) {
+   async onCommandInteraction(interaction) {
 
       const side = Math.round(Math.random());
        

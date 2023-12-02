@@ -6,7 +6,7 @@ module.exports = {
 
    data: new SlashCommandBuilder().setName("ping").setDescription("Pings elias bot."),
    
-   onCommandInteraction(interaction): void {
+   async onCommandInteraction(interaction) {
        
       interaction.reply({embeds: [new Embed({color: 0x22b1fc, title: "Ping"}).addFields(
          {name: "Bot Ping", value: `${interaction.client.ws.ping}ms`, inline: true},

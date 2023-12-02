@@ -9,7 +9,7 @@ module.exports = {
       .addUserOption(new SlashCommandUserOption().setName("user").setDescription("The user to kick.").setRequired(true))
       .addStringOption(new SlashCommandStringOption().setName("reason").setDescription("The reason for the kick.")),
       
-   onCommandInteraction(interaction: ChatInputCommandInteraction) {
+   async onCommandInteraction(interaction: ChatInputCommandInteraction) {
       
       const user = interaction.options.getUser("user");
       const reason = interaction.options.getString("reason", false);

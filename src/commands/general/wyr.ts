@@ -7,7 +7,7 @@ module.exports = {
 
    data: new SlashCommandBuilder().setName("wyr").setDescription("Asks a would you rather question."),
    
-   onCommandInteraction(interaction) {
+   async onCommandInteraction(interaction) {
        
       interaction.reply({embeds: [new Embed({color: 0x22b1fc, title: "Would You Rather",
          description: wyr[Math.floor(Math.random() * wyr.length)]})]});

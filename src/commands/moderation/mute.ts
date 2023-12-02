@@ -24,7 +24,7 @@ module.exports = {
                {name: '28 day', value: 40320}))
       .addStringOption(new SlashCommandStringOption().setName("reason").setDescription("The reason for the mute.")),
       
-   onCommandInteraction(interaction: ChatInputCommandInteraction) {
+   async onCommandInteraction(interaction: ChatInputCommandInteraction) {
       
       const user = interaction.options.getUser("user");
       const reason = interaction.options.getString("reason", false);

@@ -8,7 +8,7 @@ module.exports = {
       .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers)
       .addUserOption(new SlashCommandUserOption().setName("user").setDescription("The user to unmute.").setRequired(true)),
 
-   onCommandInteraction(interaction: ChatInputCommandInteraction) {
+   async onCommandInteraction(interaction: ChatInputCommandInteraction) {
        
       const user = interaction.options.getUser("user");
 
