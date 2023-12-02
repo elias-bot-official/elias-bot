@@ -25,7 +25,8 @@ module.exports = {
    
          }
 
-         if ((interaction.member as GuildMember).roles.highest.position <= member.roles.highest.position) {
+         if ((interaction.member as GuildMember).roles.highest.position <= member.roles.highest.position &&
+               interaction.guild.ownerId != interaction.user.id) {
 
             interaction.reply({embeds: [new Embed({color: 0xED4245, title: 'Error',
                description: 'You do not have a higher role than the target member.'})], ephemeral: true});
