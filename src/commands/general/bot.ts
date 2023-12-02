@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandSubcommandBuilder } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandSubcommandBuilder } from "discord.js";
 import { Command } from "../../structure/Command";
 import { Embed } from "../../structure/Embed";
 import jokes from "../../json/jokes.json";
@@ -21,9 +21,10 @@ module.exports = {
          .addField({name: 'Trivia Questions', value: trivia.length.toString(), inline: true})
          .addField({name: 'WYR Questions', value: wyr.length.toString(), inline: true})], components: [
             new ActionRowBuilder<ButtonBuilder>().addComponents(
-               new Button({style: ButtonStyle.Link, label: 'Invite', url: 'https://discord.com/oauth2/authorize?client_id=904730769929429072&permissions=8&scope=bot'}),
-               new Button({style: ButtonStyle.Link, label: 'Vote', url: "https://top.gg/bot/904730769929429072/vote"}),
-               new Button({style: ButtonStyle.Link, label: 'Review', url: "https://top.gg/bot/904730769929429072#reviews"}))]});
+               Button.link({label: 'Invite', url: 'https://discord.com/oauth2/authorize?client_id=904730769929429072&permissions=8&scope=bot'}),
+               Button.link({label: 'Vote', url: 'https://top.gg/bot/904730769929429072/vote'}),
+               Button.link({label: 'Review', url: 'https://top.gg/bot/904730769929429072#reviews'})
+            )]});
 
    },
 

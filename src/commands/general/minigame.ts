@@ -18,9 +18,9 @@ module.exports = {
          case 'rps':
 
             const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
-               new Button({id: "0", emoji: '🪨', style: ButtonStyle.Primary}),
-               new Button({id: "1", emoji: '📄', style: ButtonStyle.Primary}),
-               new Button({id: "2", emoji: '✂️', style: ButtonStyle.Primary}));
+               Button.primary({ custom_id: "0", emoji: '🪨' }),
+               Button.primary({ custom_id: "1", emoji: '📄' }),
+               Button.primary({ custom_id: "2", emoji: '✂️' }));
       
             interaction.reply({embeds: [new Embed({color: 0x22b1fc, title: 'RPS', description: 'Click your move.'})],
                components: [row]});
@@ -38,7 +38,7 @@ module.exports = {
                const letter = String.fromCharCode(index.toString().charCodeAt(0) + 17);
 
                formattedQuestion += `${letter}. ${option}\n`;
-               optionsRow.addComponents(new Button({id: `${option}|${questionObject.answer}`, label: letter, style: ButtonStyle.Primary}));
+               optionsRow.addComponents(Button.primary({custom_id: `${option}|${questionObject.answer}`, label: letter}));
 
             });
 
@@ -106,7 +106,7 @@ module.exports = {
 
                const segments = button.customId.split('|');
 
-               editedRow.addComponents(new Button({id: button.customId, label: button.label, disabled: true,
+               editedRow.addComponents(new ButtonBuilder({custom_id: button.customId, label: button.label, disabled: true,
                   style: (segments[0] == segments[1])? ButtonStyle.Success :
                      (interaction.customId == button.customId)? ButtonStyle.Danger : ButtonStyle.Secondary}));
 
