@@ -26,7 +26,7 @@ module.exports = {
 
 async function formatStatuses(guild: Guild) {
 
-   await guild.members.fetch({withPresences: true});
+   await guild.members.fetch({ withPresences: true });
 
    return `${emojis.online} ${usersWithStatus(guild, 'online')}
       ${emojis.dnd} ${usersWithStatus(guild, 'dnd')}
@@ -38,7 +38,7 @@ async function formatStatuses(guild: Guild) {
 function usersWithStatus(guild: Guild, status: PresenceStatus) {
 
    if (status === 'offline')
-      return guild.members.cache.filter(member => !member.presence?.status).size;
+      return guild.members.cache.filter(member => !member.presence || member.presence.status == 'offline').size;
 
    return guild.members.cache.filter(member => member.presence?.status === status).size;
 
