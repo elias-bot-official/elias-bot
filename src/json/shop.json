@@ -1,14 +1,14 @@
 [
-   {
-      "name": "Lock",
-      "price": 1000
-   },
-   {
-      "name": "Lockpick",
-      "price": 500
-   },
-   {
-      "name": "Shovel",
-      "price": 10000
-   }
+	{
+		"name": "Lock",
+		"price": 1000
+	},
+	{
+		"name": "Lockpick",
+		"price": 500
+	},
+	{
+		"name": "Shovel",
+		"price": 10000
+	}
 ]
