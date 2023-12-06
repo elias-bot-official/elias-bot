@@ -1,41 +1,55 @@
-import { SlashCommandBuilder, SlashCommandUserOption } from "discord.js";
-import { Command } from "../../structure/Command";
-import { User } from "../../schemas/User";
-import { Embed } from "../../structure/Embed";
-import emojis from "../../json/emojis.json";
+import { SlashCommandBuilder, SlashCommandUserOption } from 'discord.js';
+import { Command } from '../../structure/Command';
+import { User } from '../../schemas/User';
+import { Embed } from '../../structure/Embed';
+import emojis from '../../json/emojis.json';
 
 module.exports = {
+	data: new SlashCommandBuilder()
+		.setName('inventory')
+		.setDescription('View your inventory')
+		.addUserOption(
+			new SlashCommandUserOption()
+				.setName('user')
+				.setDescription('The user\'s inventory you want to view.')
+		),
 
-   data: new SlashCommandBuilder().setName("inventory").setDescription("View your inventory")
-      .addUserOption(new SlashCommandUserOption().setName("user").setDescription("The user's inventory you want to view.")),
+	async onCommandInteraction(interaction) {
+		const user = interaction.options.getUser('user', false);
+		const dbUser = await User.findById((user ?? interaction.user).id);
 
-   async onCommandInteraction(interaction) {
+		if (!dbUser || Array
+			.from(dbUser.inventory.values())
+			.filter(item => item != 0).length == 0) {
+			interaction.reply({
+				embeds: [
+					new Embed({
+						color: 0x22b1fc,
+						title: `${(user ?? interaction.user).displayName}'s Inventory`,
+						image: { url: 'https://i.imgur.com/yrhOAPx.png' },
+					}),
+				],
+			});
+			return;
+		}
 
-      const user = interaction.options.getUser("user", false);
-      const dbUser = await User.findById((user ?? interaction.user).id);
-       
-      if (!dbUser || Array.from(dbUser.inventory.values()).filter(item => item != 0).length == 0) {
+		let description = '';
+		dbUser.inventory.forEach((value: number, key: string) => {
+			if (dbUser.inventory[key] != 0) {
+				description += `**${
+					emojis[key]
+				} ${key}** - **${value.toLocaleString()}x**\n\n`;
+			}
+		});
 
-         interaction.reply({embeds: [new Embed({color: 0x22b1fc, title: `${(user ?? interaction.user).displayName}'s Inventory`,
-            image: {url: 'https://i.imgur.com/yrhOAPx.png'}})]});
-         return;
-
-      }
-
-      let description = '';
-      dbUser.inventory.forEach((value: number, key: string) => {
-
-         if (dbUser.inventory[key] != 0) {
-
-            description += `**${emojis[key]} ${key}** - **${value.toLocaleString()}x**\n\n`;
-
-         }
-
-      });
-
-      interaction.reply({embeds: [new Embed({color: 0x22b1fc, title: `${(user ?? interaction.user).displayName}'s Inventory`,
-         description: description})]});
-
-   },
-
-} satisfies Command
+		interaction.reply({
+			embeds: [
+				new Embed({
+					color: 0x22b1fc,
+					title: `${(user ?? interaction.user).displayName}'s Inventory`,
+					description: description,
+				}),
+			],
+		});
+	},
+} satisfies Command;
