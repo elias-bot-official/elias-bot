@@ -1,7 +1,7 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonComponent, ButtonInteraction, ButtonStyle, ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandSubcommandBuilder } from 'discord.js';
 import { Command } from '../../structure/Command';
 import outcomes from '../../json/outcomes.json';
-import { Embed } from '../../structure/Embed';
+import { Embed, EmbedColor } from '../../structure/Embed';
 import { Button } from '../../structure/Button';
 import trivia from '../../json/trivia.json';
 
@@ -32,7 +32,7 @@ module.exports = {
 				interaction.reply({
 					embeds: [
 						new Embed({
-							color: 0x22b1fc,
+							color: EmbedColor.primary,
 							title: 'RPS',
 							description: 'Click your move.',
 						}),
@@ -63,7 +63,7 @@ module.exports = {
 				interaction.reply({
 					embeds: [
 						new Embed({
-							color: 0x22b1fc,
+							color: EmbedColor.primary,
 							title: 'Trivia',
 							description: formattedQuestion,
 						}),
@@ -81,7 +81,7 @@ module.exports = {
 					interaction.reply({
 						embeds: [
 							new Embed({
-								color: 0xed4245,
+								color: EmbedColor.danger,
 								title: 'Error',
 								description: 'You are not allowed to use this button!',
 							}),
@@ -99,7 +99,7 @@ module.exports = {
 				interaction.message.edit({
 					embeds: [
 						new Embed({
-							color: 0x22b1fc,
+							color: EmbedColor.primary,
 							title: 'RPS',
 							description: message,
 							footer: {
@@ -118,7 +118,7 @@ module.exports = {
 					interaction.reply({
 						embeds: [
 							new Embed({
-								color: 0xed4245,
+								color: EmbedColor.danger,
 								title: 'Error',
 								description: 'You are not allowed to use this button!',
 							}),
@@ -134,7 +134,7 @@ module.exports = {
 					interaction.reply({
 						embeds: [
 							new Embed({
-								color: 0x6de194,
+								color: EmbedColor.success,
 								title: 'Trivia',
 								description: 'That is the correct answer!',
 							}),
@@ -145,7 +145,7 @@ module.exports = {
 					interaction.reply({
 						embeds: [
 							new Embed({
-								color: 0xed4245,
+								color: EmbedColor.danger,
 								title: 'Trivia',
 								description: `Incorrect. The correct answer is \`\`${segments[1]}\`\`.`,
 							}),

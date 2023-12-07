@@ -1,6 +1,6 @@
 import { ChatInputCommandInteraction, GuildMember, SlashCommandBuilder, SlashCommandUserOption } from 'discord.js';
 import { Command } from '../../structure/Command';
-import { Embed } from '../../structure/Embed';
+import { Embed, EmbedColor } from '../../structure/Embed';
 import emojis from '../../json/emojis.json';
 import { Guild } from '../../schemas/Guild';
 
@@ -24,7 +24,7 @@ module.exports = {
 
 				interaction.reply({
 					embeds: [
-						new Embed({ color: 0x22b1fc, title: 'Whois' })
+						new Embed({ color: EmbedColor.primary, title: 'Whois' })
 							.addFields(
 								{
 									name: 'Display Name',
@@ -79,7 +79,7 @@ module.exports = {
 				interaction.reply({
 					embeds: [
 						new Embed({
-							color: 0xed4245,
+							color: EmbedColor.danger,
 							title: 'Error',
 							description: 'Can not find this user in this server.',
 						}),

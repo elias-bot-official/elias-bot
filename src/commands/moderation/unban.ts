@@ -1,6 +1,6 @@
 import { ChatInputCommandInteraction, PermissionFlagsBits, SlashCommandBuilder, SlashCommandStringOption, SlashCommandUserOption } from 'discord.js';
 import { Command } from '../../structure/Command';
-import { Embed } from '../../structure/Embed';
+import { Embed, EmbedColor } from '../../structure/Embed';
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -26,7 +26,7 @@ module.exports = {
 		try {
 			await interaction.guild.members.unban(user, reason);
 
-			const embed = new Embed({ color: 0x22b1fc, title: 'Unban' }).addField({
+			const embed = new Embed({ color: EmbedColor.primary, title: 'Unban' }).addField({
 				name: 'User',
 				value: user.toString(),
 			});
@@ -39,7 +39,7 @@ module.exports = {
 			interaction.reply({
 				embeds: [
 					new Embed({
-						color: 0xed4245,
+						color: EmbedColor.danger,
 						title: 'Error',
 						description: 'This user is not banned.',
 					}),

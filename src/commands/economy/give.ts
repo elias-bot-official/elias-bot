@@ -1,7 +1,7 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandIntegerOption, SlashCommandUserOption } from 'discord.js';
 import { Command } from '../../structure/Command';
 import { User } from '../../schemas/User';
-import { Embed } from '../../structure/Embed';
+import { Embed, EmbedColor } from '../../structure/Embed';
 import emojis from '../../json/emojis.json';
 
 module.exports = {
@@ -29,7 +29,7 @@ module.exports = {
 			interaction.reply({
 				embeds: [
 					new Embed({
-						color: 0xed4245,
+						color: EmbedColor.danger,
 						title: 'Error',
 						description: 'You can not give money to a bot!',
 					}),
@@ -43,7 +43,7 @@ module.exports = {
 			interaction.reply({
 				embeds: [
 					new Embed({
-						color: 0xed4245,
+						color: EmbedColor.danger,
 						title: 'Error',
 						description: 'You can not give money to yourself!',
 					}),
@@ -59,7 +59,7 @@ module.exports = {
 			interaction.reply({
 				embeds: [
 					new Embed({
-						color: 0xed4245,
+						color: EmbedColor.danger,
 						title: 'Error',
 						description:
 							'You do not have any money. Try using </work:1177662316414783518> to earn some.',
@@ -76,7 +76,7 @@ module.exports = {
 			interaction.reply({
 				embeds: [
 					new Embed({
-						color: 0xed4245,
+						color: EmbedColor.danger,
 						title: 'Error',
 						description: 'You do not have this much money!',
 					}),
@@ -89,7 +89,7 @@ module.exports = {
 		interaction.reply({
 			embeds: [
 				new Embed({
-					color: 0x22b1fc,
+					color: EmbedColor.primary,
 					title: 'Give',
 					description: `You gave ${receiver} ${amount.toLocaleString()} ${emojis.coin}!`,
 				}),

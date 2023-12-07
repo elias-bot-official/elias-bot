@@ -1,13 +1,13 @@
 import { SlashCommandBuilder, SlashCommandUserOption } from 'discord.js';
 import { Command } from '../../structure/Command';
 import { User } from '../../schemas/User';
-import { Embed } from '../../structure/Embed';
+import { Embed, EmbedColor } from '../../structure/Embed';
 import emojis from '../../json/emojis.json';
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('inventory')
-		.setDescription('View your inventory')
+		.setDescription('View a user\'s inventory.')
 		.addUserOption(
 			new SlashCommandUserOption()
 				.setName('user')
@@ -24,7 +24,7 @@ module.exports = {
 			interaction.reply({
 				embeds: [
 					new Embed({
-						color: 0x22b1fc,
+						color: EmbedColor.primary,
 						title: `${(user ?? interaction.user).displayName}'s Inventory`,
 						image: { url: 'https://i.imgur.com/yrhOAPx.png' },
 					}),
@@ -45,7 +45,7 @@ module.exports = {
 		interaction.reply({
 			embeds: [
 				new Embed({
-					color: 0x22b1fc,
+					color: EmbedColor.primary,
 					title: `${(user ?? interaction.user).displayName}'s Inventory`,
 					description: description,
 				}),

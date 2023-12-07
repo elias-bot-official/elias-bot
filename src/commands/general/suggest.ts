@@ -1,6 +1,6 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandStringOption } from 'discord.js';
 import { Command } from '../../structure/Command';
-import { Embed } from '../../structure/Embed';
+import { Embed, EmbedColor } from '../../structure/Embed';
 import emojis from '../../json/emojis.json';
 
 module.exports = {
@@ -18,7 +18,7 @@ module.exports = {
 		const message = await interaction.reply({
 			embeds: [
 				new Embed({
-					color: 0x22b1fc,
+					color: EmbedColor.primary,
 					title: 'Suggestion',
 					author: {
 						name: interaction.user.displayName,

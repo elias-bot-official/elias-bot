@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from 'discord.js';
 import { Command } from '../../structure/Command';
-import { Embed } from '../../structure/Embed';
+import { Embed, EmbedColor } from '../../structure/Embed';
 import emojis from '../../json/emojis.json';
 import { ActionRowBuilder, SelectMenuBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from '@discordjs/builders';
 import outcomes from '../../json/outcomes.json';
@@ -42,7 +42,7 @@ module.exports = {
 			interaction.reply({
 				embeds: [
 					new Embed({
-						color: 0xed4245,
+						color: EmbedColor.danger,
 						title: 'Error',
 						description: `You are on cooldown! Come back <t:${user.cooldowns.search}:R>`,
 					}),
@@ -55,7 +55,7 @@ module.exports = {
 		interaction.reply({
 			embeds: [
 				new Embed({
-					color: 0x22b1fc,
+					color: EmbedColor.primary,
 					title: 'Search',
 					description: 'Select a place to search.',
 				}),
@@ -76,7 +76,7 @@ module.exports = {
 			interaction.reply({
 				embeds: [
 					new Embed({
-						color: 0xed4245,
+						color: EmbedColor.danger,
 						title: 'Error',
 						description: 'You are not allowed to use this select menu!',
 					}),
@@ -100,7 +100,7 @@ module.exports = {
 			interaction.reply({
 				embeds: [
 					new Embed({
-						color: 0x22b1fc,
+						color: EmbedColor.primary,
 						title: 'Search',
 						description: outcomes.search.fail[Math.floor(
 							Math.random() * outcomes.search.fail.length
@@ -120,7 +120,7 @@ module.exports = {
 		interaction.reply({
 			embeds: [
 				new Embed({
-					color: 0x22b1fc,
+					color: EmbedColor.primary,
 					title: 'Search',
 					description: outcome.replaceAll(
 						'${money}',

@@ -1,6 +1,6 @@
 import { ChatInputCommandInteraction, PermissionFlagsBits, SlashCommandBuilder, SlashCommandIntegerOption, SlashCommandStringOption, SlashCommandUserOption } from 'discord.js';
 import { Command } from '../../structure/Command';
-import { Embed } from '../../structure/Embed';
+import { Embed, EmbedColor } from '../../structure/Embed';
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -51,7 +51,7 @@ module.exports = {
 					interaction.reply({
 						embeds: [
 							new Embed({
-								color: 0xed4245,
+								color: EmbedColor.danger,
 								title: 'Error',
 								description: 'I can not mute myself!',
 							}),
@@ -65,7 +65,7 @@ module.exports = {
 					interaction.reply({
 						embeds: [
 							new Embed({
-								color: 0xed4245,
+								color: EmbedColor.danger,
 								title: 'Error',
 								description:
 									'I can not mute a user with a higher or equal role.',
@@ -78,7 +78,7 @@ module.exports = {
 
 				member.timeout(time * 60000, reason);
 
-				const embed = new Embed({ color: 0x22b1fc, title: 'Mute' })
+				const embed = new Embed({ color: EmbedColor.primary, title: 'Mute' })
 					.addField({ name: 'User', value: user.toString() })
 					.addField({ name: 'Time', value: mapChoice(time) });
 
@@ -90,7 +90,7 @@ module.exports = {
 				interaction.reply({
 					embeds: [
 						new Embed({
-							color: 0xed4245,
+							color: EmbedColor.danger,
 							title: 'Error',
 							description: 'Can not find this user in this server.',
 						}),

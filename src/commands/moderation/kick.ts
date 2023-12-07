@@ -1,6 +1,6 @@
 import { ChatInputCommandInteraction, PermissionFlagsBits, SlashCommandBuilder, SlashCommandStringOption, SlashCommandUserOption } from 'discord.js';
 import { Command } from '../../structure/Command';
-import { Embed } from '../../structure/Embed';
+import { Embed, EmbedColor } from '../../structure/Embed';
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -30,7 +30,7 @@ module.exports = {
 					interaction.reply({
 						embeds: [
 							new Embed({
-								color: 0xed4245,
+								color: EmbedColor.danger,
 								title: 'Error',
 								description: 'I can not kick myself!',
 							}),
@@ -44,7 +44,7 @@ module.exports = {
 					interaction.reply({
 						embeds: [
 							new Embed({
-								color: 0xed4245,
+								color: EmbedColor.danger,
 								title: 'Error',
 								description:
 									'I can not kick a user with a higher or equal role.',
@@ -57,7 +57,7 @@ module.exports = {
 
 				member.kick(reason);
 
-				const embed = new Embed({ color: 0x22b1fc, title: 'Kick' }).addField({
+				const embed = new Embed({ color: EmbedColor.primary, title: 'Kick' }).addField({
 					name: 'User',
 					value: user.toString(),
 				});
@@ -70,7 +70,7 @@ module.exports = {
 				interaction.reply({
 					embeds: [
 						new Embed({
-							color: 0xed4245,
+							color: EmbedColor.danger,
 							title: 'Error',
 							description: 'Can not find this user in this server.',
 						}),

@@ -1,6 +1,6 @@
 import { ActionRowBuilder, ButtonBuilder, ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandSubcommandBuilder } from 'discord.js';
 import { Command } from '../../structure/Command';
-import { Embed } from '../../structure/Embed';
+import { Embed, EmbedColor } from '../../structure/Embed';
 import jokes from '../../json/jokes.json';
 import wyr from '../../json/wyr.json';
 import trivia from '../../json/trivia.json';
@@ -19,7 +19,7 @@ module.exports = {
 	async onCommandInteraction(interaction: ChatInputCommandInteraction) {
 		interaction.reply({
 			embeds: [
-				new Embed({ color: 0x22b1fc, title: 'Bot Info' }).addFields(
+				new Embed({ color: EmbedColor.primary, title: 'Bot Info' }).addFields(
 					{
 						name: 'Servers',
 						value: interaction.client.guilds.cache.size.toLocaleString(),

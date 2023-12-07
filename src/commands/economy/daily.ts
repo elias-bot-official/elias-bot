@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from 'discord.js';
 import { Command } from '../../structure/Command';
 import { User } from '../../schemas/User';
-import { Embed } from '../../structure/Embed';
+import { Embed, EmbedColor } from '../../structure/Embed';
 import emojis from '../../json/emojis.json';
 
 module.exports = {
@@ -18,7 +18,7 @@ module.exports = {
 			interaction.reply({
 				embeds: [
 					new Embed({
-						color: 0xed4245,
+						color: EmbedColor.danger,
 						title: 'Error',
 						description: `You have already claimed today's rewards! Come back <t:${user.cooldowns.daily}:R>`,
 					}),
@@ -34,7 +34,7 @@ module.exports = {
 		interaction.reply({
 			embeds: [
 				new Embed({
-					color: 0x22b1fc,
+					color: EmbedColor.primary,
 					title: 'Daily',
 					description: `You got 10,000 ${emojis.coin}`,
 				}),

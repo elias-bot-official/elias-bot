@@ -1,6 +1,6 @@
 import { ChatInputCommandInteraction, Guild, PresenceStatus, SlashCommandBuilder, SlashCommandSubcommandBuilder } from 'discord.js';
 import { Command } from '../../structure/Command';
-import { Embed } from '../../structure/Embed';
+import { Embed, EmbedColor } from '../../structure/Embed';
 import emojis from '../../json/emojis.json';
 
 module.exports = {
@@ -16,7 +16,7 @@ module.exports = {
 	async onCommandInteraction(interaction: ChatInputCommandInteraction) {
 		interaction.reply({
 			embeds: [
-				new Embed({ color: 0x22b1fc, title: 'Server Info' })
+				new Embed({ color: EmbedColor.primary, title: 'Server Info' })
 					.addFields(
 						{ name: 'Name', value: interaction.guild.name, inline: true },
 						{

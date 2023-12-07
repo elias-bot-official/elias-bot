@@ -1,7 +1,7 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandIntegerOption, SlashCommandStringOption, SlashCommandSubcommandBuilder } from 'discord.js';
 import { Command } from '../../structure/Command';
 import shop from '../../json/shop.json';
-import { Embed } from '../../structure/Embed';
+import { Embed, EmbedColor } from '../../structure/Embed';
 import { User } from '../../schemas/User';
 import emojis from '../../json/emojis.json';
 
@@ -48,7 +48,7 @@ module.exports = {
 				interaction.reply({
 					embeds: [
 						new Embed({
-							color: 0x22b1fc,
+							color: EmbedColor.primary,
 							title: 'Shop',
 							description: description,
 						}),
@@ -66,7 +66,7 @@ module.exports = {
 					interaction.reply({
 						embeds: [
 							new Embed({
-								color: 0xed4245,
+								color: EmbedColor.danger,
 								title: 'Error',
 								description: 'You do not have enough money!',
 							}),
@@ -79,7 +79,7 @@ module.exports = {
 				interaction.reply({
 					embeds: [
 						new Embed({
-							color: 0x22b1fc,
+							color: EmbedColor.primary,
 							title: 'Buy',
 							description: `You bought **${amount}x ${emojis[itemName]} ${itemName}**!`,
 						}),

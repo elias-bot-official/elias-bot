@@ -1,7 +1,7 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandIntegerOption, SlashCommandStringOption } from 'discord.js';
 import { Command } from '../../structure/Command';
 import { User } from '../../schemas/User';
-import { Embed } from '../../structure/Embed';
+import { Embed, EmbedColor } from '../../structure/Embed';
 import emojis from '../../json/emojis.json';
 
 module.exports = {
@@ -36,7 +36,7 @@ module.exports = {
 			interaction.reply({
 				embeds: [
 					new Embed({
-						color: 0xed4245,
+						color: EmbedColor.danger,
 						title: 'Error',
 						description:
 							'You can not gamble more money than you own. Try using </work:1177662316414783518> to earn some more.',
@@ -53,7 +53,7 @@ module.exports = {
 			interaction.reply({
 				embeds: [
 					new Embed({
-						color: 0x22b1fc,
+						color: EmbedColor.primary,
 						title: 'Gamble',
 						description: `You won ${amount.toLocaleString()} ${emojis.coin}!`,
 					}).setThumbnail(
@@ -67,7 +67,7 @@ module.exports = {
 			interaction.reply({
 				embeds: [
 					new Embed({
-						color: 0x22b1fc,
+						color: EmbedColor.primary,
 						title: 'Gamble',
 						description: `You lost ${amount.toLocaleString()} ${emojis.coin}!`,
 					}).setThumbnail(

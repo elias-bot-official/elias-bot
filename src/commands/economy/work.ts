@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from 'discord.js';
 import { Command } from '../../structure/Command';
 import { User } from '../../schemas/User';
-import { Embed } from '../../structure/Embed';
+import { Embed, EmbedColor } from '../../structure/Embed';
 import emojis from '../../json/emojis.json';
 
 module.exports = {
@@ -18,7 +18,7 @@ module.exports = {
 			interaction.reply({
 				embeds: [
 					new Embed({
-						color: 0xed4245,
+						color: EmbedColor.danger,
 						title: 'Error',
 						description: `You are on cooldown! Come back <t:${user.cooldowns.work}:R>`,
 					}),
@@ -33,7 +33,7 @@ module.exports = {
 		interaction.reply({
 			embeds: [
 				new Embed({
-					color: 0x22b1fc,
+					color: EmbedColor.primary,
 					title: 'Work',
 					description: `You earned ${money.toLocaleString()} ${emojis.coin} for your shift.`,
 				}),

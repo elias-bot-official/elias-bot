@@ -1,6 +1,6 @@
 import { Interaction, RepliableInteraction } from 'discord.js';
 import { DiscordEvent } from '../structure/DiscordEvent';
-import { Embed } from '../structure/Embed';
+import { Embed, EmbedColor } from '../structure/Embed';
 
 module.exports = {
 	execute(interaction: Interaction) {
@@ -46,7 +46,7 @@ function reportError(error: Error, interaction: RepliableInteraction) {
 	interaction.reply({
 		embeds: [
 			new Embed({
-				color: 0xed4245,
+				color: EmbedColor.danger,
 				title: 'Error',
 				description: `An unknown error has occured. Please report this to the devs.\`\`\`${error.message}\`\`\``,
 			}),

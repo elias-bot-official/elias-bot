@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from 'discord.js';
-import { Embed } from '../../structure/Embed';
+import { Embed, EmbedColor } from '../../structure/Embed';
 import { Command } from '../../structure/Command';
 
 module.exports = {
@@ -10,7 +10,7 @@ module.exports = {
 	async onCommandInteraction(interaction) {
 		interaction.reply({
 			embeds: [
-				new Embed({ color: 0x22b1fc, title: 'Ping' }).addFields(
+				new Embed({ color: EmbedColor.primary, title: 'Ping' }).addFields(
 					{
 						name: 'Bot Ping',
 						value: `${interaction.client.ws.ping}ms`,

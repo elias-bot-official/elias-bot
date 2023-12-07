@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from 'discord.js';
 import { Command } from '../../structure/Command';
-import { Embed } from '../../structure/Embed';
+import { Embed, EmbedColor } from '../../structure/Embed';
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -13,7 +13,7 @@ module.exports = {
 		interaction.reply({
 			embeds: [
 				new Embed({
-					color: 0x22b1fc,
+					color: EmbedColor.primary,
 					title: 'Coin Flip',
 					description: `The coin is ${side == 0 ? 'heads' : 'tails'}!`,
 				}).setThumbnail(

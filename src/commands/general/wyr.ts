@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from 'discord.js';
 import { Command } from '../../structure/Command';
-import { Embed } from '../../structure/Embed';
+import { Embed, EmbedColor } from '../../structure/Embed';
 import wyr from '../../json/wyr.json';
 
 module.exports = {
@@ -12,7 +12,7 @@ module.exports = {
 		interaction.reply({
 			embeds: [
 				new Embed({
-					color: 0x22b1fc,
+					color: EmbedColor.primary,
 					title: 'Would You Rather',
 					description: wyr[Math.floor(Math.random() * wyr.length)],
 				}),

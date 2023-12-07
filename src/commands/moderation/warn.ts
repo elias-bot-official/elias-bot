@@ -1,7 +1,7 @@
 import { ChatInputCommandInteraction, GuildMember, PermissionFlagsBits, SlashCommandBuilder, SlashCommandStringOption, SlashCommandUserOption } from 'discord.js';
 import { Command } from '../../structure/Command';
 import { Guild } from '../../schemas/Guild';
-import { Embed } from '../../structure/Embed';
+import { Embed, EmbedColor } from '../../structure/Embed';
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -31,7 +31,7 @@ module.exports = {
 					interaction.reply({
 						embeds: [
 							new Embed({
-								color: 0xed4245,
+								color: EmbedColor.danger,
 								title: 'Error',
 								description: 'I can not warn myself!',
 							}),
@@ -46,7 +46,7 @@ module.exports = {
 					interaction.reply({
 						embeds: [
 							new Embed({
-								color: 0xed4245,
+								color: EmbedColor.danger,
 								title: 'Error',
 								description:
 									'You do not have a higher role than the target member.',
@@ -60,7 +60,7 @@ module.exports = {
 				const guild = await Guild.findById(interaction.guild.id) ??
 					await Guild.create({ _id: interaction.guild.id });
 
-				const embed = new Embed({ color: 0x22b1fc, title: 'Warn' }).addField({
+				const embed = new Embed({ color: EmbedColor.primary, title: 'Warn' }).addField({
 					name: 'User',
 					value: user.toString(),
 				});
@@ -76,7 +76,7 @@ module.exports = {
 				interaction.reply({
 					embeds: [
 						new Embed({
-							color: 0xed4245,
+							color: EmbedColor.danger,
 							title: 'Error',
 							description: 'Can not find this user in this server.',
 						}),
