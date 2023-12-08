@@ -26,7 +26,7 @@ module.exports = {
 					new Embed({
 						color: EmbedColor.primary,
 						title: `${(user ?? interaction.user).displayName}'s Inventory`,
-						image: { url: 'https://i.imgur.com/yrhOAPx.png' },
+						description: 'Nothing to see here.'
 					}),
 				],
 			});

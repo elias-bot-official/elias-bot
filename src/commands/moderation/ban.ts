@@ -1,10 +1,4 @@
-import {
-	ChatInputCommandInteraction,
-	PermissionFlagsBits,
-	SlashCommandBuilder,
-	SlashCommandStringOption,
-	SlashCommandUserOption,
-} from 'discord.js';
+import { ChatInputCommandInteraction, PermissionFlagsBits, SlashCommandBuilder, SlashCommandStringOption, SlashCommandUserOption } from 'discord.js';
 import { Command } from '../../structure/Command';
 import { Embed, EmbedColor } from '../../structure/Embed';
 

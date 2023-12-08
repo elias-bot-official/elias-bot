@@ -46,8 +46,7 @@ module.exports = {
 							new Embed({
 								color: EmbedColor.danger,
 								title: 'Error',
-								description:
-									'I can not kick a user with a higher or equal role.',
+								description: 'I can not kick a user with a higher or equal role.',
 							}),
 						],
 						ephemeral: true,
