@@ -19,6 +19,7 @@
 		"no-case-declarations": "off",
 		"brace-style": ["warn", "stroustrup"],
 		"object-curly-spacing": ["warn", "always"],
-		"no-var-requires": "off"
+		"no-var-requires": "off",
+		"arrow-parens": ["warn", "as-needed"]
 	}
 }
