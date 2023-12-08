@@ -21,8 +21,8 @@ module.exports = {
 		channel.permissionOverwrites.edit(interaction.guild.roles.everyone.id, {
 			SendMessages: null,
 			SendMessagesInThreads: null,
-			CreatePublicThreads: false,
-			CreatePrivateThreads: false
+			CreatePublicThreads: null,
+			CreatePrivateThreads: null
 		});
 		
 		interaction.reply({
