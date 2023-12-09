@@ -5,6 +5,11 @@ export interface Warn {
 	reason?: string;
 }
 
+export interface Level {
+	level: number,
+	xp: number
+}
+
 const GuildSchema = new mongoose.Schema(
 	{
 		_id: {
@@ -14,9 +19,27 @@ const GuildSchema = new mongoose.Schema(
 		warns: {
 			type: Array<Warn>,
 			default: [],
+		},
+		xp: {
+			type: Map<string, number>,
+			default: new Map()
+		},
+		plugins: {
+			type: Map<string, boolean>,
+			default: new Map()
 		}
-	},
-	{ minimize: false }
+	}
 );
 
 export const Guild = mongoose.model('Guild', GuildSchema);
+
+export function getLevel(xp: number) {
+	for (let i = 0;; i++) {
+		if (xp < getXP(i + 1)) return i;
+	}
+}
+
+export function getXP(level: number) {
+	if (level == 0) return 0;
+	return level * 100 + getXP(level - 1);
+}
