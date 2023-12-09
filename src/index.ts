@@ -20,7 +20,9 @@ const client = new Client({
 		GatewayIntentBits.GuildMembers |
 		GatewayIntentBits.GuildPresences |
 		GatewayIntentBits.Guilds |
-		GatewayIntentBits.GuildMessageReactions,
+		GatewayIntentBits.GuildMessageReactions |
+		GatewayIntentBits.MessageContent |
+		GatewayIntentBits.GuildMessages
 }); // creates discord client
 client.rest = new REST(); // creates a rest client
 client.commands = []; // initializes the client's commands
