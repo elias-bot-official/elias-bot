@@ -15,6 +15,7 @@ declare module 'discord.js' {
 	}
 }
 
+// creates the discord client
 const client = new Client({
 	intents:
 		GatewayIntentBits.GuildMembers |
@@ -23,7 +24,7 @@ const client = new Client({
 		GatewayIntentBits.GuildMessageReactions |
 		GatewayIntentBits.MessageContent |
 		GatewayIntentBits.GuildMessages
-}); // creates discord client
+});
 client.rest = new REST(); // creates a rest client
 client.commands = []; // initializes the client's commands
 
@@ -50,9 +51,11 @@ process.on('uncaughtException', exception => {
 	console.log(exception);
 });
 
+// starts the bot and rest client
 client.login(process.env.token);
 client.rest.setToken(process.env.token);
 
+// connects to the database
 mongoose
 	.connect(process.env.db)
 	.then(() => console.log('Connected to MongoDB!'));
