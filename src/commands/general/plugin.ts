@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandStringOption, SlashCommandSubcommandBuilder } from 'discord.js';
+import { ChatInputCommandInteraction, PermissionFlagsBits, SlashCommandBuilder, SlashCommandStringOption, SlashCommandSubcommandBuilder } from 'discord.js';
 import { Command } from '../../structure/Command';
 import { Guild } from '../../schemas/Guild';
 import { Embed, EmbedColor } from '../../structure/Embed';
@@ -7,6 +7,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('plugin')
 		.setDescription('Commands related to managing plugins.')
+		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 		.addSubcommand(
 			new SlashCommandSubcommandBuilder()
 				.setName('enable')
@@ -41,25 +42,29 @@ module.exports = {
 			case 'enable':
 				guild.plugins.set(pluginName, true);
 				guild.save();
-				interaction.reply({ embeds: [
-					new Embed({
-						color: EmbedColor.primary,
-						title: 'Plugin',
-						description: `The \`\`${pluginName}\`\` plugin has been enabled!`
-					})
-				] });
+				interaction.reply({
+					embeds: [
+						new Embed({
+							color: EmbedColor.primary,
+							title: 'Plugin',
+							description: `The \`\`${pluginName}\`\` plugin has been enabled!`
+						})
+					]
+				});
 				return;
 
 			case 'disable':
 				guild.plugins.set(pluginName, false);
 				guild.save();
-				interaction.reply({ embeds: [
-					new Embed({
-						color: EmbedColor.primary,
-						title: 'Plugin',
-						description: `The \`\`${pluginName}\`\` plugin has been disabled!`
-					})
-				] });
+				interaction.reply({
+					embeds: [
+						new Embed({
+							color: EmbedColor.primary,
+							title: 'Plugin',
+							description: `The \`\`${pluginName}\`\` plugin has been disabled!`
+						})
+					]
+				});
 		}
 	},
 } satisfies Command;
