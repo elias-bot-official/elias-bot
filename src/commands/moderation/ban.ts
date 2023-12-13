@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, PermissionFlagsBits, SlashCommandBuilder, SlashCommandStringOption, SlashCommandUserOption } from 'discord.js';
+import { ChatInputCommandInteraction, PermissionFlagsBits, SlashCommandBuilder, SlashCommandIntegerOption, SlashCommandStringOption, SlashCommandUserOption } from 'discord.js';
 import { Command } from '../../structure/Command';
 import { Embed, EmbedColor } from '../../structure/Embed';
 
@@ -17,11 +17,19 @@ module.exports = {
 			new SlashCommandStringOption()
 				.setName('reason')
 				.setDescription('The reason for the ban.')
+		)
+		.addIntegerOption(
+			new SlashCommandIntegerOption()
+				.setName('hours')
+				.setDescription('How many hours of messages by the user to delete.')
+				.setMinValue(0)
+				.setMaxValue(1680)
 		),
 
 	async onCommandInteraction(interaction: ChatInputCommandInteraction) {
 		const user = interaction.options.getUser('user');
 		const reason = interaction.options.getString('reason', false);
+		const hours = interaction.options.getInteger('hours', false);
 
 		interaction.guild.members
 			.fetch(user.id)
@@ -55,14 +63,13 @@ module.exports = {
 					return;
 				}
 
-				member.ban({ reason: reason });
+				member.ban({ reason: reason, deleteMessageSeconds: hours * 3600 });
 
-				const embed = new Embed({ color: EmbedColor.primary, title: 'Ban' }).addField({
-					name: 'User',
-					value: user.toString(),
-				});
+				const embed = new Embed({ color: EmbedColor.primary, title: 'Ban' })
+					.addField({ name: 'User', value: user.toString() });
 
 				if (reason) embed.addField({ name: 'Reason', value: reason });
+				if (hours) embed.addField({ name: 'Hours', value: hours.toLocaleString() });
 
 				interaction.reply({ embeds: [embed] });
 			})
