@@ -122,27 +122,29 @@ async function drawCard(member: GuildMember, xp: number, rank: number) {
 	ctx.beginPath();
 	ctx.fillStyle = '#ffff';
 	ctx.textBaseline = 'bottom';
-	ctx.font = '30px roboto';
+	ctx.font = '25px Geist';
 	ctx.fillText(member.displayName, 135, 85);
 	ctx.closePath();
 
 	// xp
 	ctx.beginPath();
 	ctx.textAlign = 'end';
-	ctx.font = '16px roboto';
-	ctx.fillText(`${formatter.format(xp - getXP(level))} / ${formatter.format(neededXP - getXP(level))} XP`, 520, 83);
+	ctx.font = '15px Geist';
+	ctx.fillText(`${formatter.format(xp - getXP(level))} / ${formatter.format(neededXP - getXP(level))}`, 520, 85);
 	ctx.closePath();
 
 	// rank
 	ctx.beginPath();
-	ctx.font = '22px roboto';
+	ctx.fillStyle = '#f9c93f';
+	ctx.font = '22px Geist';
 	ctx.textBaseline = 'top';
-	ctx.fillText(`RANK ${rank}`, 395, 20);
+	ctx.fillText(`RANK ${rank}`, 395, 25);
 	ctx.closePath();
 
 	// level
 	ctx.beginPath();
-	ctx.fillText(`LEVEL ${level}`, 520, 20);
+	ctx.fillStyle = '#04a0fb';
+	ctx.fillText(`LEVEL ${level}`, 520, 25);
 	ctx.closePath();
 
 	return canvas.toBuffer();
