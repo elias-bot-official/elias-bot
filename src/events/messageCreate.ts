@@ -6,7 +6,7 @@ module.exports = {
 	async execute(message: Message) {
 		const guild = await Guild.findById(message.guild.id);
 
-		if (!guild || !guild.plugins.get('leveling') || message.author.bot) return;
+		if (!guild || !guild.plugins.get('Leveling') || message.author.bot) return;
 
 		const xp = guild.xp.get(message.author.id) as number ?? 0;
 		const bonus = Math.round(Math.random() * 20 + 20);
