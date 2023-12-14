@@ -3,6 +3,7 @@ import { Command } from '../../structure/Command';
 import { Guild, getLevel, getXP } from '../../schemas/Guild';
 import { Embed, EmbedColor } from '../../structure/Embed';
 import { createCanvas, loadImage } from 'canvas';
+import { User } from '../../schemas/User';
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -18,7 +19,7 @@ module.exports = {
 		const guild = await Guild.findById(interaction.guild.id);
 		const user = interaction.options.getUser('user') ?? interaction.user;
 
-		if (!guild || !guild.plugins.get('leveling')) {
+		if (!guild || !guild.plugins.get('Leveling')) {
 			interaction.reply({
 				embeds: [
 					new Embed({
@@ -54,7 +55,14 @@ module.exports = {
 		interaction.guild.members
 			.fetch(user.id)
 			.then(async member => {
-				const card = await drawCard(member, guild.xp.get(user.id) as number, rank);
+				const dbUser = await User.findById(member.id);
+				const card = await drawCard(
+					member,
+					dbUser.settings.get('background') as string,
+					dbUser.settings.get('accent') as string,
+					guild.xp.get(user.id) as number,
+					rank
+				);
 
 				interaction.reply({
 					files: [
@@ -77,7 +85,7 @@ module.exports = {
 	},
 } satisfies Command;
 
-async function drawCard(member: GuildMember, xp: number, rank: number) {
+async function drawCard(member: GuildMember, backgroundUrl: string, accent: string, xp: number, rank: number) {
 	const level = getLevel(xp);
 	const neededXP = getXP(level + 1);
 	const formatter = Intl.NumberFormat('en', { notation: 'compact' });
@@ -87,10 +95,16 @@ async function drawCard(member: GuildMember, xp: number, rank: number) {
 	const avatar = await loadImage(member.user.avatarURL({ extension: 'png' }));
 
 	// background
-	ctx.beginPath();
-	ctx.fillStyle = '#2b2d30';
-	ctx.fillRect(0, 0, 550, 150);
-	ctx.closePath();
+	if (backgroundUrl) {
+		ctx.drawImage(await loadImage(backgroundUrl), 0, 0, 550, 150);
+	}
+
+	else {
+		ctx.beginPath();
+		ctx.fillStyle = '#2b2d30';
+		ctx.fillRect(0, 0, 550, 150);
+		ctx.closePath();
+	}
 
 	// avatar
 	ctx.beginPath();
@@ -112,7 +126,7 @@ async function drawCard(member: GuildMember, xp: number, rank: number) {
 	
 	// colored part of progress bar
 	ctx.beginPath();
-	ctx.fillStyle = '#04a0fb';
+	ctx.fillStyle = accent ?? '#04a0fb';
 	ctx.roundRect(0, 90, (xp - getXP(level)) / (neededXP - getXP(level)) * 385 + 135, 20, 10);
 	ctx.fill();
 	ctx.closePath();
@@ -135,7 +149,7 @@ async function drawCard(member: GuildMember, xp: number, rank: number) {
 
 	// rank
 	ctx.beginPath();
-	ctx.fillStyle = '#f9c93f';
+	ctx.fillStyle = '#f5d131';
 	ctx.font = '22px Geist';
 	ctx.textBaseline = 'top';
 	ctx.fillText(`RANK ${rank}`, 395, 25);
@@ -143,7 +157,7 @@ async function drawCard(member: GuildMember, xp: number, rank: number) {
 
 	// level
 	ctx.beginPath();
-	ctx.fillStyle = '#04a0fb';
+	ctx.fillStyle = accent ?? '#04a0fb';
 	ctx.fillText(`LEVEL ${level}`, 520, 25);
 	ctx.closePath();
 
