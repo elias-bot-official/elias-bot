@@ -28,6 +28,10 @@ const UserSchema = new mongoose.Schema(
 			type: Map<string, number>,
 			default: new Map(),
 		},
+		settings: {
+			type: Map<string, unknown>,
+			default: new Map()
+		}
 	},
 	{ minimize: false }
 );
