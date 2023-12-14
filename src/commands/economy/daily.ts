@@ -14,22 +14,19 @@ module.exports = {
 			await User.create({ _id: interaction.user.id });
 		const now = Math.floor(Date.now() / 1000);
 
-		if (user.cooldowns.daily > now) {
+		if (user.cooldowns.get('daily') > now) {
 			interaction.reply({
 				embeds: [
 					new Embed({
 						color: EmbedColor.danger,
 						title: 'Error',
-						description: `You have already claimed today's rewards! Come back <t:${user.cooldowns.daily}:R>`,
+						description: `You have already claimed today's rewards! Come back <t:${user.cooldowns.get('daily')}:R>`,
 					}),
 				],
 				ephemeral: true,
 			});
 			return;
 		}
-
-		user.balance += 10000;
-		user.cooldowns.daily = Math.ceil(now / 86400) * 86400;
 
 		interaction.reply({
 			embeds: [
@@ -40,6 +37,8 @@ module.exports = {
 				}),
 			],
 		});
+		user.balance += 10000;
+		user.cooldowns.set('daily', Math.ceil(now / 86400) * 86400);
 		user.save();
 	},
 } satisfies Command;

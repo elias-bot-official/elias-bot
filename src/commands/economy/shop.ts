@@ -88,7 +88,7 @@ module.exports = {
 
 				user.inventory.set(
 					itemName,
-					((user.inventory.get(itemName) as number) ?? 0) + amount
+					(user.inventory.get(itemName) ?? 0) + amount
 				);
 				user.balance -= item.price * amount;
 				user.save();

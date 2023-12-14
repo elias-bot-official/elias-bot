@@ -14,13 +14,13 @@ module.exports = {
 			await User.create({ _id: interaction.user.id });
 		const now = Math.floor(Date.now() / 1000);
 
-		if (user.cooldowns.work > now) {
+		if (user.cooldowns.get('work') > now) {
 			interaction.reply({
 				embeds: [
 					new Embed({
 						color: EmbedColor.danger,
 						title: 'Error',
-						description: `You are on cooldown! Come back <t:${user.cooldowns.work}:R>`,
+						description: `You are on cooldown! Come back <t:${user.cooldowns.get('work')}:R>`,
 					}),
 				],
 				ephemeral: true,
@@ -41,7 +41,7 @@ module.exports = {
 		});
 
 		user.balance += money;
-		user.cooldowns.work = now + 1800;
+		user.cooldowns.set('work', now + 1800);
 		user.save();
 	},
 } satisfies Command;

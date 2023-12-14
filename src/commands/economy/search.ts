@@ -38,13 +38,13 @@ module.exports = {
 			await User.create({ _id: interaction.user.id });
 		const now = Math.floor(Date.now() / 1000);
 
-		if (user.cooldowns.search > now) {
+		if (user.cooldowns.get('search') > now) {
 			interaction.reply({
 				embeds: [
 					new Embed({
 						color: EmbedColor.danger,
 						title: 'Error',
-						description: `You are on cooldown! Come back <t:${user.cooldowns.search}:R>`,
+						description: `You are on cooldown! Come back <t:${user.cooldowns.get('search')}:R>`,
 					}),
 				],
 				ephemeral: true,
@@ -67,7 +67,7 @@ module.exports = {
 			],
 		});
 
-		user.cooldowns.search = Math.floor(Date.now() / 1000) + 30;
+		user.cooldowns.set('search', Math.floor(Date.now() / 1000) + 30);
 		user.save();
 	},
 

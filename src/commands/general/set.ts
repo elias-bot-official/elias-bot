@@ -51,7 +51,7 @@ module.exports = {
 				interaction.reply({
 					embeds: [
 						new Embed({
-							color: EmbedColor.primary,
+							color: EmbedColor.success,
 							description: 'Successfully updated your accent color!'
 						})
 					]
@@ -81,8 +81,8 @@ module.exports = {
 				interaction.reply({
 					embeds: [
 						new Embed({
-							color: EmbedColor.primary,
-							description: 'Background successfully updated!'
+							color: EmbedColor.success,
+							description: 'Successfully updated your background!'
 						})
 					]
 				});

@@ -15,13 +15,13 @@ module.exports = {
 			await User.create({ _id: interaction.user.id });
 		const now = Math.floor(Date.now() / 1000);
 
-		if (user.cooldowns.beg > now) {
+		if (user.cooldowns.get('beg') > now) {
 			interaction.reply({
 				embeds: [
 					new Embed({
 						color: EmbedColor.danger,
 						title: 'Error',
-						description: `You are on cooldown! Come back <t:${user.cooldowns.beg}:R>`,
+						description: `You are on cooldown! Come back <t:${user.cooldowns.get('beg')}:R>`,
 					}),
 				],
 				ephemeral: true,
@@ -62,7 +62,7 @@ module.exports = {
 			});
 		}
 
-		user.cooldowns.beg = now + 30;
+		user.cooldowns.set('beg', now + 30);
 		user.save();
 	},
 } satisfies Command;
