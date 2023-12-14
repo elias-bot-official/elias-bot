@@ -5,11 +5,6 @@ export interface Warn {
 	reason?: string;
 }
 
-export interface Level {
-	level: number,
-	xp: number
-}
-
 const GuildSchema = new mongoose.Schema(
 	{
 		_id: {
@@ -21,11 +16,13 @@ const GuildSchema = new mongoose.Schema(
 			default: [],
 		},
 		xp: {
-			type: Map<string, number>,
+			type: Map,
+			of: Number,
 			default: new Map()
 		},
 		plugins: {
-			type: Map<string, boolean>,
+			type: Map,
+			of: Boolean,
 			default: new Map()
 		}
 	}

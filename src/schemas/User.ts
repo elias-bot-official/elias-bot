@@ -11,29 +11,21 @@ const UserSchema = new mongoose.Schema(
 			default: 0,
 		},
 		cooldowns: {
-			daily: {
-				type: Number,
-			},
-			work: {
-				type: Number,
-			},
-			beg: {
-				type: Number,
-			},
-			search: {
-				type: Number,
-			},
+			type: Map,
+			of: Number,
+			default: new Map()
 		},
 		inventory: {
-			type: Map<string, number>,
+			type: Map,
+			of: Number,
 			default: new Map(),
 		},
 		settings: {
-			type: Map<string, unknown>,
+			type: Map,
+			of: Object,
 			default: new Map()
 		}
-	},
-	{ minimize: false }
+	}
 );
 
 export const User = mongoose.model('User', UserSchema);
