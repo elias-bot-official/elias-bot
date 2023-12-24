@@ -51,7 +51,7 @@ module.exports = {
 			.fetch(user.id)
 			.then(async member => {
 				const dbUser = await User.findById(member.id);
-				const backgroundUrl = dbUser.settings.get('background');
+				const backgroundUrl = dbUser? dbUser.settings.get('background') : null;
 				const xp = guild.xp.get(member.id);
 				const level = getLevel(xp);
 
@@ -67,7 +67,7 @@ module.exports = {
 								background: backgroundUrl? await loadImage(backgroundUrl) : null,
 								avatar: await loadImage(user.avatarURL({ extension: 'png' })),
 								name: member.displayName,
-								accent: dbUser.settings.get('accent'),
+								accent: dbUser? dbUser.settings.get('accent') : null,
 								xp: xp - getXP(level),
 								neededXP: getXP(level + 1) - getXP(level),
 								rank: rank,
