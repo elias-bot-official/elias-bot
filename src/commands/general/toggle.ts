@@ -12,7 +12,10 @@ module.exports = {
 			new SlashCommandStringOption()
 				.setName('plugin')
 				.setDescription('The plugin you want to toggle.')
-				.addChoices({ name: 'Leveling', value: 'Leveling' })
+				.addChoices(
+					{ name: 'Leveling', value: 'Leveling' },
+					{ name: 'Saluter', value: 'Saluter' }
+				)
 				.setRequired(true)
 		),
 

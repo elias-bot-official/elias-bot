@@ -24,8 +24,13 @@ const GuildSchema = new mongoose.Schema(
 			type: Map,
 			of: Boolean,
 			default: new Map()
+		},
+		settings: {
+			type: Map,
+			of: Object,
+			default: new Map()
 		}
-	}
+	},
 );
 
 export const Guild = mongoose.model('Guild', GuildSchema);
