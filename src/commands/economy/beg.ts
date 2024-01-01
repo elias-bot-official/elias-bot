@@ -20,7 +20,6 @@ module.exports = {
 				embeds: [
 					new Embed({
 						color: EmbedColor.danger,
-						title: 'Error',
 						description: `You are on cooldown! Come back <t:${user.cooldowns.get('beg')}:R>`,
 					}),
 				],
@@ -29,9 +28,7 @@ module.exports = {
 			return;
 		}
 
-		const random = Math.round(Math.random());
-
-		if (random == 0) {
+		if (Math.round(Math.random()) == 0) {
 			const money = Math.round(Math.random() * 200 + 300);
 
 			interaction.reply({
@@ -41,7 +38,7 @@ module.exports = {
 						title: 'Beg',
 						description: outcomes.beg.success[
 							Math.floor(Math.random() * outcomes.beg.success.length)
-						].replace('${money}', `${money} ${emojis.coin}`),
+						].replace('{money}', `${money} ${emojis.coin}`),
 					}),
 				],
 			});

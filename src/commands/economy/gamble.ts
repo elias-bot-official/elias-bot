@@ -28,16 +28,14 @@ module.exports = {
 		),
 
 	async onCommandInteraction(interaction: ChatInputCommandInteraction) {
-		const user = await User.findById(interaction.user.id) ??
-			await User.create({ _id: interaction.user.id });
+		const user = await User.findById(interaction.user.id);
 		const amount = interaction.options.getInteger('amount');
 
-		if (amount > user.balance) {
+		if (!user || user.balance < amount) {
 			interaction.reply({
 				embeds: [
 					new Embed({
 						color: EmbedColor.danger,
-						title: 'Error',
 						description:
 							'You can not gamble more money than you own. Try using </work:1177662316414783518> to earn some more.',
 					}),
@@ -47,9 +45,7 @@ module.exports = {
 			return;
 		}
 
-		const random = Math.round(Math.random());
-
-		if (random == 0) {
+		if (Math.round(Math.random()) == 0) {
 			interaction.reply({
 				embeds: [
 					new Embed({

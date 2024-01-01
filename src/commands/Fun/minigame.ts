@@ -82,7 +82,6 @@ module.exports = {
 						embeds: [
 							new Embed({
 								color: EmbedColor.danger,
-								title: 'Error',
 								description: 'You are not allowed to use this button!',
 							}),
 						],
@@ -103,9 +102,8 @@ module.exports = {
 							title: 'RPS',
 							description: message,
 							footer: {
-								text: outcome == 0
-									? 'You Won' 
-									: outcome == 1? 'You Tied' : 'You Lost',
+								text: outcome == 0? 'You Won' : 
+									outcome == 1? 'You Tied' : 'You Lost',
 							},
 						}),
 					],
@@ -119,7 +117,6 @@ module.exports = {
 						embeds: [
 							new Embed({
 								color: EmbedColor.danger,
-								title: 'Error',
 								description: 'You are not allowed to use this button!',
 							}),
 						],
@@ -165,11 +162,9 @@ module.exports = {
 								label: button.label,
 								disabled: true,
 								style:
-								segments[0] == segments[1]
-									? ButtonStyle.Success
-									: interaction.customId == button.customId
-										? ButtonStyle.Danger
-										: ButtonStyle.Secondary,
+								segments[0] == segments[1]?									ButtonStyle.Success :
+									interaction.customId == button.customId?										ButtonStyle.Danger :
+										ButtonStyle.Secondary,
 							})
 						);
 					});

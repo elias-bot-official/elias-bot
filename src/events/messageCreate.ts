@@ -9,7 +9,7 @@ module.exports = {
 		if (!guild || !guild.plugins.get('Leveling') || message.author.bot) return;
 
 		const xp = guild.xp.get(message.author.id) as number ?? 0;
-		const bonus = Math.round(Math.random() * 20 + 20);
+		const bonus = Math.round(Math.random() * 20 + 10);
 
 		if (xp + bonus >= getXP(getLevel(xp) + 1)) {
 			message.channel.send(`Congratulations ${message.author}, you just reached level ${getLevel(xp + bonus)}!`);

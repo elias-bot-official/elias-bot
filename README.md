@@ -1,8 +1,17 @@
 <div align="center">
-   <img src="https://cdn.discordapp.com/attachments/971206934826991657/1177319240773148723/elias_bot_banner.png?ex=657212fc&is=655f9dfc&hm=c6456737436b7747ef0d75408ac3c524c82c20c9d85465eb3f2be532c2ebb16d&"/>
+  <img src="https://i.imgur.com/xrLW6HE.png"/>
 </div>
 
-Elias bot is a discord bot made for the purpose of being robust, easy-to-use, and fun! It features moderation commands, minigames, and a currency system. Other features include a joke command, and a would you rather command.
+Elias bot is a discord but made to be robust and easy-to-use. Here are a few of elias bot's plugins.
+
+###  Economy
+
+Elias bot comes with a full-fledged economy system! Compete with your friends to see who can make the most money. You can work, beg, dig, search, gamble, rob, and so much more. Ounce you have earned enough money head to the shop to buy some items.
+
+### Moderation
+
+With this elias bot plugin you can easily moderate members, channels, and messages in your server. Easily moderate members in your server with the help of our warn system. The Moderation plugin also allows you to lock and unlock channels, as well as purge messages, and so much more.
+
 ## Installation
 
 Run the following command to clone the repository.
@@ -23,12 +32,11 @@ To use this bot you must first define some environment variables. First create a
 |Variable| Description                                                     |
 |:-------| :---------------------------------------------------------------|
 |`token` | Your discord bot's token.                                       |
-|`guild` | The id of the server you want the bot to post guild commands to.|
 |`db`    | The MongoDB connection string for your database.                |
 
 ## Run Locally
 
-To run the bot locally use the following `npm` command.
+To run the bot locally use the following command.
 
 ```
 npm run dev

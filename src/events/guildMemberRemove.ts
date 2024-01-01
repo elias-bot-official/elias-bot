@@ -15,6 +15,7 @@ module.exports = {
 		member.guild.channels.fetch(channel)
 			.then(channel => {
 				(channel as TextChannel).send(`${member} just left the server.`);
-			});
+			})
+			.catch(error => console.log(error));
 	}
 } satisfies DiscordEvent;

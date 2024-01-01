@@ -3,7 +3,7 @@ import { DiscordEvent } from '../structure/DiscordEvent';
 import { Embed, EmbedColor } from '../structure/Embed';
 
 module.exports = {
-	execute(interaction: Interaction) {
+	async execute(interaction: Interaction) {
 		if (interaction.isCommand()) {
 			interaction.client.commands
 				.find(command => interaction.commandName == command.data.name)
@@ -11,6 +11,22 @@ module.exports = {
 				.catch((error: Error) => {
 					reportError(error, interaction);
 				});
+
+			const random = Math.round(Math.random() * 7);
+
+			if (random == 0) {
+				await interaction.fetchReply();
+				interaction.followUp({
+					embeds: [
+						new Embed({
+							color: EmbedColor.primary,
+							title: 'Leave a Review',
+							description: 'Do you like what your seeing? Don\'t forget to leave us a [review](https://top.gg/bot/904730769929429072#reviews).'
+						})
+					],
+					ephemeral: true
+				});
+			}
 			return;
 		}
 
@@ -48,7 +64,7 @@ function reportError(error: Error, interaction: RepliableInteraction) {
 			new Embed({
 				color: EmbedColor.danger,
 				title: 'Error',
-				description: `An unknown error has occured. Please report this to the devs.\`\`\`${error.message}\`\`\``,
+				description: `An unknown error has occurred. Please report this to the [devs](https://discord.gg/KCY2RERtxk).\`\`\`${error.message}\`\`\``,
 			}),
 		],
 		ephemeral: true,

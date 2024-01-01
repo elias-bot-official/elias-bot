@@ -67,7 +67,6 @@ module.exports = {
 						embeds: [
 							new Embed({
 								color: EmbedColor.danger,
-								title: 'Error',
 								description: 'You do not have enough money!',
 							}),
 						],

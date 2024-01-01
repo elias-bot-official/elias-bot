@@ -10,7 +10,8 @@ module.exports = {
 		.setDescription('Shows you the top 10 of the leaderboard.'),
 
 	async onCommandInteraction(interaction) {
-		const dbUsers = await User.find().sort({ balance: -1 }).limit(10);
+		const dbUsers = await User.find().sort({ balance: -1 })
+			.limit(10);
 
 		let description = '';
 		for (const [index, dbUser] of dbUsers.entries()) {

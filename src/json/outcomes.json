@@ -2,56 +2,70 @@
 	"rps": {
 		"0": [
 			"Wow! You're so good you beat a robot!",
-			"You finally won for ounce!",
-			"The people that thought robots would take over the world.",
-			"Never give up!",
-			"Robot mind reader.",
-			"Yeah, I'm special."
+			"Hey, you finally won for ounce.",
+			"Too ez.",
+			"Good job I guess?"
 		],
 		"1": [
-			"At least you didn't lose.",
-			"Phew, that was close.",
-			"Let's not try that again.",
-			"Boring."
+			"Well that was anticlimactic.",
+			"What are the odds?",
+			"Best out of three?",
+			"I guess you have to play again."
 		],
 		"2": [
-			"How did you lose to a robot?",
+			"No one saw that.",
 			"Hey, did you know if you stop playing you will stop losing?",
 			"Maybe next time.",
-			"I hate robots anyway.",
-			"Just walk away."
+			"That is just embarrassing.",
+			"And we have a winner. Not you lol.",
+			"Is there an easy mode?"
 		]
 	},
 	"beg": {
 		"success": [
-			"Oh, you poor thing, here, have ${money}.",
-			"Have ${money}, it's the least I can do.",
-			"You begged and got ${money}.",
-			"**Elon Musk**: Here, have ${money}.",
-			"**Jeff Bezos**: Here is ${money}, go spend it on Amazon.",
-			"**Mr.Beast**: I just gave this homeless man ${money}."
+			"Oh, you poor thing, here is {money}.",
+			"You begged and got {money}.",
+			"**Elon Musk**: Here, have {money}.",
+			"**Jeff Bezos**: Here is {money}, go spend it on Amazon.",
+			"**MrBeast**: Here is a briefcase with {money} in it.",
+			"**Mark Zuckerberg**: Ah whatever, here is {money}.",
+			"FINE, I'll give you {money}."
 		],
 		"fail": [
 			"Go beg somewhere else.",
 			"Sorry, I didn't bring my wallet.",
-			"Go get a job for once.",
+			"Go get a job.",
 			"Imagine begging lol.",
-			"Ewwww, poor people."
+			"Ewwww, poor people.",
+			"**Karen**: Give you my money? Ridiculous.",
+			"**Ebenezer Scrooge**: Go get your own money."
 		]
 	},
 	"search": {
 		"success": [
-			"You searched high and low and found ${money}.",
-			"After looking a bit you found a wallet with ${money} in it!",
-			"You found ${money}. Maybe try searching there again.",
-			"You found ${money}! How did that get there?",
-			"You found ${money} just lying around. Finders keepers."
+			"You searched high and low and found {money}.",
+			"After looking a bit you found a wallet with {money} in it!",
+			"You found {money}. Maybe try searching there again.",
+			"You found {money}! How did that get there?",
+			"You found {money} just lying around. Finders keepers."
 		],
 		"fail": [
 			"You searched and found nothing, amazing!",
 			"You found nothing lol.",
 			"You searched in vain and left empty handed. Oh man.",
 			"Nothing, what a waste of time."
+		]
+	},
+	"dig": {
+		"success": [
+			"You found an old purse with {money} in it",
+			"You found {money} buried in the ground.",
+			"You found a time capsule with {money} in it."
+		],
+		"fail": [
+			"You turned up empty handed. Put your back into it next time.",
+			"You found nothing but dirt lol.",
+			"You reached bedrock and still didn't find anything."
 		]
 	}
 }

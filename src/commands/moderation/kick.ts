@@ -31,7 +31,6 @@ module.exports = {
 						embeds: [
 							new Embed({
 								color: EmbedColor.danger,
-								title: 'Error',
 								description: 'I can not kick myself!',
 							}),
 						],
@@ -45,7 +44,6 @@ module.exports = {
 						embeds: [
 							new Embed({
 								color: EmbedColor.danger,
-								title: 'Error',
 								description: 'I can not kick a user with a higher or equal role.',
 							}),
 						],
@@ -70,7 +68,6 @@ module.exports = {
 					embeds: [
 						new Embed({
 							color: EmbedColor.danger,
-							title: 'Error',
 							description: 'Can not find this user in this server.',
 						}),
 					],

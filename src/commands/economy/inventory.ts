@@ -24,21 +24,19 @@ module.exports = {
 			interaction.reply({
 				embeds: [
 					new Embed({
-						color: EmbedColor.primary,
-						title: `${(user ?? interaction.user).displayName}'s Inventory`,
-						description: 'Nothing to see here.'
+						color: EmbedColor.danger,
+						description: 'This user has no items.'
 					}),
 				],
+				ephemeral: true
 			});
 			return;
 		}
 
 		let description = '';
 		dbUser.inventory.forEach((value: number, key: string) => {
-			if (dbUser.inventory[key] != 0) {
-				description += `**${
-					emojis[key]
-				} ${key}** - **${value.toLocaleString()}x**\n\n`;
+			if (value != 0) {
+				description += `**${emojis[key]} ${key}** - **${value.toLocaleString()}x**\n`;
 			}
 		});
 

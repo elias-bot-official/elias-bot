@@ -56,11 +56,10 @@ module.exports = {
 								},
 								{
 									name: 'Warns',
-									value: guild
-										? guild.warns
-											.filter(warn => warn.user_id == member.id)
-											.length.toString()
-										: '0',
+									value: guild? guild.warns
+										.filter(warn => warn.user_id == member.id)
+										.length.toLocaleString() :
+										'0',
 									inline: true,
 								},
 								{
@@ -80,7 +79,6 @@ module.exports = {
 					embeds: [
 						new Embed({
 							color: EmbedColor.danger,
-							title: 'Error',
 							description: 'Can not find this user in this server.',
 						}),
 					],

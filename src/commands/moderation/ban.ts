@@ -39,7 +39,6 @@ module.exports = {
 						embeds: [
 							new Embed({
 								color: EmbedColor.danger,
-								title: 'Error',
 								description: 'I can not ban myself!',
 							}),
 						],
@@ -53,7 +52,6 @@ module.exports = {
 						embeds: [
 							new Embed({
 								color: EmbedColor.danger,
-								title: 'Error',
 								description:
 									'I can not ban a user with a higher or equal role.',
 							}),
@@ -78,7 +76,6 @@ module.exports = {
 					embeds: [
 						new Embed({
 							color: EmbedColor.danger,
-							title: 'Error',
 							description: 'Can not find this user in this server.',
 						}),
 					],

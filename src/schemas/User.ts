@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 
 const UserSchema = new mongoose.Schema(
 	{
@@ -29,3 +29,23 @@ const UserSchema = new mongoose.Schema(
 );
 
 export const User = mongoose.model('User', UserSchema);
+export type User = Document<string, object, {
+	_id: string;
+	balance: number;
+	cooldowns: Map<string, number>;
+	inventory: Map<string, number>;
+	settings: Map<string, unknown>;
+}> & {
+	_id: string;
+	balance: number;
+	cooldowns: Map<string, number>;
+	inventory: Map<string, number>;
+	settings: Map<string, unknown>;
+};
+
+export function transfer(giver: User, receiver: User, amount: number) {
+	giver.balance -= amount;
+	receiver.balance += amount;
+
+	return amount;
+}

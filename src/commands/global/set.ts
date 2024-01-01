@@ -16,7 +16,8 @@ module.exports = {
 						.setName('color')
 						.setDescription('The hex representation of the accent color (defaults to blue if not provided).')
 				)
-		).addSubcommand(
+		)
+		.addSubcommand(
 			new SlashCommandSubcommandBuilder()
 				.setName('background')
 				.setDescription('Sets the background of your level card.')
@@ -39,7 +40,6 @@ module.exports = {
 						embeds: [
 							new Embed({
 								color: EmbedColor.danger,
-								title: 'Error',
 								description: 'That is not a valid hex color.'
 							})
 						],
@@ -69,7 +69,6 @@ module.exports = {
 						embeds: [
 							new Embed({
 								color: EmbedColor.danger,
-								title: 'Error',
 								description: 'That is not a valid imgur image url.'
 							})
 						],

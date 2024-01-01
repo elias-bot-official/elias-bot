@@ -43,7 +43,6 @@ module.exports = {
 				embeds: [
 					new Embed({
 						color: EmbedColor.danger,
-						title: 'Error',
 						description: `You are on cooldown! Come back <t:${user.cooldowns.get('search')}:R>`,
 					}),
 				],
@@ -77,7 +76,6 @@ module.exports = {
 				embeds: [
 					new Embed({
 						color: EmbedColor.danger,
-						title: 'Error',
 						description: 'You are not allowed to use this select menu!',
 					}),
 				],
@@ -113,19 +111,15 @@ module.exports = {
 
 		const user = await User.findById(interaction.user.id);
 		const money = Math.round(Math.random() * 500 + 500);
-		const outcome = outcomes.search.success[Math.floor(
-			Math.random() * outcomes.search.success.length
-		)];
 
 		interaction.reply({
 			embeds: [
 				new Embed({
 					color: EmbedColor.primary,
 					title: 'Search',
-					description: outcome.replaceAll(
-						'${money}',
-						`${money.toLocaleString()} ${emojis.coin}`
-					),
+					description: outcomes.search.success[Math.floor(
+						Math.random() * outcomes.search.success.length
+					)].replace('{money}', `${money.toLocaleString()} ${emojis.coin}`),
 				}),
 			],
 		});

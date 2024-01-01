@@ -32,7 +32,6 @@ module.exports = {
 						embeds: [
 							new Embed({
 								color: EmbedColor.danger,
-								title: 'Error',
 								description: 'I can not warn myself!',
 							}),
 						],
@@ -47,7 +46,6 @@ module.exports = {
 						embeds: [
 							new Embed({
 								color: EmbedColor.danger,
-								title: 'Error',
 								description:
 									'You do not have a higher role than the target member.',
 							}),
@@ -77,7 +75,6 @@ module.exports = {
 					embeds: [
 						new Embed({
 							color: EmbedColor.danger,
-							title: 'Error',
 							description: 'Can not find this user in this server.',
 						}),
 					],

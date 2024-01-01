@@ -19,7 +19,6 @@ module.exports = {
 				embeds: [
 					new Embed({
 						color: EmbedColor.danger,
-						title: 'Error',
 						description: `You are on cooldown! Come back <t:${user.cooldowns.get('work')}:R>`,
 					}),
 				],

@@ -1,6 +1,6 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandIntegerOption, SlashCommandUserOption } from 'discord.js';
 import { Command } from '../../structure/Command';
-import { User } from '../../schemas/User';
+import { User, transfer } from '../../schemas/User';
 import { Embed, EmbedColor } from '../../structure/Embed';
 import emojis from '../../json/emojis.json';
 
@@ -30,7 +30,6 @@ module.exports = {
 				embeds: [
 					new Embed({
 						color: EmbedColor.danger,
-						title: 'Error',
 						description: 'You can not give money to a bot!',
 					}),
 				],
@@ -44,7 +43,6 @@ module.exports = {
 				embeds: [
 					new Embed({
 						color: EmbedColor.danger,
-						title: 'Error',
 						description: 'You can not give money to yourself!',
 					}),
 				],
@@ -53,31 +51,14 @@ module.exports = {
 			return;
 		}
 
-		const user = await User.findById(interaction.user.id);
-
-		if (!user || user.balance == 0) {
-			interaction.reply({
-				embeds: [
-					new Embed({
-						color: EmbedColor.danger,
-						title: 'Error',
-						description:
-							'You do not have any money. Try using </work:1177662316414783518> to earn some.',
-					}),
-				],
-				ephemeral: true,
-			});
-			return;
-		}
-
+		const dbUser = await User.findById(interaction.user.id);
 		const amount = interaction.options.getInteger('amount');
 
-		if (user.balance < amount) {
+		if (!dbUser || dbUser.balance < amount) {
 			interaction.reply({
 				embeds: [
 					new Embed({
 						color: EmbedColor.danger,
-						title: 'Error',
 						description: 'You do not have this much money!',
 					}),
 				],
@@ -86,27 +67,29 @@ module.exports = {
 			return;
 		}
 
+		const dbReceiver = await User.findById(receiver.id) ??
+			await User.create({ _id: receiver.id });
+
 		interaction.reply({
 			embeds: [
 				new Embed({
-					color: EmbedColor.primary,
-					title: 'Give',
-					description: `You gave ${receiver} ${amount.toLocaleString()} ${emojis.coin}!`,
+					color: EmbedColor.success,
+					description: `You gave ${receiver} ${transfer(dbUser, dbReceiver, amount).toLocaleString()} ${emojis.coin}.`,
 				}),
 			],
 		});
 
-		user.balance -= amount;
-		user.save();
-
-		await User.findById(receiver.id).then(dbReceiver => {
-			if (!dbReceiver) {
-				User.create({ _id: receiver.id, balance: amount });
-				return;
-			}
-
-			dbReceiver.balance += amount;
-			dbReceiver.save();
+		receiver.send({
+			embeds: [
+				new Embed({
+					color: EmbedColor.primary,
+					title: 'Donation Alert',
+					description: `${interaction.user} just gave you ${amount.toLocaleString()} ${emojis.coin}!`
+				})
+			]
 		});
+
+		dbReceiver.save();
+		dbUser.save();
 	},
 } satisfies Command;

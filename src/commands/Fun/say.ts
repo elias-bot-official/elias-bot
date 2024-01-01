@@ -1,6 +1,5 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandStringOption } from 'discord.js';
 import { Command } from '../../structure/Command';
-import { Embed, EmbedColor } from '../../structure/Embed';
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -14,14 +13,6 @@ module.exports = {
 		),
 
 	async onCommandInteraction(interaction: ChatInputCommandInteraction) {
-		interaction.reply({
-			embeds: [
-				new Embed({
-					color: EmbedColor.primary,
-					title: 'Say',
-					description: interaction.options.getString('text'),
-				}),
-			],
-		});
+		interaction.reply(interaction.options.getString('text'));
 	},
 } satisfies Command;

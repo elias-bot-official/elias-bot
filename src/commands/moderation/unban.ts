@@ -40,7 +40,6 @@ module.exports = {
 				embeds: [
 					new Embed({
 						color: EmbedColor.danger,
-						title: 'Error',
 						description: 'This user is not banned.',
 					}),
 				],

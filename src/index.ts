@@ -58,4 +58,5 @@ client.rest.setToken(process.env.token);
 // connects to the database
 mongoose
 	.connect(process.env.db)
-	.then(() => console.log('Connected to MongoDB!'));
+	.then(() => console.log('Connected to MongoDB!'))
+	.catch(error => console.log(error));

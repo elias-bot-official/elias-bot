@@ -19,7 +19,6 @@ module.exports = {
 				embeds: [
 					new Embed({
 						color: EmbedColor.danger,
-						title: 'Error',
 						description: `You have already claimed today's rewards! Come back <t:${user.cooldowns.get('daily')}:R>`,
 					}),
 				],
@@ -37,6 +36,7 @@ module.exports = {
 				}),
 			],
 		});
+		
 		user.balance += 10000;
 		user.cooldowns.set('daily', Math.ceil(now / 86400) * 86400);
 		user.save();

@@ -25,7 +25,6 @@ module.exports = {
 						embeds: [
 							new Embed({
 								color: EmbedColor.danger,
-								title: 'Error',
 								description: 'This user is not muted!',
 							}),
 						],
@@ -39,7 +38,6 @@ module.exports = {
 						embeds: [
 							new Embed({
 								color: EmbedColor.danger,
-								title: 'Error',
 								description:
 									'I can not unmute a user with a higher or equal role.',
 							}),
@@ -65,7 +63,6 @@ module.exports = {
 					embeds: [
 						new Embed({
 							color: EmbedColor.danger,
-							title: 'Error',
 							description: 'Can not find this user in this server.',
 						}),
 					],
