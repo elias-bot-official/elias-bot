@@ -20,6 +20,8 @@
 		"brace-style": ["warn", "stroustrup"],
 		"object-curly-spacing": ["warn", "always"],
 		"no-var-requires": "off",
-		"arrow-parens": ["warn", "as-needed"]
+		"arrow-parens": ["warn", "as-needed"],
+		"newline-per-chained-call": "warn",
+		"operator-linebreak": ["warn", "after", {"overrides": {"?": "none"}}]
 	}
 }
