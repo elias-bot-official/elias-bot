@@ -8,5 +8,20 @@
 	"online": "<:online:1189634209673912400>",
 	"dnd": "<:dnd:1189634272374562927>",
 	"idle": "<:idle:1189634242204934214>",
-	"offline": "<:offline:1189634223171178606>"
+	"offline": "<:offline:1189634223171178606>",
+	"red_square": "🟥",
+	"red_heart": "❤️",
+	"red_circle": "🔴",
+	"orange_square": "🟧",
+	"orange_heart": "🧡",
+	"orange_circle": "🟠",
+	"yellow_square": "🟨",
+	"yellow_heart": "💛",
+	"yellow_circle": "🟡",
+	"green_square": "🟩",
+	"green_heart": "💚",
+	"green_circle": "🟢",
+	"blue_square": "🟦",
+	"blue_heart": "💙",
+	"blue_circle": "🔵"
 }
