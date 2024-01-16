@@ -1,28 +1,16 @@
-import { ChatInputCommandInteraction, GuildMember, PermissionFlagsBits, SlashCommandBuilder, SlashCommandStringOption, SlashCommandUserOption } from 'discord.js';
+import { ActionRowBuilder, ApplicationCommandType, ContextMenuCommandBuilder, GuildMember, ModalBuilder, ModalSubmitInteraction, PermissionFlagsBits, TextInputBuilder, TextInputStyle, UserContextMenuCommandInteraction } from 'discord.js';
 import { Command } from '../../structure/Command';
 import { Guild } from '../../schemas/Guild';
 import { Embed, EmbedColor } from '../../structure/Embed';
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('warn')
-		.setDescription('Warns a user.')
-		.setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers)
-		.addUserOption(
-			new SlashCommandUserOption()
-				.setName('user')
-				.setDescription('The user to warn.')
-				.setRequired(true)
-		)
-		.addStringOption(
-			new SlashCommandStringOption()
-				.setName('reason')
-				.setDescription('The reason for the warn.')
-		),
+	data: new ContextMenuCommandBuilder()
+		.setType(ApplicationCommandType.User)
+		.setName('Warn')
+		.setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers),
 
-	async onCommandInteraction(interaction: ChatInputCommandInteraction) {
-		const user = interaction.options.getUser('user');
-		const reason = interaction.options.getString('reason', false);
+	async onCommandInteraction(interaction: UserContextMenuCommandInteraction) {
+		const user = interaction.targetUser;
 
 		interaction.guild.members
 			.fetch(user.id)
@@ -40,8 +28,9 @@ module.exports = {
 					return;
 				}
 
-				if ((interaction.member as GuildMember).roles.highest.position <= member.roles.highest.position
-					&& interaction.guild.ownerId != interaction.user.id) {
+				if ((interaction.member as GuildMember).roles.highest.position <=
+					member.roles.highest.position &&
+					interaction.guild.ownerId != interaction.user.id) {
 					interaction.reply({
 						embeds: [
 							new Embed({
@@ -55,20 +44,22 @@ module.exports = {
 					return;
 				}
 
-				const guild = await Guild.findById(interaction.guild.id) ??
-					await Guild.create({ _id: interaction.guild.id });
+				const modal = new ModalBuilder()
+					.setCustomId(`Warn|${user.id}`)
+					.setTitle('Warn')
+					.addComponents(
+						new ActionRowBuilder<TextInputBuilder>()
+							.addComponents(
+								new TextInputBuilder()
+									.setCustomId('reason')
+									.setLabel('Reason (optional)')
+									.setStyle(TextInputStyle.Short)
+									.setMaxLength(50)
+									.setRequired(false)
+							)
+					);
 
-				const embed = new Embed({ color: EmbedColor.primary, title: 'Warn' }).addField({
-					name: 'User',
-					value: user.toString(),
-				});
-
-				if (reason) embed.addField({ name: 'Reason', value: reason });
-
-				interaction.reply({ embeds: [embed] });
-
-				guild.warns.push({ user_id: user.id, reason: reason });
-				guild.save();
+				interaction.showModal(modal);
 			})
 			.catch(() => {
 				interaction.reply({
@@ -82,4 +73,21 @@ module.exports = {
 				});
 			});
 	},
+	async onModalSubmitInteraction(interaction: ModalSubmitInteraction) {
+		const userId = interaction.customId.split('|')[1];
+		const guild = await Guild.findById(interaction.guild.id) ??
+			await Guild.create({ _id: interaction.guild.id });
+
+		const embed = new Embed({ color: EmbedColor.primary, title: 'Warn' })
+			.addField('User', `<@${userId}>`);
+
+		const reason = interaction.fields.getTextInputValue('reason');
+
+		if (reason) embed.addField('Reason', reason);
+
+		interaction.reply({ embeds: [embed] });
+
+		guild.warns.push({ user_id: userId, reason: reason });
+		guild.save();
+	}
 } satisfies Command;
