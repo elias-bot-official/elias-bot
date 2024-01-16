@@ -12,7 +12,7 @@ module.exports = {
 					reportError(error, interaction);
 				});
 
-			const random = Math.round(Math.random() * 7);
+			const random = Math.round(Math.random() * 20);
 
 			if (random == 0) {
 				await interaction.fetchReply();
@@ -27,7 +27,19 @@ module.exports = {
 					ephemeral: true
 				});
 			}
-			return;
+			else if (random == 1) {
+				await interaction.fetchReply();
+				interaction.followUp({
+					embeds: [
+						new Embed({
+							color: EmbedColor.primary,
+							title: 'Vote',
+							description: 'Support elias bot by [voting](https://top.gg/bot/904730769929429072/vote).'
+						})
+					],
+					ephemeral: true
+				});
+			}
 		}
 
 		if (interaction.isButton()) {
@@ -50,6 +62,18 @@ module.exports = {
 						.split(' ')[0] == command.data.name
 				)
 				.onSelectMenuInteraction(interaction)
+				.catch((error: Error) => {
+					reportError(error, interaction);
+				});
+			return;
+		}
+
+		if (interaction.isModalSubmit()) {
+			interaction.client.commands
+				.find(
+					command => command.data.name == interaction.customId.split('|')[0]
+				)
+				.onModalSubmitInteraction(interaction)
 				.catch((error: Error) => {
 					reportError(error, interaction);
 				});
