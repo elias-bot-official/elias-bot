@@ -152,8 +152,8 @@ module.exports = {
 
 				const editedRow = new ActionRowBuilder<ButtonBuilder>();
 
-				(interaction.message.components[0].components as ButtonComponent[])
-					.forEach(button => {
+				interaction.message.components[0].components
+					.forEach((button: ButtonComponent) => {
 						const segments = button.customId.split('|');
 
 						editedRow.addComponents(
@@ -161,9 +161,8 @@ module.exports = {
 								custom_id: button.customId,
 								label: button.label,
 								disabled: true,
-								style:
-								segments[0] == segments[1]?									ButtonStyle.Success :
-									interaction.customId == button.customId?										ButtonStyle.Danger :
+								style: segments[0] == segments[1]? ButtonStyle.Success :
+									interaction.customId == button.customId? ButtonStyle.Danger :
 										ButtonStyle.Secondary,
 							})
 						);

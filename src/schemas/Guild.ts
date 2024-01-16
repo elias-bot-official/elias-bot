@@ -11,10 +11,7 @@ const GuildSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
-		warns: {
-			type: Array<Warn>,
-			default: [],
-		},
+		warns: [Object],
 		xp: {
 			type: Map,
 			of: Number,

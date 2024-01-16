@@ -36,7 +36,7 @@ module.exports = {
 				}),
 			],
 		});
-		
+
 		user.balance += 10000;
 		user.cooldowns.set('daily', Math.ceil(now / 86400) * 86400);
 		user.save();
