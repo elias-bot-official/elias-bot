@@ -30,7 +30,7 @@
 		]
 	},
 	{
-		"question": "Who was the first author to use a \"typemachine\" or typewriter in writing a manuscript?",
+		"question": "Who was the first author to use a typewriter in writing a manuscript?",
 		"answer": "Mark Twain",
 		"options": ["Mark Twain", "Dr. Seuss", "Jane Austen", "Edgar Allan Poe"]
 	},
@@ -80,7 +80,7 @@
 		"options": ["China", "Great Britain", "India", "America"]
 	},
 	{
-		"question": "Which country do cities of Perth, Adelade & Brisbane belong to?",
+		"question": "Which country do cities of Perth, Adelaide, and Brisbane belong to?",
 		"answer": "Australia",
 		"options": ["Australia", "Greece", "America", "England"]
 	},
@@ -332,7 +332,7 @@
 	{
 		"question": "Which city is “101 Dalmatians” set in?",
 		"answer": "London",
-		"options": ["London", "New York City", "Orlando", "Syndney"]
+		"options": ["London", "New York City", "Orlando", "Sydney"]
 	},
 	{
 		"question": "Play-Doh was originally invented for what purpose?",
@@ -366,7 +366,7 @@
 			"saffron",
 			"black pepper",
 			"vanilla bean",
-			"mahlab",
+			"mahleb",
 			"fennel pollen"
 		]
 	},
@@ -454,5 +454,130 @@
 		"question": "Bats are blind.",
 		"answer": "false",
 		"options": ["false", "true"]
+	},
+	{
+		"question": "What mythical creature is Scotland's national animal?",
+		"answer": "Unicorn",
+		"options": ["Unicorn", "Dragon", "Goblin", "Griffin"]
+	},
+	{
+		"question": "What animal has the highest blood pressure?",
+		"answer": "giraffe",
+		"options": ["giraffe", "ostrich", "hamster", "octopus"]
+	},
+	{
+		"question": "What mammal has the most powerful bite?",
+		"answer": "hippopotamus",
+		"options": ["hippopotamus", "lion", "alligator", "blue whale"]
+	},
+	{
+		"question": "What is the closest living relative to the T-rex?",
+		"answer": "chicken",
+		"options": ["chicken", "gecko", "deer", "pig"]
+	},
+	{
+		"question": "What is the deadliest creature in the world?",
+		"answer": "mosquito",
+		"options": ["mosquito", "tick", "lion", "shark"]
+	},
+	{
+		"question": "How many legs does a lobster have?",
+		"answer": "10",
+		"options": ["10", "12", "6", "4"]
+	},
+	{
+		"question": "What was the name of the first electronic general-purpose computer?",
+		"answer": "ENIAC",
+		"options": ["ENIAC", "Colossus Mark 1", "Macintosh 128K", "ABC"]
+	},
+	{
+		"question": "One kilobyte is equal to how many bytes?",
+		"answer": "1,024",
+		"options": ["1,024", "1,000", "10,000", "1,540"]
+	},
+	{
+		"question": "In what year was the Nintendo 64 officially released?",
+		"answer": "1996",
+		"options": ["1996", "1964", "2001", "1991"]
+	},
+	{
+		"question": "RAM stands for \"Random Access Memory\".",
+		"answer": "true",
+		"options": ["true", "false"]
+	},
+	{
+		"question": "In what year was the iPhone first released?",
+		"answer": "2007",
+		"options": ["2007", "2001", "2010", "1990"]
+	},
+	{
+		"question": "What is the name of the main protagonist in the Legend of Zelda series of video games?",
+		"answer": "Link",
+		"options": ["Link", "Zelda", "Waluigi", "Mario"]
+	},
+	{
+		"question": "NES stands for \"Nintendo Emulating System\".",
+		"answer": "false",
+		"options": ["true", "false"]
+	},
+	{
+		"question": "SQL in database programming stands for \"Superlative Query Language\".",
+		"answer": "false",
+		"options": ["true", "false"]
+	},
+	{
+		"question": "What year was Facebook founded?",
+		"answer": "2004",
+		"options": ["2004", "2010", "1999", "2007"]
+	},
+	{
+		"question": "Steve Jobs, Steve Wozniak, and Ronald Wayne founded what company in 1976?",
+		"answer": "Apple",
+		"options": ["Apple", "Microsoft", "Google", "Samsung"]
+	},
+	{
+		"question": "HTML and CSS are computer languages used to create what?",
+		"answer": "websites",
+		"options": ["websites", "mobile apps", "desktop apps", "games"]
+	},
+	{
+		"question": "Ariana Grande got her start on what kids TV show?",
+		"answer": "Victorious",
+		"options": ["Victorious", "Sam & Cat", "PAW Patrol", "Arthur"]
+	},
+	{
+		"question": "Who was the first winner of The Masked Singer?",
+		"answer": "T-Pain",
+		"options": ["T-Pain", "Amber Riley", "LeAnn Rimes", "Wayne Brady"]
+	},
+	{
+		"question": "Which entrepreneur named his son X Æ A-12?",
+		"answer": "Elon Musk",
+		"options": ["Elon Musk", "Bill Gates", "Mark Zuckerberg", "Warren Buffett"]
+	},
+	{
+		"question": "What was the name of Meghan Markle's lifestyle blog before she married into the royal family?",
+		"answer": "The Tig",
+		"options": ["The Tig", "Markle's Blog", "Miss Markle", "Rug Road"]
+	},
+	{
+		"question": "What year was YouTube founded?",
+		"answer": "2005",
+		"options": ["2005", "2008", "2001", "2010"]
+	},
+	{
+		"question": "Who was the first president of the United States?",
+		"answer": "George Washington",
+		"options": ["George Washington", "Abraham Lincoln", "James Monroe", "Thomas Jefferson"]
+	},
+	{
+		"question": "Native to the Caribbean, what kind of animal is a Mountain Chicken?",
+		"answer": "frog",
+		"options": ["frog", "goat", "duck", "catfish"]
+	},
+	{
+		"question": "What bird has eyes bigger than its brain?",
+		"answer": "ostrich",
+		"options": ["ostrich", "hummingbird", "swallow", "blue jay"]
 	}
 ]
