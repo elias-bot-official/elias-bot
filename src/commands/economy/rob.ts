@@ -44,8 +44,21 @@ module.exports = {
 			return;
 		}
 
-		const dbUser = await User.findById(interaction.user.id) ??
-			await User.create({ _id: interaction.user.id });
+		const dbUser = await User.findById(interaction.user.id);
+
+		if (!dbUser || dbUser.balance < 5000) {
+			interaction.reply({
+				embeds: [
+					new Embed({
+						color: EmbedColor.danger,
+						description: `You need to have at least 5,000 ${emojis.coin} to rob someone.`
+					})
+				],
+				ephemeral: true
+			});
+			return;
+		}
+
 		const dbTarget = await User.findById(target.id);
 		const now = Math.floor(Date.now() / 1000);
 
@@ -116,7 +129,7 @@ module.exports = {
 						new Embed({
 							color: EmbedColor.primary,
 							title: 'Rob',
-							description: `${target} had a lock on their vault but you used your lockpick and managed to steal ${transfer(dbTarget, dbUser, Math.round(Math.random() * 3500 + 4000)).toLocaleString()} ${emojis.coin}.`
+							description: `${target} had a lock on their vault but you used your lockpick to break it and managed to steal ${transfer(dbTarget, dbUser, Math.round(Math.random() * 3500 + 4000)).toLocaleString()} ${emojis.coin}.`
 						})
 					]
 				});
