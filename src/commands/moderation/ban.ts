@@ -64,10 +64,10 @@ module.exports = {
 				member.ban({ reason: reason, deleteMessageSeconds: hours * 3600 });
 
 				const embed = new Embed({ color: EmbedColor.primary, title: 'Ban' })
-					.addField({ name: 'User', value: user.toString() });
+					.addField('User', user.toString());
 
-				if (reason) embed.addField({ name: 'Reason', value: reason });
-				if (hours) embed.addField({ name: 'Hours', value: hours.toLocaleString() });
+				if (reason) embed.addField('Reason', reason);
+				if (hours) embed.addField('Hours', hours.toLocaleString());
 
 				interaction.reply({ embeds: [embed] });
 			})

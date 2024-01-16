@@ -28,7 +28,7 @@ module.exports = {
 		interaction.reply({
 			embeds: [
 				new Embed({ color: EmbedColor.primary, title: 'Unlock' })
-					.addField({ name: 'Channel', value: channel.toString() })
+					.addField('Channel', channel.toString())
 			]
 		});
 	},

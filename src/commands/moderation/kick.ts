@@ -54,12 +54,10 @@ module.exports = {
 
 				member.kick(reason);
 
-				const embed = new Embed({ color: EmbedColor.primary, title: 'Kick' }).addField({
-					name: 'User',
-					value: user.toString(),
-				});
+				const embed = new Embed({ color: EmbedColor.primary, title: 'Kick' })
+					.addField('User', user.toString());
 
-				if (reason) embed.addField({ name: 'Reason', value: reason });
+				if (reason) embed.addField('Reason', reason.toString());
 
 				interaction.reply({ embeds: [embed] });
 			})

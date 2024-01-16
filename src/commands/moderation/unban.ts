@@ -26,12 +26,10 @@ module.exports = {
 		try {
 			await interaction.guild.members.unban(user, reason);
 
-			const embed = new Embed({ color: EmbedColor.primary, title: 'Unban' }).addField({
-				name: 'User',
-				value: user.toString(),
-			});
+			const embed = new Embed({ color: EmbedColor.primary, title: 'Unban' })
+				.addField('User', user.toString());
 
-			if (reason) embed.addField({ name: 'Reason', value: reason });
+			if (reason) embed.addField('Reason', reason);
 
 			interaction.reply({ embeds: [embed] });
 		}

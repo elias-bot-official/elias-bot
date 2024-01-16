@@ -51,10 +51,8 @@ module.exports = {
 
 				interaction.reply({
 					embeds: [
-						new Embed({ color: EmbedColor.primary, title: 'Unmute' }).addField({
-							name: 'User',
-							value: user.toString(),
-						}),
+						new Embed({ color: EmbedColor.primary, title: 'Unmute' })
+							.addField('User', user.toString())
 					],
 				});
 			})

@@ -77,10 +77,10 @@ module.exports = {
 				member.timeout(time * 60000, reason);
 
 				const embed = new Embed({ color: EmbedColor.primary, title: 'Mute' })
-					.addField({ name: 'User', value: user.toString() })
-					.addField({ name: 'Time', value: mapChoice(time) });
+					.addField('User', user.toString())
+					.addField('Time', mapChoice(time));
 
-				if (reason) embed.addField({ name: 'Reason', value: reason });
+				if (reason) embed.addField('Reason', reason);
 
 				interaction.reply({ embeds: [embed] });
 			})

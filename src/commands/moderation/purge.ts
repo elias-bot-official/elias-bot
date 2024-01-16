@@ -22,10 +22,8 @@ module.exports = {
 		interaction.channel.bulkDelete(amount, true);
 		interaction.reply({
 			embeds: [
-				new Embed({ color: EmbedColor.primary, title: 'Purge' }).addField({
-					name: 'Amount',
-					value: amount.toString(),
-				}),
+				new Embed({ color: EmbedColor.primary, title: 'Purge' })
+					.addField('Amount', amount.toString()),
 			],
 			ephemeral: true,
 		});

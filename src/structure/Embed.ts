@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { APIEmbedField, EmbedBuilder, EmbedData } from 'discord.js';
+import { EmbedBuilder, EmbedData } from 'discord.js';
 
 export enum EmbedColor {
 	primary = 0x04a0fb,
@@ -14,8 +14,8 @@ export class Embed extends EmbedBuilder {
 	}
 
 	// adds one field to the embed
-	addField(field: APIEmbedField): this {
-		this.addFields(field);
+	addField(name: string, value: string, inline?: boolean): this {
+		this.addFields({ name: name, value: value, inline: inline });
 		return this;
 	}
 }
