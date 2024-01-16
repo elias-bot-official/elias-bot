@@ -43,7 +43,7 @@ module.exports = {
 
 		const random = Math.round(Math.random() * 100);
 
-		if (random < 5) {
+		if (random < 3) {
 			const money = Math.round(Math.random() * 10000 + 20000);
 
 			interaction.reply({
