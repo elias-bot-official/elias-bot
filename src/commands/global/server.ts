@@ -7,6 +7,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('server')
 		.setDescription('Commands related to this server.')
+		.setDMPermission(false)
 		.addSubcommand(
 			new SlashCommandSubcommandBuilder()
 				.setName('info')

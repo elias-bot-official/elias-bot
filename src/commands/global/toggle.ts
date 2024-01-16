@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import { ChatInputCommandInteraction, PermissionFlagsBits, SlashCommandBuilder, SlashCommandStringOption } from 'discord.js';
+import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandStringOption } from 'discord.js';
 import { Command } from '../../structure/Command';
 import { Guild } from '../../schemas/Guild';
 import { Embed, EmbedColor } from '../../structure/Embed';
@@ -10,7 +10,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('toggle')
 		.setDescription('Toggles a plugin.')
-		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
+		.setDMPermission(false)
 		.addStringOption(
 			new SlashCommandStringOption()
 				.setName('plugin')
@@ -26,8 +26,6 @@ module.exports = {
 		),
 
 	async onCommandInteraction(interaction: ChatInputCommandInteraction) {
-		await interaction.deferReply();
-
 		const pluginName = interaction.options.getString('plugin');
 		const guild = await Guild.findById(interaction.guild.id) ??
 			await Guild.create({ _id: interaction.guild.id });
@@ -37,8 +35,7 @@ module.exports = {
 				const commandNames = [];
 
 				fs.readdirSync(path.join(__dirname, '..', pluginName)).forEach(file => {
-					const command = require(path.join(__dirname, '..', pluginName, file));
-					commandNames.push(command.data.name);
+					commandNames.push(file.split('.')[0]);
 				});
 	
 				const guildCommands = await interaction.guild.commands.fetch();
@@ -51,7 +48,7 @@ module.exports = {
 				}
 			}
 
-			interaction.followUp({
+			interaction.reply({
 				embeds: [
 					new Embed({
 						color: EmbedColor.primary,
@@ -68,7 +65,7 @@ module.exports = {
 				});
 			}
 
-			interaction.followUp({
+			interaction.reply({
 				embeds: [
 					new Embed({
 						color: EmbedColor.primary,

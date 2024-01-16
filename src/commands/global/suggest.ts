@@ -7,6 +7,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('suggest')
 		.setDescription('Creates a suggestion.')
+		.setDMPermission(false)
 		.addStringOption(
 			new SlashCommandStringOption()
 				.setName('suggestion')
