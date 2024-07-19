@@ -81,7 +81,7 @@ module.exports = {
 					embeds: [
 						new Embed({
 							color: EmbedColor.danger,
-							description: 'Can not find this user in this server.',
+							description: `Couldn't find this user in this server.`,
 						}),
 					],
 					ephemeral: true,
