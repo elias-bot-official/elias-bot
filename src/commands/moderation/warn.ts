@@ -10,10 +10,8 @@ module.exports = {
 		.setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers),
 
 	async onCommandInteraction(interaction: UserContextMenuCommandInteraction) {
-		const user = interaction.targetUser;
-
 		interaction.guild.members
-			.fetch(user.id)
+			.fetch(interaction.targetUser.id)
 			.then(async member => {
 				if (member.id == interaction.guild.members.me.id) {
 					interaction.reply({
@@ -27,8 +25,7 @@ module.exports = {
 					});
 					return;
 				}
-
-				if ((interaction.member as GuildMember).roles.highest.position <=
+				else if ((interaction.member as GuildMember).roles.highest.position <=
 					member.roles.highest.position &&
 					interaction.guild.ownerId != interaction.user.id) {
 					interaction.reply({
@@ -45,7 +42,7 @@ module.exports = {
 				}
 
 				const modal = new ModalBuilder()
-					.setCustomId(`Warn|${user.id}`)
+					.setCustomId(`Warn|${interaction.targetUser.id}`)
 					.setTitle('Warn')
 					.addComponents(
 						new ActionRowBuilder<TextInputBuilder>()
@@ -66,26 +63,46 @@ module.exports = {
 					embeds: [
 						new Embed({
 							color: EmbedColor.danger,
-							description: 'Can not find this user in this server.',
+							description: 'Could not find this user in this server.',
 						}),
 					],
 					ephemeral: true,
 				});
 			});
 	},
+	
 	async onModalSubmitInteraction(interaction: ModalSubmitInteraction) {
 		const userId = interaction.customId.split('|')[1];
 		const guild = await Guild.findById(interaction.guild.id) ??
 			await Guild.create({ _id: interaction.guild.id });
-
-		const embed = new Embed({ color: EmbedColor.primary, title: 'Warn' })
-			.addField('User', `<@${userId}>`);
-
 		const reason = interaction.fields.getTextInputValue('reason');
 
-		if (reason) embed.addField('Reason', reason);
+		interaction.reply({
+			embeds: [
+				new Embed({
+					color: EmbedColor.primary,
+					title: 'Warn',
+					fields: [
+						{ name: 'User', value: `<@${userId}>` },
+						... reason? [{ name: 'Reason', value: reason }] : []
+					]
+				})
+			]
+		});
 
-		interaction.reply({ embeds: [embed] });
+		(await interaction.guild.members.fetch(userId)).send({
+			embeds: [
+				new Embed({
+					color: EmbedColor.danger,
+					title: 'Warn',
+					description: `You have been warned by ${interaction.member}.`,
+					fields: [
+						... reason? [{ name: 'Reason', value: reason }] : [],
+						{ name: 'Server', value: interaction.guild.toString() }
+					] as Array<{ name: string; value: string }>
+				})
+			]
+		}).catch();
 
 		guild.warns.push({ user_id: userId, reason: reason });
 		guild.save();

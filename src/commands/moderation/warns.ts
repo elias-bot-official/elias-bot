@@ -62,7 +62,7 @@ module.exports = {
 							{ name: 'ID', value: i.toString(), inline: true },
 							{
 								name: 'Reason',
-								value: warn.reason ? warn.reason : '`Unspecified`',
+								value: warn.reason ? warn.reason : '`NONE`',
 								inline: true
 							}
 						);
@@ -89,7 +89,7 @@ module.exports = {
 							});
 							return;
 						}
-		
+
 						if ((interaction.member as GuildMember).roles.highest.position <=
 							member.roles.highest.position &&
 							interaction.guild.ownerId != interaction.user.id) {
@@ -104,14 +104,33 @@ module.exports = {
 							});
 							return;
 						}
-		
-						const embed = new Embed(
-							{ color: EmbedColor.primary, title: 'Warn' }
-						).addField('User', user.toString());
-		
-						if (reason) embed.addField('Reason', reason);
-		
-						interaction.reply({ embeds: [embed] });
+						
+						interaction.reply({
+							embeds: [
+								new Embed({
+									color: EmbedColor.primary,
+									title: 'Warn',
+									fields: [
+										{ name: 'User', value: user.toString() },
+										... reason? [{ name: 'Reason', value: reason }] : []
+									]
+								})
+							]
+						});
+
+						member.send({
+							embeds: [
+								new Embed({
+									color: EmbedColor.danger,
+									title: 'Warn',
+									description: `You have been warned by ${interaction.member}.`,
+									fields: [
+										... reason? [{ name: 'Reason', value: reason }] : [],
+										{ name: 'Server', value: interaction.guild.toString() }
+									] as Array<{ name: string; value: string }>
+								})
+							]
+						}).catch();
 		
 						guild.warns.push({ user_id: user.id, reason: reason });
 						guild.save();
@@ -121,23 +140,23 @@ module.exports = {
 							embeds: [
 								new Embed({
 									color: EmbedColor.danger,
-									description: 'Can not find this user in this server.',
+									description: 'Could not find this user in this server.',
 								}),
 							],
 							ephemeral: true,
 						});
 					});
-				break;
+				return;
 
 			case 'delete':
-				const ID = interaction.options.getInteger('id');
+				const id = interaction.options.getInteger('id');
 
-				if (!guild.warns[ID]) {
+				if (!guild.warns[id]) {
 					interaction.reply({
 						embeds: [
 							new Embed({
 								color: EmbedColor.danger,
-								description: 'There is no warning with this ID.'
+								description: 'User does not have a warning with this ID.'
 							})
 						],
 						ephemeral: true,
@@ -151,14 +170,16 @@ module.exports = {
 							color: EmbedColor.primary,
 							title: 'Warning Deleted',
 							fields: [
-								{ name: 'ID', value: ID.toString() },
-								{ name: 'User', value: `<@${guild.warns[ID].user_id}>` }
+								{ name: 'ID', value: id.toString() },
+								{ name: 'User', value: `<@${guild.warns[id].user_id}>` },
+								... guild.warns[id].reason?
+									[{ name: 'Reason', value: guild.warns[id].reason }] : []
 							]
 						})
 					]
 				});
 
-				guild.warns.splice(ID, 1);
+				guild.warns.splice(id, 1);
 				guild.save();
 		}
 	},
