@@ -75,21 +75,26 @@ module.exports = {
 				}
 
 				member.timeout(time * 60000, reason);
-
-				const embed = new Embed({ color: EmbedColor.primary, title: 'Mute' })
-					.addField('User', user.toString())
-					.addField('Time', mapChoice(time));
-
-				if (reason) embed.addField('Reason', reason);
-
-				interaction.reply({ embeds: [embed] });
+				interaction.reply({
+					embeds: [
+						new Embed({
+							color: EmbedColor.primary,
+							title: 'Mute',
+							fields: [
+								{ name: 'User', value: user.toString() },
+								{ name: 'Time', value: mapChoice(time) },
+								... reason? [{ name: 'Reason', value: reason }] : []
+							]
+						})
+					]
+				});
 			})
 			.catch(() => {
 				interaction.reply({
 					embeds: [
 						new Embed({
 							color: EmbedColor.danger,
-							description: 'Can not find this user in this server.',
+							description: 'Could not find this user in this server.',
 						}),
 					],
 					ephemeral: true,
@@ -100,31 +105,18 @@ module.exports = {
 
 function mapChoice(value: number) {
 	switch (value) {
-		case 1:
-			return '1 minute';
-		case 5:
-			return '5 minutes';
-		case 10:
-			return '10 minutes';
-		case 15:
-			return '15 minutes';
-		case 30:
-			return '30 minutes';
-		case 45:
-			return '45 minutes';
-		case 60:
-			return '1 hour';
-		case 300:
-			return '5 hours';
-		case 600:
-			return '10 hours';
-		case 1440:
-			return '1 day';
-		case 7200:
-			return '5 days';
-		case 14400:
-			return '10 days';
-		case 40320:
-			return '28 days';
+		case 1: return '1 minute';
+		case 5: return '5 minutes';
+		case 10: return '10 minutes';
+		case 15: return '15 minutes';
+		case 30: return '30 minutes';
+		case 45: return '45 minutes';
+		case 60: return '1 hour';
+		case 300: return '5 hours';
+		case 600: return '10 hours';
+		case 1440: return '1 day';
+		case 7200: return '5 days';
+		case 14400: return '10 days';
+		case 40320: return '28 days';
 	}
 }

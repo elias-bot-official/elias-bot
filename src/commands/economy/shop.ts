@@ -21,10 +21,11 @@ module.exports = {
 				.addStringOption(
 					new SlashCommandStringOption()
 						.setName('item')
-						.setDescription('The name of the item you want to buy.')
+						.setDescription('The item you want to buy.')
 						.addChoices(
 							{ name: 'Lock', value: 'Lock' },
 							{ name: 'Lockpick', value: 'Lockpick' },
+							{ name: 'Security Camera', value: 'Security Camera' },
 							{ name: 'Shovel', value: 'Shovel' }
 						)
 						.setRequired(true)
@@ -32,10 +33,28 @@ module.exports = {
 				.addIntegerOption(
 					new SlashCommandIntegerOption()
 						.setName('amount')
-						.setDescription('The amount you want to buy.')
+						.setDescription('The number of items you want to buy.')
 						.setMinValue(1)
 				)
-		),
+		)
+		// .addSubcommand(
+		// 	new SlashCommandSubcommandBuilder()
+		// 		.setName('sell')
+		// 		.setDescription('Sell and item in your inventory.')
+		// 		.addStringOption(
+		// 			new SlashCommandStringOption()
+		// 				.setName('item')
+		// 				.setDescription('The item you want to sell.')
+		// 				.setAutocomplete(true)
+		// 		)
+		// 		.addIntegerOption(
+		// 			new SlashCommandIntegerOption()
+		// 				.setName('amount')
+		// 				.setDescription('The number of items you want to sell.')
+		// 				.setMinValue(1)
+		// 		)
+		// )
+	,
 
 	async onCommandInteraction(interaction: ChatInputCommandInteraction) {
 		switch (interaction.options.getSubcommand()) {
@@ -58,8 +77,8 @@ module.exports = {
 
 			case 'buy':
 				const itemName = interaction.options.getString('item');
-				const item = shop.filter(item => item.name == itemName)[0];
 				const amount = interaction.options.getInteger('amount', false) ?? 1;
+				const item = shop.filter(item => item.name == itemName)[0];
 				const user = await User.findById(interaction.user.id);
 
 				if (!user || item.price * amount > user.balance) {
@@ -91,6 +110,14 @@ module.exports = {
 				);
 				user.balance -= item.price * amount;
 				user.save();
+				return;
+
+			case 'sell':
+
 		}
 	},
+
+	async onAutocompleteInteraction() {
+		
+	}
 } satisfies Command;

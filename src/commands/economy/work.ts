@@ -30,17 +30,16 @@ module.exports = {
 
 		const colors = ['red', 'orange', 'yellow', 'green', 'blue'];
 		const shapes = ['square', 'heart', 'circle'];
-
 		const emojis = [];
 
 		for (const shape of shapes) {
-			const random = Math.round(Math.random() * (colors.length - 1));
+			const random = Math.floor(Math.random() * colors.length);
 			emojis.push(`${colors[random]}_${shape}`);
 			colors.splice(random, 1);
 		}
 
 		let sequence = '';
-		emojis.forEach(name => sequence += `:${name}: `);
+		emojis.forEach(emoji => sequence += `:${emoji}: `);
 
 		interaction.reply({
 			embeds: [
@@ -52,7 +51,7 @@ module.exports = {
 			]
 		});
 
-		const emoji = emojis[Math.round(Math.random() * (emojis.length - 1))];
+		const emoji = emojis[Math.floor(Math.random() * emojis.length)];
 		setTimeout(() => showButtons(interaction, emoji), 2500);
 
 		dbUser.cooldowns.set('work', now + 1800);
@@ -60,9 +59,7 @@ module.exports = {
 	},
 
 	async onButtonInteraction(interaction: ButtonInteraction) {
-		const user = interaction.message.interaction.user;
-
-		if (interaction.user.id != user.id) {
+		if (interaction.user.id != interaction.message.interaction.user.id) {
 			interaction.reply({
 				embeds: [
 					new Embed({
@@ -75,7 +72,7 @@ module.exports = {
 			return;
 		}
 
-		const dbUser = await User.findById(user.id);
+		const dbUser = await User.findById(interaction.user.id);
 		const segments = interaction.customId.split('|');
 
 		if (segments[0] == segments[1]) {
@@ -86,12 +83,11 @@ module.exports = {
 					new Embed({
 						color: EmbedColor.success,
 						title: 'Correct',
-						description: `Good job! You earned ${money.toLocaleString()} ${emojis.coin} for your shift.`,
+						description: `Good job! You earned ${money.toLocaleString()} ${emojis.coin} for your work.`,
 					}),
 				],
 				components: []
 			});
-
 			dbUser.balance += money;
 		}
 		else {
@@ -102,12 +98,11 @@ module.exports = {
 					new Embed({
 						color: EmbedColor.danger,
 						title: 'Incorrect',
-						description: `Terrible job. You earned ${money.toLocaleString()} ${emojis.coin} for your below average shift.`,
+						description: `Terrible job. You earned ${money.toLocaleString()} ${emojis.coin} for your work.`,
 					}),
 				],
 				components: []
 			});
-
 			dbUser.balance += money;
 		}
 		
@@ -120,7 +115,6 @@ function showButtons(interaction: ChatInputCommandInteraction, emoji: string) {
 	const shape = emoji.split('_')[1];
 
 	const actionRow = new ActionRowBuilder<Button>();
-
 	colors.forEach(color => {
 		actionRow.addComponents(
 			Button.secondary({

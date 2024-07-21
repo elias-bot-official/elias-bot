@@ -3,7 +3,7 @@ import { ButtonBuilder, ButtonStyle, ComponentEmojiResolvable } from 'discord.js
 interface BaseButton {
 	label?: string;
 	emoji?: ComponentEmojiResolvable;
-	disabled?: true;
+	disabled?: boolean;
 }
 
 export class Button extends ButtonBuilder {

@@ -13,12 +13,12 @@ module.exports = {
 	async onCommandInteraction(interaction) {
 		const user = await User.findById(interaction.user.id);
 
-		if (!user || !(user.inventory.get('Shovel') > 0)) {
+		if (!user || user.inventory.get('Shovel') == 0) {
 			interaction.reply({
 				embeds: [
 					new Embed({
 						color: EmbedColor.danger,
-						description: 'You need a shovel in order to dig! Try using </shop buy:1184144022684581966> to buy one.',
+						description: 'You need a shovel in order to dig! Try using the shop to buy one.',
 					}),
 				],
 				ephemeral: true,

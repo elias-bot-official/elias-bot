@@ -52,8 +52,7 @@ module.exports = {
 						embeds: [
 							new Embed({
 								color: EmbedColor.danger,
-								description:
-									'I can not ban a user with a higher or equal role.',
+								description: 'I can not ban a user with a higher or equal role.',
 							}),
 						],
 						ephemeral: true,
@@ -62,21 +61,26 @@ module.exports = {
 				}
 
 				member.ban({ reason: reason, deleteMessageSeconds: hours * 3600 });
-
-				const embed = new Embed({ color: EmbedColor.primary, title: 'Ban' })
-					.addField('User', user.toString());
-
-				if (reason) embed.addField('Reason', reason);
-				if (hours) embed.addField('Hours', hours.toLocaleString());
-
-				interaction.reply({ embeds: [embed] });
+				interaction.reply({
+					embeds: [
+						new Embed({
+							color: EmbedColor.primary,
+							title: 'Ban',
+							fields: [
+								{ name: 'User', value: user.toString() },
+								... reason? [{ name: 'Reason', value: reason }] : [],
+								... hours? [{ name: 'Hours', value: hours.toLocaleString() }] : []
+							]
+						})
+					]
+				});
 			})
 			.catch(() => {
 				interaction.reply({
 					embeds: [
 						new Embed({
 							color: EmbedColor.danger,
-							description: 'Can not find this user in this server.',
+							description: 'Could not find this user in this server.',
 						}),
 					],
 					ephemeral: true,

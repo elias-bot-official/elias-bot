@@ -34,9 +34,7 @@ module.exports = {
 						},
 						{
 							name: 'Created',
-							value: `<t:${Math.floor(
-								interaction.guild.createdTimestamp / 1000
-							)}:d>`,
+							value: `<t:${Math.floor(interaction.guild.createdTimestamp / 1000)}:d>`,
 							inline: true,
 						},
 						{

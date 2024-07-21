@@ -66,8 +66,10 @@ module.exports = {
 								},
 								{
 									name: 'Status',
-									value: `${emojis[member.presence.status]} ${
-										member.presence.status
+									value: `${
+										member.presence? emojis[member.presence.status] : emojis.offline
+									} ${
+										member.presence? member.presence.status : 'offline'
 									}`,
 									inline: true,
 								}
@@ -81,7 +83,7 @@ module.exports = {
 					embeds: [
 						new Embed({
 							color: EmbedColor.danger,
-							description: 'Can not find this user in this server.',
+							description: 'Could not find this user in this server.',
 						}),
 					],
 					ephemeral: true,

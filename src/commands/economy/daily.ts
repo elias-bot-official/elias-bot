@@ -7,7 +7,7 @@ import emojis from '../../json/emojis.json';
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('daily')
-		.setDescription('Redeems your daily coins'),
+		.setDescription('Redeems your daily coins.'),
 
 	async onCommandInteraction(interaction) {
 		const user = await User.findById(interaction.user.id) ??
@@ -19,7 +19,7 @@ module.exports = {
 				embeds: [
 					new Embed({
 						color: EmbedColor.danger,
-						description: `You have already claimed today's rewards! Come back <t:${user.cooldowns.get('daily')}:R>`,
+						description: `You have already claimed today's coins! Come back <t:${user.cooldowns.get('daily')}:R>`,
 					}),
 				],
 				ephemeral: true,

@@ -94,7 +94,7 @@ module.exports = {
 
 		const random = Math.round(Math.random() * 100);
 
-		if (random > 75) {
+		if (random > 60) {
 			interaction.reply({
 				embeds: [
 					new Embed({

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-unused-vars */
-import { AnySelectMenuInteraction, ButtonInteraction, CommandInteraction, ModalSubmitInteraction } from 'discord.js';
+import { AnySelectMenuInteraction, AutocompleteInteraction, ButtonInteraction, CommandInteraction, ModalSubmitInteraction } from 'discord.js';
 
 export interface Command {
 	data: any;
@@ -8,4 +8,5 @@ export interface Command {
 	onButtonInteraction?(interaction: ButtonInteraction): Promise<void>;
 	onSelectMenuInteraction?(interaction: AnySelectMenuInteraction): Promise<void>;
 	onModalSubmitInteraction?(interaction: ModalSubmitInteraction): Promise<void>;
+	onAutocompleteInteraction?(interaction: AutocompleteInteraction): Promise<void>;
 }

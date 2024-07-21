@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { ActivityType, Client, Routes } from 'discord.js';
 import { DiscordEvent } from '../structure/DiscordEvent';
 import fs from 'fs';
@@ -6,25 +7,26 @@ import path from 'path';
 module.exports = {
 	once: true,
 
-	execute(client: Client) {
-		// registers the global commands
-		const commands = [];
+	async execute(client: Client) {
+		if (process.env.NODE_ENV == 'production') {
+			const commands = [];
 		
-		fs.readdirSync(path.join(__dirname, '..', 'commands', 'global')).forEach(file => {
-			// eslint-disable-next-line @typescript-eslint/no-var-requires
-			const command = require(path.join(__dirname, '..', 'commands', 'global', file));
-			commands.push(command.data);
-		});
+			fs.readdirSync(path.join(__dirname, '..', 'commands', 'global'))
+				.forEach(file =>
+					commands.push(
+						require(path.join(__dirname, '..', 'commands', 'global', file)).data
+					)
+				);
 
-		client.rest.put(
-			Routes.applicationCommands(client.application!.id),
-			{ body: commands }
-		);
+			// registers the global commands
+			client.rest.put(
+				Routes.applicationCommands(client.application!.id), { body: commands }
+			);
+		}
 
 		// sets client's activity
 		client.user.setActivity(
-			`${client.guilds.cache.size} servers`,
-			{ type: ActivityType.Watching }
+			`${client.guilds.cache.size} servers`, { type: ActivityType.Watching }
 		);
 
 		console.log('Bot is ready!');

@@ -5,7 +5,11 @@
 	},
 	{
 		"name": "Lockpick",
-		"price": 1500
+		"price": 500
+	},
+	{
+		"name": "Security Camera",
+		"price": 25000
 	},
 	{
 		"name": "Shovel",

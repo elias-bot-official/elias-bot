@@ -11,9 +11,8 @@ module.exports = {
 		const xp = guild.xp.get(message.author.id) as number ?? 0;
 		const bonus = Math.round(Math.random() * 20 + 10);
 
-		if (xp + bonus >= getXP(getLevel(xp) + 1)) {
+		if (xp + bonus >= getXP(getLevel(xp) + 1))
 			message.channel.send(`Congratulations ${message.author}, you just reached level ${getLevel(xp + bonus)}!`);
-		}
 
 		guild.xp.set(message.author.id, xp + bonus);
 		guild.save();

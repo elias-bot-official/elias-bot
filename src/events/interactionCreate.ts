@@ -8,11 +8,9 @@ module.exports = {
 			interaction.client.commands
 				.find(command => interaction.commandName == command.data.name)
 				.onCommandInteraction(interaction)
-				.catch((error: Error) => {
-					reportError(error, interaction);
-				});
+				.catch((error: Error) => reportError(error, interaction));
 
-			const random = Math.round(Math.random() * 20);
+			const random = Math.round(Math.random() * 30);
 
 			if (random == 0) {
 				await interaction.fetchReply();
@@ -41,43 +39,33 @@ module.exports = {
 				});
 			}
 		}
-
-		if (interaction.isButton()) {
+		else if (interaction.isButton()) {
 			interaction.client.commands
-				.find(
-					command => interaction.message.interaction.commandName
-						.split(' ')[0] == command.data.name
-				)
+				.find(command =>
+					interaction.message.interaction.commandName.split(' ')[0] == command.data.name)
 				.onButtonInteraction(interaction)
-				.catch((error: Error) => {
-					reportError(error, interaction);
-				});
-			return;
+				.catch((error: Error) => reportError(error, interaction));
 		}
-
-		if (interaction.isAnySelectMenu()) {
+		else if (interaction.isAnySelectMenu()) {
 			interaction.client.commands
-				.find(
-					command => interaction.message.interaction.commandName
-						.split(' ')[0] == command.data.name
-				)
+				.find(command =>
+					interaction.message.interaction.commandName.split(' ')[0] == command.data.name)
 				.onSelectMenuInteraction(interaction)
-				.catch((error: Error) => {
-					reportError(error, interaction);
-				});
+				.catch((error: Error) => reportError(error, interaction));
 			return;
 		}
-
-		if (interaction.isModalSubmit()) {
+		else if (interaction.isModalSubmit()) {
 			interaction.client.commands
-				.find(
-					command => command.data.name == interaction.customId.split('|')[0]
-				)
+				.find(command => command.data.name == interaction.customId.split('|')[0])
 				.onModalSubmitInteraction(interaction)
-				.catch((error: Error) => {
-					reportError(error, interaction);
-				});
+				.catch((error: Error) => reportError(error, interaction));
 			return;
+		}
+		else if (interaction.isAutocomplete()) {
+			interaction.client.commands
+				.find(command => interaction.commandName == command.data.name)
+				.onAutocompleteInteraction(interaction)
+				.catch((error: Error) => console.log(error));
 		}
 	},
 } satisfies DiscordEvent;

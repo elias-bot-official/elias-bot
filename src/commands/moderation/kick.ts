@@ -53,20 +53,25 @@ module.exports = {
 				}
 
 				member.kick(reason);
-
-				const embed = new Embed({ color: EmbedColor.primary, title: 'Kick' })
-					.addField('User', user.toString());
-
-				if (reason) embed.addField('Reason', reason.toString());
-
-				interaction.reply({ embeds: [embed] });
+				interaction.reply({
+					embeds: [
+						new Embed({
+							color: EmbedColor.primary,
+							title: 'Kick',
+							fields: [
+								{ name: 'User', value: user.toString() },
+								... reason? [{ name: 'Reason', value: reason }] : []
+							]
+						})
+					]
+				});
 			})
 			.catch(() => {
 				interaction.reply({
 					embeds: [
 						new Embed({
 							color: EmbedColor.danger,
-							description: 'Can not find this user in this server.',
+							description: 'Could not find this user in this server.',
 						}),
 					],
 					ephemeral: true,

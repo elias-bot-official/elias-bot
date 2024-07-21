@@ -13,7 +13,7 @@ module.exports = {
 				.setName('amount')
 				.setDescription('The amount you want to gamble.')
 				.setMinValue(1)
-				.setMaxValue(50000)
+				.setMaxValue(25000)
 				.setRequired(true)
 		)
 		.addStringOption(
@@ -37,7 +37,7 @@ module.exports = {
 					new Embed({
 						color: EmbedColor.danger,
 						description:
-							'You can not gamble more money than you own. Try using </work:1177662316414783518> to earn some more.',
+							'You can not gamble more money than you own.',
 					}),
 				],
 				ephemeral: true,

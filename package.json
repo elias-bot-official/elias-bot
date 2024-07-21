@@ -4,7 +4,8 @@
   "description": "The official elias discord bot.",
   "main": "src/index.ts",
   "scripts": {
-    "dev": "ts-node src/index.ts"
+    "dev": "set NODE_ENV=development&& ts-node src/index.ts",
+    "prod": "set NODE_ENV=production&& ts-node src/index.ts"
   },
   "keywords": [
     "elias-bot",
@@ -16,7 +17,7 @@
     "canvas": "^2.11.2",
     "discord.js": "^14.14.1",
     "dotenv": "^16.3.1",
-    "mongoose": "^8.0.1",
+    "mongoose": "^8.0.0",
     "ts-node": "^10.9.1"
   },
   "devDependencies": {

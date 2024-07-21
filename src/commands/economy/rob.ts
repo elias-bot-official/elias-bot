@@ -1,6 +1,6 @@
-import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandUserOption } from 'discord.js';
+import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandUserOption, User } from 'discord.js';
 import { Command } from '../../structure/Command';
-import { User, transfer } from '../../schemas/User';
+import { User as _User, transfer } from '../../schemas/User';
 import { Embed, EmbedColor } from '../../structure/Embed';
 import emojis from '../../json/emojis.json';
 
@@ -17,7 +17,6 @@ module.exports = {
 
 	async onCommandInteraction(interaction: ChatInputCommandInteraction) {
 		const target = interaction.options.getUser('user');
-
 		if (target.id == interaction.user.id) {
 			interaction.reply({
 				embeds: [
@@ -30,7 +29,6 @@ module.exports = {
 			});
 			return;
 		}
-
 		if (target.bot) {
 			interaction.reply({
 				embeds: [
@@ -44,14 +42,13 @@ module.exports = {
 			return;
 		}
 
-		const dbUser = await User.findById(interaction.user.id);
-
-		if (!dbUser || dbUser.balance < 5000) {
+		const dbUser = await _User.findById(interaction.user.id);
+		if (!dbUser || dbUser.balance < 10000) {
 			interaction.reply({
 				embeds: [
 					new Embed({
 						color: EmbedColor.danger,
-						description: `You need to have at least 5,000 ${emojis.coin} to rob someone.`
+						description: `You need to have at least 10,000 ${emojis.coin} to rob someone.`
 					})
 				],
 				ephemeral: true
@@ -59,22 +56,21 @@ module.exports = {
 			return;
 		}
 
-		const dbTarget = await User.findById(target.id);
+		const dbTarget = await _User.findById(target.id);
+		if (!dbTarget || dbTarget.balance < 10000) {
+			interaction.reply({
+				embeds: [
+					new Embed({
+						color: EmbedColor.danger,
+						description: `You can not rob a user with less than 10,000 ${emojis.coin}`
+					})
+				],
+				ephemeral: true
+			});
+			return;
+		}
+
 		const now = Math.floor(Date.now() / 1000);
-
-		if (!dbTarget || dbTarget.balance < 7500) {
-			interaction.reply({
-				embeds: [
-					new Embed({
-						color: EmbedColor.danger,
-						description: `This user does not have at least 7,500 ${emojis.coin}.`
-					})
-				],
-				ephemeral: true
-			});
-			return;
-		}
-
 		if (dbUser.cooldowns.get('rob') > now) {
 			interaction.reply({
 				embeds: [
@@ -88,31 +84,26 @@ module.exports = {
 			return;
 		}
 
-		if (!(dbTarget.inventory.get('Lock') > 0)) {
-			const random = Math.round(Math.random());
+		if (dbTarget.inventory.get('Security Camera') > 0) {
+			const count = dbTarget.inventory.get('Security Camera');
+			if (Math.random() < Math.pow(.15, count))
+				success(interaction, dbUser, dbTarget, interaction.user, target);
+			else
+				bust(interaction, dbUser, dbTarget, target);
 
-			if (random == 0) {
-				interaction.reply({
-					embeds: [
-						new Embed({
-							color: EmbedColor.primary,
-							title: 'Rob',
-							description: `You managed to steal ${transfer(dbTarget, dbUser, Math.round(Math.random() * 3500 + 4000)).toLocaleString()} ${emojis.coin} from ${target}.`
-						})
-					]
-				});
-			}
-			else {
-				interaction.reply({
-					embeds: [
-						new Embed({
-							color: EmbedColor.primary,
-							title: 'Rob',
-							description: `You got caught and had to pay ${target} ${transfer(dbUser, dbTarget, Math.round(Math.random() * 2500 + 2500)).toLocaleString()} ${emojis.coin}.`
-						})
-					]
-				});
-			}
+			dbUser.cooldowns.set('rob', now + 35);
+			dbUser.save();
+			dbTarget.save();
+			return;
+		}
+
+		if (!(dbTarget.inventory.get('Lock') > 0)) {
+			const random = Math.round(Math.random() * 100);
+
+			if (random < 75)
+				success(interaction, dbUser, dbTarget, interaction.user, target);
+			else
+				bust(interaction, dbUser, dbTarget, target);
 
 			dbUser.cooldowns.set('rob', now + 35);
 			dbUser.save();
@@ -121,43 +112,19 @@ module.exports = {
 		}
 
 		if (dbUser.inventory.get('Lockpick') > 0) {
-			const random = Math.round(Math.random());
+			const random = Math.round(Math.random() * 100);
 
-			if (random == 0) {
-				interaction.reply({
-					embeds: [
-						new Embed({
-							color: EmbedColor.primary,
-							title: 'Rob',
-							description: `${target} had a lock on their vault but you used your lockpick to break it and managed to steal ${transfer(dbTarget, dbUser, Math.round(Math.random() * 3500 + 4000)).toLocaleString()} ${emojis.coin}.`
-						})
-					]
-				});
+			if (random < 25) {
+				success(interaction, dbUser, dbTarget, interaction.user, target);
 				dbTarget.inventory.set('Lock', dbTarget.inventory.get('Lock') - 1);
 			}
 			else {
-				interaction.reply({
-					embeds: [
-						new Embed({
-							color: EmbedColor.primary,
-							title: 'Rob',
-							description: `${target} had a lock on their vault. You tried to use your lockpick but it broke and you had to pay them ${transfer(dbUser, dbTarget, Math.round(Math.random() * 2500 + 2500)).toLocaleString()} ${emojis.coin}.`
-						})
-					]
-				});
+				bust(interaction, dbUser, dbTarget, target);
 				dbUser.inventory.set('Lockpick', dbUser.inventory.get('Lockpick') - 1);
 			}
 		}
 		else {
-			interaction.reply({
-				embeds: [
-					new Embed({
-						color: EmbedColor.primary,
-						title: 'Rob',
-						description: `${target} had a lock on their vault. You got caught and had to pay them ${transfer(dbUser, dbTarget, Math.round(Math.random() * 2500 + 2500)).toLocaleString()} ${emojis.coin}.`
-					})
-				]
-			});
+			bust(interaction, dbUser, dbTarget, target);
 		}
 
 		dbUser.cooldowns.set('rob', now + 35);
@@ -165,3 +132,51 @@ module.exports = {
 		dbTarget.save();
 	},
 } satisfies Command;
+
+function success(interaction: ChatInputCommandInteraction, dbUser: _User,
+	dbTarget: _User, user: User, target: User) {
+	const money = transfer(
+		dbTarget,
+		dbUser,
+		Math.floor(Math.random() * (dbUser.balance * .25 - 5000)) + 5000
+	).toLocaleString();
+
+	interaction.reply({
+		embeds: [
+			new Embed({
+				color: EmbedColor.success,
+				title: 'Success',
+				description: `You managed to steal ${money} ${emojis.coin} from ${target}.`
+			})
+		]
+	});
+
+	target.send({
+		embeds: [
+			new Embed({
+				color: EmbedColor.danger,
+				title: 'Theft Alert',
+				description: `${user} stole ${money} ${emojis.coin} from you.`
+			})
+		]
+	});
+}
+
+function bust(interaction: ChatInputCommandInteraction, dbUser: _User,
+	dbTarget: _User, target: User) {
+	const money = transfer(
+		dbUser,
+		dbTarget,
+		Math.round(Math.random() * 5000 + 5000)
+	).toLocaleString();
+
+	interaction.reply({
+		embeds: [
+			new Embed({
+				color: EmbedColor.danger,
+				title: 'Bust',
+				description: `You got caught and had to pay ${target} ${money} ${emojis.coin}.`
+			})
+		]
+	});
+}

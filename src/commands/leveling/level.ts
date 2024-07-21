@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, SlashCommandUserOption } from 'discord.js';
+import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandUserOption } from 'discord.js';
 import { Command } from '../../structure/Command';
 import { Guild, getLevel, getXP } from '../../schemas/Guild';
 import { Embed, EmbedColor } from '../../structure/Embed';
@@ -15,7 +15,7 @@ module.exports = {
 				.setDescription('The user whose level you want to see')
 		),
 
-	async onCommandInteraction(interaction) {
+	async onCommandInteraction(interaction: ChatInputCommandInteraction) {
 		const guild = await Guild.findById(interaction.guild.id);
 		const user = interaction.options.getUser('user') ?? interaction.user;
 
@@ -68,7 +68,7 @@ module.exports = {
 					embeds: [
 						new Embed({
 							color: EmbedColor.danger,
-							description: 'Can not find this user in this server.',
+							description: 'Could not find this user in this server.',
 						}),
 					],
 					ephemeral: true,
@@ -89,16 +89,8 @@ interface CardOptions {
 }
 
 class LevelCard {
-	static from({
-		background,
-		avatar,
-		name,
-		accent,
-		xp,
-		neededXP,
-		rank,
-		level,
-	}: CardOptions) {
+	static from({ background, avatar, name, accent,
+		xp, neededXP, rank, level }: CardOptions) {
 		const canvas = createCanvas(550, 150);
 		const ctx = canvas.getContext('2d');
 		const formatter = Intl.NumberFormat('en', { notation: 'compact' });

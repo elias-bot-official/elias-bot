@@ -2,5 +2,5 @@
 /* eslint-disable no-unused-vars */
 export interface DiscordEvent {
 	once?: boolean;
-	execute(...params: any): void;
+	execute(...params: any): Promise<void>;
 }

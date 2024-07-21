@@ -43,7 +43,7 @@ module.exports = {
 
 			case 'trivia':
 				const questionObject = trivia[Math.floor(Math.random() * trivia.length)];
-				const options = shuffle(questionObject.options);
+				const options = shuffleOptions(questionObject.options);
 				const optionsRow = new ActionRowBuilder<ButtonBuilder>();
 
 				let formattedQuestion = questionObject.question + '\n\n';
@@ -75,25 +75,25 @@ module.exports = {
 	},
 
 	async onButtonInteraction(interaction: ButtonInteraction) {
+		if (interaction.user.id != interaction.message.interaction.user.id) {
+			interaction.reply({
+				embeds: [
+					new Embed({
+						color: EmbedColor.danger,
+						description: 'You are not allowed to use this button!',
+					}),
+				],
+				ephemeral: true,
+			});
+			return;
+		}
+
 		switch (interaction.message.interaction.commandName) {
 			case 'minigame rps':
-				if (interaction.user.id != interaction.message.interaction.user.id) {
-					interaction.reply({
-						embeds: [
-							new Embed({
-								color: EmbedColor.danger,
-								description: 'You are not allowed to use this button!',
-							}),
-						],
-						ephemeral: true,
-					});
-					return;
-				}
-
 				const outcome = Math.floor(Math.random() * 3);
-				const message = outcomes.rps[outcome][Math.floor(
-					Math.random() * outcomes.rps[outcome].length
-				)];
+				const message = outcomes.rps[outcome][
+					Math.floor(Math.random() * outcomes.rps[outcome].length)
+				];
 
 				interaction.message.edit({
 					embeds: [
@@ -112,19 +112,6 @@ module.exports = {
 				return;
 
 			case 'minigame trivia':
-				if (interaction.user.id != interaction.message.interaction.user.id) {
-					interaction.reply({
-						embeds: [
-							new Embed({
-								color: EmbedColor.danger,
-								description: 'You are not allowed to use this button!',
-							}),
-						],
-						ephemeral: true,
-					});
-					return;
-				}
-
 				const segments = interaction.customId.split('|');
 
 				if (segments[0] == segments[1]) {
@@ -173,7 +160,7 @@ module.exports = {
 	},
 } satisfies Command;
 
-function shuffle(array: string[]) {
+function shuffleOptions(array: string[]) {
 	for (let i = array.length - 1; i > 0; i--) {
 		const j = Math.floor(Math.random() * (i + 1));
 		[array[i], array[j]] = [array[j], array[i]];

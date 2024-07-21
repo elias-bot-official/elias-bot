@@ -23,26 +23,32 @@ module.exports = {
 		const user = interaction.options.getUser('user');
 		const reason = interaction.options.getString('reason', false);
 
-		try {
-			await interaction.guild.members.unban(user, reason);
-
-			const embed = new Embed({ color: EmbedColor.primary, title: 'Unban' })
-				.addField('User', user.toString());
-
-			if (reason) embed.addField('Reason', reason);
-
-			interaction.reply({ embeds: [embed] });
-		}
-		catch (error) {
-			interaction.reply({
-				embeds: [
-					new Embed({
-						color: EmbedColor.danger,
-						description: 'This user is not banned.',
-					}),
-				],
-				ephemeral: true,
-			});
-		}
+		interaction.guild.members
+			.unban(user, reason)
+			.then(() =>
+				interaction.reply({
+					embeds: [
+						new Embed({
+							color: EmbedColor.primary,
+							title: 'Unban',
+							fields: [
+								{ name: 'User', value: user.toString() },
+								... reason? [{ name: 'Reason', value: reason }] : []
+							]
+						})
+					]
+				})
+			)
+			.catch(() =>
+				interaction.reply({
+					embeds: [
+						new Embed({
+							color: EmbedColor.danger,
+							description: 'This user is not banned.',
+						}),
+					],
+					ephemeral: true,
+				})
+			);
 	},
 } satisfies Command;

@@ -12,10 +12,10 @@ module.exports = {
 
 		if (!channel) return;
 
-		member.guild.channels.fetch(channel)
-			.then(channel => {
-				(channel as TextChannel).send(`${member} welcome to the server!`);
-			})
+		member.guild.channels
+			.fetch(channel)
+			.then(channel =>
+				(channel as TextChannel).send(`${member} welcome to the server!`))
 			.catch(error => console.log(error));
 	}
 } satisfies DiscordEvent;

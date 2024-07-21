@@ -18,9 +18,7 @@ module.exports = {
 					},
 					{
 						name: 'Up Since',
-						value: `<t:${Math.trunc(
-							Date.now() / 1000 - interaction.client.uptime / 1000
-						)}:R>`,
+						value: `<t:${Math.floor((Date.now() - interaction.client.uptime) / 1000)}:R>`,
 					}
 				),
 			],

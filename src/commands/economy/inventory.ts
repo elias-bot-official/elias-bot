@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, SlashCommandUserOption } from 'discord.js';
+import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandUserOption } from 'discord.js';
 import { Command } from '../../structure/Command';
 import { User } from '../../schemas/User';
 import { Embed, EmbedColor } from '../../structure/Embed';
@@ -14,7 +14,7 @@ module.exports = {
 				.setDescription('The user\'s inventory you want to view.')
 		),
 
-	async onCommandInteraction(interaction) {
+	async onCommandInteraction(interaction: ChatInputCommandInteraction) {
 		const user = interaction.options.getUser('user', false);
 		const dbUser = await User.findById((user ?? interaction.user).id);
 
