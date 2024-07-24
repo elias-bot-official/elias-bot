@@ -1,9 +1,9 @@
 import { ActionRowBuilder, ButtonInteraction, ChatInputCommandInteraction, SlashCommandBuilder } from 'discord.js';
 import { Command } from '../../structure/Command';
-import { User } from '../../schemas/User';
 import { Embed, EmbedColor } from '../../structure/Embed';
 import emojis from '../../json/emojis.json';
 import { Button } from '../../structure/Button';
+import { UserModel } from '../../schemas/User';
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -11,8 +11,8 @@ module.exports = {
 		.setDescription('Work for some extra coins.'),
 
 	async onCommandInteraction(interaction: ChatInputCommandInteraction) {
-		const dbUser = await User.findById(interaction.user.id) ??
-			await User.create({ _id: interaction.user.id });
+		const dbUser = await UserModel.findById(interaction.user.id) ??
+			await UserModel.create({ _id: interaction.user.id });
 		const now = Math.floor(Date.now() / 1000);
 
 		if (dbUser.cooldowns.get('work') > now) {
@@ -72,7 +72,7 @@ module.exports = {
 			return;
 		}
 
-		const dbUser = await User.findById(interaction.user.id);
+		const dbUser = await UserModel.findById(interaction.user.id);
 		const segments = interaction.customId.split('|');
 
 		if (segments[0] == segments[1]) {

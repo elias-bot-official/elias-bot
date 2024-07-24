@@ -1,8 +1,8 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandIntegerOption, SlashCommandStringOption } from 'discord.js';
 import { Command } from '../../structure/Command';
-import { User } from '../../schemas/User';
 import { Embed, EmbedColor } from '../../structure/Embed';
 import emojis from '../../json/emojis.json';
+import { UserModel } from '../../schemas/User';
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -28,7 +28,7 @@ module.exports = {
 		),
 
 	async onCommandInteraction(interaction: ChatInputCommandInteraction) {
-		const user = await User.findById(interaction.user.id);
+		const user = await UserModel.findById(interaction.user.id);
 		const amount = interaction.options.getInteger('amount');
 
 		if (!user || user.balance < amount) {

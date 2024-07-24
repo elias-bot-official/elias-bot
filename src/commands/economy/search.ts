@@ -4,7 +4,7 @@ import { Embed, EmbedColor } from '../../structure/Embed';
 import emojis from '../../json/emojis.json';
 import { ActionRowBuilder, SelectMenuBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from '@discordjs/builders';
 import outcomes from '../../json/outcomes.json';
-import { User } from '../../schemas/User';
+import { UserModel } from '../../schemas/User';
 
 const selectMenu = new StringSelectMenuBuilder()
 	.setPlaceholder('Select a place.')
@@ -34,8 +34,8 @@ module.exports = {
 		.setDescription('Search for some extra coins.'),
 
 	async onCommandInteraction(interaction) {
-		const user = await User.findById(interaction.user.id) ??
-			await User.create({ _id: interaction.user.id });
+		const user = await UserModel.findById(interaction.user.id) ??
+			await UserModel.create({ _id: interaction.user.id });
 		const now = Math.floor(Date.now() / 1000);
 
 		if (user.cooldowns.get('search') > now) {
@@ -109,7 +109,7 @@ module.exports = {
 			return;
 		}
 
-		const user = await User.findById(interaction.user.id);
+		const user = await UserModel.findById(interaction.user.id);
 		const money = Math.round(Math.random() * 500 + 500);
 
 		interaction.reply({

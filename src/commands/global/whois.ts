@@ -2,7 +2,7 @@ import { ChatInputCommandInteraction, GuildMember, PermissionFlagsBits, SlashCom
 import { Command } from '../../structure/Command';
 import { Embed, EmbedColor } from '../../structure/Embed';
 import emojis from '../../json/emojis.json';
-import { Guild } from '../../schemas/Guild';
+import { GuildModel } from '../../schemas/Guild';
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -22,7 +22,7 @@ module.exports = {
 		interaction.guild.members
 			.fetch(user.id)
 			.then(async member => {
-				const guild = await Guild.findById(interaction.guild.id);
+				const dbGuild = await GuildModel.findById(interaction.guild.id);
 
 				interaction.reply({
 					embeds: [
@@ -58,7 +58,7 @@ module.exports = {
 								},
 								{
 									name: 'Warns',
-									value: guild? guild.warns
+									value: dbGuild? dbGuild.warns
 										.filter(warn => warn.user_id == member.id)
 										.length.toLocaleString() :
 										'0',

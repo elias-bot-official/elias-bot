@@ -1,7 +1,7 @@
 import { SlashCommandBuilder, Guild, ActionRowBuilder, ButtonBuilder, ButtonInteraction } from 'discord.js';
 import { Command } from '../../structure/Command';
 import { Embed, EmbedColor } from '../../structure/Embed';
-import { Guild as _Guild, getLevel } from '../../schemas/Guild';
+import { GuildModel, getLevel } from '../../schemas/Guild';
 import { Button } from '../../structure/Button';
 import emojis from '../../json/emojis.json';
 
@@ -28,7 +28,7 @@ module.exports = {
 } satisfies Command;
 
 async function getEmbed(page: number, guild: Guild) {
-	const dbGuild = await _Guild.findById(guild.id);
+	const dbGuild = await GuildModel.findById(guild.id);
 	const array = [...dbGuild.xp.entries()];
 	array.sort((a, b) => b[1] - a[1]);
 
@@ -61,7 +61,7 @@ async function getEmbed(page: number, guild: Guild) {
 }
 
 async function getActionRow(page: number, guild: Guild) {
-	const dbGuild = await _Guild.findById(guild.id);
+	const dbGuild = await GuildModel.findById(guild.id);
 
 	return new ActionRowBuilder<ButtonBuilder>().addComponents(
 		Button.primary({

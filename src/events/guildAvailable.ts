@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { Guild, Routes } from 'discord.js';
 import { DiscordEvent } from '../structure/DiscordEvent';
-import { Guild as _Guild } from '../schemas/Guild';
+import { GuildModel } from '../schemas/Guild';
 import path from 'path';
 import fs from 'node:fs';
 
@@ -14,13 +14,11 @@ module.exports = {
 			{ body: [] }
 		);
 
-		const dbGuild = await _Guild.findById(guild.id);
+		const dbGuild = await GuildModel.findById(guild.id);
 		if (!dbGuild) return;
 
-		dbGuild.plugins.forEach((v, k) => {
-			if (!v) return;
-
-			const pluginPath = path.join(__dirname, '..', 'commands', k);
+		dbGuild.plugins.forEach(name => {
+			const pluginPath = path.join(__dirname, '..', 'commands', name);
 			
 			if (!fs.existsSync(pluginPath))
 				return;

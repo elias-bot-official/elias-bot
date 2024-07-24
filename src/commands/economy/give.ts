@@ -1,6 +1,6 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandIntegerOption, SlashCommandUserOption } from 'discord.js';
 import { Command } from '../../structure/Command';
-import { User, transfer } from '../../schemas/User';
+import { transfer, UserModel } from '../../schemas/User';
 import { Embed, EmbedColor } from '../../structure/Embed';
 import emojis from '../../json/emojis.json';
 
@@ -51,7 +51,7 @@ module.exports = {
 			return;
 		}
 
-		const dbUser = await User.findById(interaction.user.id);
+		const dbUser = await UserModel.findById(interaction.user.id);
 		const amount = interaction.options.getInteger('amount');
 
 		if (!dbUser || dbUser.balance < amount) {
@@ -67,8 +67,8 @@ module.exports = {
 			return;
 		}
 
-		const dbReceiver = await User.findById(receiver.id) ??
-			await User.create({ _id: receiver.id });
+		const dbReceiver = await UserModel.findById(receiver.id) ??
+			await UserModel.create({ _id: receiver.id });
 
 		interaction.reply({
 			embeds: [

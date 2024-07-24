@@ -1,6 +1,6 @@
 import { ActionRowBuilder, ApplicationCommandType, ContextMenuCommandBuilder, GuildMember, ModalBuilder, ModalSubmitInteraction, PermissionFlagsBits, TextInputBuilder, TextInputStyle, UserContextMenuCommandInteraction } from 'discord.js';
 import { Command } from '../../structure/Command';
-import { Guild } from '../../schemas/Guild';
+import { GuildModel } from '../../schemas/Guild';
 import { Embed, EmbedColor } from '../../structure/Embed';
 
 module.exports = {
@@ -73,8 +73,8 @@ module.exports = {
 	
 	async onModalSubmitInteraction(interaction: ModalSubmitInteraction) {
 		const userId = interaction.customId.split('|')[1];
-		const guild = await Guild.findById(interaction.guild.id) ??
-			await Guild.create({ _id: interaction.guild.id });
+		const guild = await GuildModel.findById(interaction.guild.id) ??
+			await GuildModel.create({ _id: interaction.guild.id });
 		const reason = interaction.fields.getTextInputValue('reason');
 
 		interaction.reply({
@@ -99,7 +99,7 @@ module.exports = {
 					fields: [
 						... reason? [{ name: 'Reason', value: reason }] : [],
 						{ name: 'Server', value: interaction.guild.toString() }
-					] as Array<{ name: string; value: string }>
+					]
 				})
 			]
 		}).catch();

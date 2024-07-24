@@ -1,9 +1,9 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandUserOption } from 'discord.js';
 import { Command } from '../../structure/Command';
-import { Guild, getLevel, getXP } from '../../schemas/Guild';
+import { GuildModel, getLevel, getXP } from '../../schemas/Guild';
 import { Embed, EmbedColor } from '../../structure/Embed';
 import { Image, createCanvas, loadImage } from 'canvas';
-import { User } from '../../schemas/User';
+import { UserModel } from '../../schemas/User';
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -16,10 +16,10 @@ module.exports = {
 		),
 
 	async onCommandInteraction(interaction: ChatInputCommandInteraction) {
-		const guild = await Guild.findById(interaction.guild.id);
+		const dbGuild = await GuildModel.findById(interaction.guild.id);
 		const user = interaction.options.getUser('user') ?? interaction.user;
 
-		if (!guild.xp.get(user.id)) {
+		if (!dbGuild.xp.get(user.id)) {
 			interaction.reply({
 				embeds: [
 					new Embed({
@@ -35,25 +35,22 @@ module.exports = {
 		interaction.guild.members
 			.fetch(user.id)
 			.then(async member => {
-				const dbUser = await User.findById(member.id);
-				const backgroundUrl = dbUser ? dbUser.settings.get('background') : null;
-				const xp = guild.xp.get(member.id);
+				const dbUser = await UserModel.findById(member.id);
+				const xp = dbGuild.xp.get(member.id);
 				const level = getLevel(xp);
 
 				let rank = 1;
-				guild.xp.forEach(xp => {
-					if (xp > guild.xp.get(user.id)) rank++;
-				});
+				dbGuild.xp.forEach(xp => xp > dbGuild.xp.get(user.id) && rank++);
 
 				interaction.reply({
 					files: [
 						{
 							attachment: LevelCard.from({
-								background: backgroundUrl? await loadImage(backgroundUrl) :
-									null,
+								background: dbUser?
+									await loadImage(dbUser.settings.get('background') as string) : null,
 								avatar: await loadImage(user.avatarURL({ extension: 'png' })),
 								name: member.displayName,
-								accent: dbUser ? dbUser.settings.get('accent') : null,
+								accent: dbUser?.settings.get('accent') as string,
 								xp: xp - getXP(level),
 								neededXP: getXP(level + 1) - getXP(level),
 								rank: rank,
@@ -89,14 +86,13 @@ interface CardOptions {
 }
 
 class LevelCard {
-	static from({ background, avatar, name, accent,
-		xp, neededXP, rank, level }: CardOptions) {
+	static from(options: CardOptions) {
 		const canvas = createCanvas(550, 150);
 		const ctx = canvas.getContext('2d');
 		const formatter = Intl.NumberFormat('en', { notation: 'compact' });
 
 		// background
-		if (background) ctx.drawImage(background, 0, 0, 550, 150);
+		if (options.background) ctx.drawImage(options.background, 0, 0, 550, 150);
 		else {
 			ctx.beginPath();
 			ctx.fillStyle = '#2b2d30';
@@ -110,7 +106,7 @@ class LevelCard {
 		ctx.closePath();
 		ctx.save();
 		ctx.clip();
-		ctx.drawImage(avatar, 25, 25, 100, 100);
+		ctx.drawImage(options.avatar, 25, 25, 100, 100);
 		ctx.restore();
 
 		// white part of progress bar
@@ -124,8 +120,8 @@ class LevelCard {
 
 		// colored part of progress bar
 		ctx.beginPath();
-		ctx.fillStyle = accent ?? '#04a0fb';
-		ctx.roundRect(0, 90, (xp / neededXP) * 385 + 135, 20, 10);
+		ctx.fillStyle = options.accent ?? '#04a0fb';
+		ctx.roundRect(0, 90, (options.xp / options.neededXP) * 385 + 135, 20, 10);
 		ctx.fill();
 		ctx.closePath();
 		ctx.restore();
@@ -135,7 +131,7 @@ class LevelCard {
 		ctx.fillStyle = '#ffff';
 		ctx.textBaseline = 'bottom';
 		ctx.font = '25px Geist';
-		ctx.fillText(name, 135, 85);
+		ctx.fillText(options.name, 135, 85);
 		ctx.closePath();
 
 		// xp
@@ -143,7 +139,7 @@ class LevelCard {
 		ctx.textAlign = 'end';
 		ctx.font = '15px Geist';
 		ctx.fillText(
-			`${formatter.format(xp)} / ${formatter.format(neededXP)}`,
+			`${formatter.format(options.xp)} / ${formatter.format(options.neededXP)}`,
 			520,
 			85
 		);
@@ -154,13 +150,13 @@ class LevelCard {
 		ctx.fillStyle = '#f5d131';
 		ctx.font = '22px Geist';
 		ctx.textBaseline = 'top';
-		ctx.fillText(`RANK ${rank}`, 395, 25);
+		ctx.fillText(`RANK ${options.rank}`, 395, 25);
 		ctx.closePath();
 
 		// level
 		ctx.beginPath();
-		ctx.fillStyle = accent ?? '#04a0fb';
-		ctx.fillText(`LEVEL ${level}`, 520, 25);
+		ctx.fillStyle = options.accent ?? '#04a0fb';
+		ctx.fillText(`LEVEL ${options.level}`, 520, 25);
 		ctx.closePath();
 
 		return canvas.toBuffer();

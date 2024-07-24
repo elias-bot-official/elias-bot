@@ -2,8 +2,8 @@ import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandIntegerOp
 import { Command } from '../../structure/Command';
 import shop from '../../json/shop.json';
 import { Embed, EmbedColor } from '../../structure/Embed';
-import { User } from '../../schemas/User';
 import emojis from '../../json/emojis.json';
+import { UserModel } from '../../schemas/User';
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -79,7 +79,7 @@ module.exports = {
 				const itemName = interaction.options.getString('item');
 				const amount = interaction.options.getInteger('amount', false) ?? 1;
 				const item = shop.filter(item => item.name == itemName)[0];
-				const user = await User.findById(interaction.user.id);
+				const user = await UserModel.findById(interaction.user.id);
 
 				if (!user || item.price * amount > user.balance) {
 					interaction.reply({

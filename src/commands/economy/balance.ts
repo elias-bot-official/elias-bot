@@ -1,8 +1,8 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandUserOption } from 'discord.js';
 import { Command } from '../../structure/Command';
-import { User } from '../../schemas/User';
 import { Embed, EmbedColor } from '../../structure/Embed';
 import emojis from '../../json/emojis.json';
+import { UserModel } from '../../schemas/User';
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -16,7 +16,7 @@ module.exports = {
 
 	async onCommandInteraction(interaction: ChatInputCommandInteraction) {
 		const user = interaction.options.getUser('user', false);
-		const dbUser = await User.findById((user ?? interaction.user).id);
+		const dbUser = await UserModel.findById((user ?? interaction.user).id);
 
 		interaction.reply({
 			embeds: [

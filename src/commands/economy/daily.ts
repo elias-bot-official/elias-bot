@@ -1,8 +1,8 @@
 import { SlashCommandBuilder } from 'discord.js';
 import { Command } from '../../structure/Command';
-import { User } from '../../schemas/User';
 import { Embed, EmbedColor } from '../../structure/Embed';
 import emojis from '../../json/emojis.json';
+import { UserModel } from '../../schemas/User';
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -10,8 +10,8 @@ module.exports = {
 		.setDescription('Redeems your daily coins.'),
 
 	async onCommandInteraction(interaction) {
-		const user = await User.findById(interaction.user.id) ??
-			await User.create({ _id: interaction.user.id });
+		const user = await UserModel.findById(interaction.user.id) ??
+			await UserModel.create({ _id: interaction.user.id });
 		const now = Math.floor(Date.now() / 1000);
 
 		if (user.cooldowns.get('daily') > now) {

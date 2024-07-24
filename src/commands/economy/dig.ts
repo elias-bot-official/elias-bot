@@ -1,9 +1,9 @@
 import { SlashCommandBuilder } from 'discord.js';
 import { Command } from '../../structure/Command';
-import { User } from '../../schemas/User';
 import { Embed, EmbedColor } from '../../structure/Embed';
 import outcomes from '../../json/outcomes.json';
 import emojis from '../../json/emojis.json';
+import { UserModel } from '../../schemas/User';
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -11,7 +11,7 @@ module.exports = {
 		.setDescription('Dig for coins.'),
 
 	async onCommandInteraction(interaction) {
-		const user = await User.findById(interaction.user.id);
+		const user = await UserModel.findById(interaction.user.id);
 
 		if (!user || user.inventory.get('Shovel') == 0) {
 			interaction.reply({

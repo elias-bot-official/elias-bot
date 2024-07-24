@@ -1,6 +1,6 @@
 import { ChatInputCommandInteraction, GuildMember, SlashCommandBuilder, SlashCommandIntegerOption, SlashCommandStringOption, SlashCommandSubcommandBuilder, SlashCommandUserOption } from 'discord.js';
 import { Command } from '../../structure/Command';
-import { Guild, Warn } from '../../schemas/Guild';
+import { GuildModel } from '../../schemas/Guild';
 import { Embed, EmbedColor } from '../../structure/Embed';
 
 module.exports = {
@@ -49,13 +49,13 @@ module.exports = {
 
 	async onCommandInteraction(interaction: ChatInputCommandInteraction) {
 		const user = interaction.options.getUser('user');
-		const guild = await Guild.findById(interaction.guild.id);
+		const guild = await GuildModel.findById(interaction.guild.id);
 
 		switch (interaction.options.getSubcommand()) {
 			case 'view':
 				const embed = new Embed({ color: EmbedColor.primary, title: 'Warns' });
 
-				guild.warns.forEach((warn: Warn, i) => {
+				guild.warns.forEach((warn, i) => {
 					if (warn.user_id == user.id) {
 						embed.addFields(
 							{ name: '\u200b', value: '\u200b' },

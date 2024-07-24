@@ -47,9 +47,7 @@ fs.readdirSync(path.join(__dirname, 'events')).forEach(file => {
 });
 
 // catches any uncaught exceptions
-process.on('uncaughtException', exception => {
-	console.log(exception);
-});
+process.on('uncaughtException', exception => console.log(exception));
 
 // starts the bot and rest client
 client.login(process.env.token);

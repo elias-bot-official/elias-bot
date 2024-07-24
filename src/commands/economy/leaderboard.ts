@@ -1,9 +1,9 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, Client, SlashCommandBuilder } from 'discord.js';
 import { Command } from '../../structure/Command';
-import { User } from '../../schemas/User';
 import { Embed, EmbedColor } from '../../structure/Embed';
 import emojis from '../../json/emojis.json';
 import { Button } from '../../structure/Button';
+import { UserModel } from '../../schemas/User';
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -28,7 +28,7 @@ module.exports = {
 } satisfies Command;
 
 async function getEmbed(page: number, client: Client) {
-	const dbUsers = await User.find().sort({ balance: -1 })
+	const dbUsers = await UserModel.find().sort({ balance: -1 })
 		.limit(10 * page);
 
 	let description = '';
@@ -38,7 +38,7 @@ async function getEmbed(page: number, client: Client) {
 		description += `${index + 1}. \`\`${user.displayName}\`\` - ${dbUser.balance.toLocaleString()} ${emojis.coin}\n`;
 	}
 
-	const userCount = await User.countDocuments();
+	const userCount = await UserModel.countDocuments();
 	const pageCount = (userCount / 10 < 5)? Math.ceil(userCount / 10) : 5;
 
 	return new Embed({
@@ -50,7 +50,7 @@ async function getEmbed(page: number, client: Client) {
 }
 
 async function getButtons(page: number) {
-	const userCount = await User.countDocuments();
+	const userCount = await UserModel.countDocuments();
 
 	return new ActionRowBuilder<ButtonBuilder>().addComponents(
 		Button.primary({

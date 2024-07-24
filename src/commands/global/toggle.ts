@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { ChatInputCommandInteraction, PermissionFlagsBits, SlashCommandBuilder, SlashCommandStringOption } from 'discord.js';
 import { Command } from '../../structure/Command';
-import { Guild } from '../../schemas/Guild';
+import { GuildModel } from '../../schemas/Guild';
 import { Embed, EmbedColor } from '../../structure/Embed';
 import fs from 'fs';
 import path from 'path';
@@ -28,10 +28,10 @@ module.exports = {
 
 	async onCommandInteraction(interaction: ChatInputCommandInteraction) {
 		const pluginName = interaction.options.getString('plugin');
-		const guild = await Guild.findById(interaction.guild.id) ??
-			await Guild.create({ _id: interaction.guild.id });
+		const guild = await GuildModel.findById(interaction.guild.id) ??
+			await GuildModel.create({ _id: interaction.guild.id });
 
-		if (guild.plugins.get(pluginName)) {
+		if (guild.plugins.includes(pluginName)) {
 			if (fs.existsSync(path.join(__dirname, '..', pluginName))) {
 				const commandNames = [];
 
@@ -57,6 +57,8 @@ module.exports = {
 					})
 				]
 			});
+
+			guild.plugins.splice(guild.plugins.indexOf(pluginName), 1);
 		}
 		else {
 			if (fs.existsSync(path.join(__dirname, '..', pluginName))) {
@@ -74,9 +76,10 @@ module.exports = {
 					})
 				]
 			});
+
+			guild.plugins.push(pluginName);
 		}
 
-		guild.plugins.set(pluginName, !guild.plugins.get(pluginName));
 		guild.save();
 	},
 } satisfies Command;

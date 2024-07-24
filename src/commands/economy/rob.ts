@@ -1,6 +1,6 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandUserOption, User } from 'discord.js';
 import { Command } from '../../structure/Command';
-import { User as _User, transfer } from '../../schemas/User';
+import { transfer, UserDocument, UserModel } from '../../schemas/User';
 import { Embed, EmbedColor } from '../../structure/Embed';
 import emojis from '../../json/emojis.json';
 
@@ -17,6 +17,7 @@ module.exports = {
 
 	async onCommandInteraction(interaction: ChatInputCommandInteraction) {
 		const target = interaction.options.getUser('user');
+
 		if (target.id == interaction.user.id) {
 			interaction.reply({
 				embeds: [
@@ -29,6 +30,7 @@ module.exports = {
 			});
 			return;
 		}
+
 		if (target.bot) {
 			interaction.reply({
 				embeds: [
@@ -42,7 +44,8 @@ module.exports = {
 			return;
 		}
 
-		const dbUser = await _User.findById(interaction.user.id);
+		const dbUser = await UserModel.findById(interaction.user.id);
+
 		if (!dbUser || dbUser.balance < 10000) {
 			interaction.reply({
 				embeds: [
@@ -56,7 +59,8 @@ module.exports = {
 			return;
 		}
 
-		const dbTarget = await _User.findById(target.id);
+		const dbTarget = await UserModel.findById(target.id);
+
 		if (!dbTarget || dbTarget.balance < 10000) {
 			interaction.reply({
 				embeds: [
@@ -71,6 +75,7 @@ module.exports = {
 		}
 
 		const now = Math.floor(Date.now() / 1000);
+		
 		if (dbUser.cooldowns.get('rob') > now) {
 			interaction.reply({
 				embeds: [
@@ -88,8 +93,7 @@ module.exports = {
 			const count = dbTarget.inventory.get('Security Camera');
 			if (Math.random() < Math.pow(.15, count))
 				success(interaction, dbUser, dbTarget, interaction.user, target);
-			else
-				bust(interaction, dbUser, dbTarget, target);
+			else bust(interaction, dbUser, dbTarget, target);
 
 			dbUser.cooldowns.set('rob', now + 35);
 			dbUser.save();
@@ -102,8 +106,7 @@ module.exports = {
 
 			if (random < 75)
 				success(interaction, dbUser, dbTarget, interaction.user, target);
-			else
-				bust(interaction, dbUser, dbTarget, target);
+			else bust(interaction, dbUser, dbTarget, target);
 
 			dbUser.cooldowns.set('rob', now + 35);
 			dbUser.save();
@@ -123,9 +126,7 @@ module.exports = {
 				dbUser.inventory.set('Lockpick', dbUser.inventory.get('Lockpick') - 1);
 			}
 		}
-		else {
-			bust(interaction, dbUser, dbTarget, target);
-		}
+		else bust(interaction, dbUser, dbTarget, target);
 
 		dbUser.cooldowns.set('rob', now + 35);
 		dbUser.save();
@@ -133,8 +134,8 @@ module.exports = {
 	},
 } satisfies Command;
 
-function success(interaction: ChatInputCommandInteraction, dbUser: _User,
-	dbTarget: _User, user: User, target: User) {
+function success(interaction: ChatInputCommandInteraction, dbUser: UserDocument,
+	dbTarget: UserDocument, user: User, target: User) {
 	const money = transfer(
 		dbTarget,
 		dbUser,
@@ -162,8 +163,8 @@ function success(interaction: ChatInputCommandInteraction, dbUser: _User,
 	});
 }
 
-function bust(interaction: ChatInputCommandInteraction, dbUser: _User,
-	dbTarget: _User, target: User) {
+function bust(interaction: ChatInputCommandInteraction, dbUser: UserDocument,
+	dbTarget: UserDocument, target: User) {
 	const money = transfer(
 		dbUser,
 		dbTarget,

@@ -1,6 +1,6 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandStringOption, SlashCommandSubcommandBuilder } from 'discord.js';
 import { Command } from '../../structure/Command';
-import { User } from '../../schemas/User';
+import { UserModel } from '../../schemas/User';
 import { Embed, EmbedColor } from '../../structure/Embed';
 
 module.exports = {
@@ -29,8 +29,8 @@ module.exports = {
 		),
 
 	async onCommandInteraction(interaction: ChatInputCommandInteraction) {
-		const user = await User.findById(interaction.user.id) ??
-			await User.create({ _id: interaction.user.id });
+		const user = await UserModel.findById(interaction.user.id) ??
+			await UserModel.create({ _id: interaction.user.id });
 		switch(interaction.options.getSubcommand()) {
 			case 'accent':
 				const color = interaction.options.getString('color', false);
