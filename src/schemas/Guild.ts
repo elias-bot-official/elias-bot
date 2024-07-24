@@ -1,50 +1,29 @@
-import mongoose, { Document } from 'mongoose';
+import { model, Schema } from 'mongoose';
 
-export interface Warn {
-	user_id: string;
-	reason?: string;
-}
-
-const GuildSchema = new mongoose.Schema(
-	{
-		_id: {
-			type: String,
-			required: true,
-		},
-		warns: [Object],
-		xp: {
-			type: Map,
-			of: Number,
-			default: new Map()
-		},
-		plugins: {
-			type: Map,
-			of: Boolean,
-			default: new Map()
-		},
-		settings: {
-			type: Map,
-			of: Object,
-			default: new Map()
-		}
+const WarnSchema = new Schema({
+	user_id: {
+		type: String,
+		required: true
 	},
-);
+	reason: String
+}, { _id: false });
 
-export const Guild = mongoose.model('Guild', GuildSchema);
+const GuildSchema = new Schema({
+	_id: {
+		type: String,
+		required: true,
+	},
+	warns: [WarnSchema],
+	xp: {
+		type: Map,
+		of: Number,
+		default: new Map()
+	},
+	plugins: [String],
+	salutes_channel: String
+}, { versionKey: false });
 
-export type Guild = Document<string, object, {
-	_id: string;
-	xp: Map<string, number>;
-	warns: Warn[];
-	plugins: Map<string, boolean>;
-	settings: Map<string, object>;
-}> & {
-	xp: Map<string, number>;
-	_id: string;
-	warns: Warn[];
-	plugins: Map<string, boolean>;
-	settings: Map<string, object>;
-};
+export const GuildModel = model('Guild', GuildSchema);
 
 export function getLevel(xp: number) {
 	for (let i = 0;; i++) {
