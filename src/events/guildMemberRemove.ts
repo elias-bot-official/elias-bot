@@ -13,6 +13,9 @@ module.exports = {
 			.fetch(guild.salutes_channel)
 			.then(channel =>
 				(channel as TextChannel).send(`${member} just left the server.`))
-			.catch();
+			.catch(() => {
+				guild.salutes_channel = null;
+				guild.save();
+			});
 	}
 } satisfies DiscordEvent;

@@ -13,6 +13,9 @@ module.exports = {
 			.fetch(guild.salutes_channel)
 			.then((channel: TextChannel) =>
 				channel.send(`${member} welcome to the server!`))
-			.catch(err => console.log('.catch() ' + err));
+			.catch(() => {
+				guild.salutes_channel = null;
+				guild.save();
+			});
 	}
 } satisfies DiscordEvent;
