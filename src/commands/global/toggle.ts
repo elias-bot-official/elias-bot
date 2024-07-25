@@ -7,79 +7,80 @@ import fs from 'fs';
 import path from 'path';
 
 module.exports = {
-	data: new SlashCommandBuilder()
+    data: new SlashCommandBuilder()
 		.setName('toggle')
-		.setDescription('Toggles a plugin.')
-		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
-		.setDMPermission(false)
-		.addStringOption(
-			new SlashCommandStringOption()
-				.setName('plugin')
-				.setDescription('The plugin you want to toggle.')
-				.addChoices(
-					{ name: 'Economy', value: 'Economy' },
-					{ name: 'Fun', value: 'Fun' },
-					{ name: 'Leveling', value: 'Leveling' },
-					{ name: 'Moderation', value: 'Moderation' },
-					{ name: 'Saluter', value: 'Saluter' }
-				)
-				.setRequired(true)
-		),
+        .setDescription('Toggles a plugin.')
+        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
+        .setDMPermission(false)
+        .addStringOption(
+            new SlashCommandStringOption()
+                .setName('plugin')
+                .setDescription('The plugin you want to toggle.')
+                .addChoices(
+                    { name: 'Economy', value: 'Economy' },
+                    { name: 'Fun', value: 'Fun' },
+                    { name: 'Leveling', value: 'Leveling' },
+                    { name: 'Moderation', value: 'Moderation' },
+                    { name: 'Saluter', value: 'Saluter' }
+                )
+                .setRequired(true)
+        ),
 
-	async onCommandInteraction(interaction: ChatInputCommandInteraction) {
-		const pluginName = interaction.options.getString('plugin');
-		const guild = await GuildModel.findById(interaction.guild.id) ??
-			await GuildModel.create({ _id: interaction.guild.id });
+    async onCommandInteraction(interaction: ChatInputCommandInteraction) {
+        await interaction.deferReply();
 
-		if (guild.plugins.includes(pluginName)) {
-			if (fs.existsSync(path.join(__dirname, '..', pluginName))) {
-				const commandNames = [];
+        const pluginName = interaction.options.getString('plugin');
+        const guild = await GuildModel.findById(interaction.guild.id) ?? await GuildModel.create({ _id: interaction.guild.id });
 
-				fs.readdirSync(path.join(__dirname, '..', pluginName)).forEach(file => {
-					commandNames.push(file.split('.')[0]);
-				});
-	
-				const guildCommands = await interaction.guild.commands.fetch();
-	
-				for (const entry of guildCommands) {
-					if (entry[1].client.application.id == interaction.client.application.id &&
-					commandNames.includes(entry[1].name)) {
-						interaction.guild.commands.delete(entry[1].id);
-					}
-				}
-			}
+        if (guild.plugins.includes(pluginName)) {
+            if (fs.existsSync(path.join(__dirname, '..', pluginName))) {
+                const commandNames = [];
 
-			interaction.reply({
-				embeds: [
-					new Embed({
-						color: EmbedColor.primary,
-						description: `The \`${pluginName}\` plugin has been disabled.`
-					})
-				]
-			});
+                fs.readdirSync(path.join(__dirname, '..', pluginName)).forEach(file => {
+                    commandNames.push(file.split('.')[0]);
+                });
 
-			guild.plugins.splice(guild.plugins.indexOf(pluginName), 1);
-		}
-		else {
-			if (fs.existsSync(path.join(__dirname, '..', pluginName))) {
-				fs.readdirSync(path.join(__dirname, '..', pluginName)).forEach(file => {
-					const command = require(path.join(__dirname, '..', pluginName, file));
-					interaction.guild.commands.create(command.data);
-				});
-			}
+                const guildCommands = await interaction.guild.commands.fetch();
 
-			interaction.reply({
-				embeds: [
-					new Embed({
-						color: EmbedColor.primary,
-						description: `The \`${pluginName}\` plugin has been enabled.`
-					})
-				]
-			});
+                for (const entry of guildCommands) {
+                    if (entry[1].client.application.id == interaction.client.application.id &&
+                        commandNames.includes(entry[1].name)) {
+                        interaction.guild.commands.delete(entry[1].id);
+                    }
+                }
+            }
 
-			guild.plugins.push(pluginName);
-		}
+            guild.plugins.splice(guild.plugins.indexOf(pluginName), 1);
 
-		guild.save();
-	}
+            await interaction.editReply({
+                embeds: [
+                    new Embed({
+                        color: EmbedColor.primary,
+                        description: `The \`${pluginName}\` plugin has been disabled.`
+                    })
+                ]
+            });
+        }
+        else {
+            if (fs.existsSync(path.join(__dirname, '..', pluginName))) {
+                fs.readdirSync(path.join(__dirname, '..', pluginName)).forEach(file => {
+                    const command = require(path.join(__dirname, '..', pluginName, file));
+                    interaction.guild.commands.create(command.data);
+                });
+            }
+
+            guild.plugins.push(pluginName);
+
+            await interaction.editReply({
+                embeds: [
+                    new Embed({
+                        color: EmbedColor.primary,
+                        description: `The \`${pluginName}\` plugin has been enabled.`
+                    })
+                ]
+            });
+        }
+
+        await guild.save();
+    }
 } satisfies Command;
