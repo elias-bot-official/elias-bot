@@ -51,7 +51,7 @@ module.exports = {
 				.addIntegerOption(
 					new SlashCommandIntegerOption()
 						.setName('amount')
-						.setDescription('The number of items you want to sell.')
+						.setDescription('The number of items you want to sell (defaults to 1).')
 						.setMinValue(1)
 				)
 		),
@@ -113,12 +113,11 @@ module.exports = {
 				return;
 
 			case 'sell':
-				const sellItemName = interaction.options.getString('item');
-				const sellAmount = interaction.options.getInteger('amount', false) ?? 1;
-				const sellItem = shop.filter(item => item.name == sellItemName)[0];
-				const sellUser = await UserModel.findById(interaction.user.id);
+				const item = interaction.options.getString('item');
+				const amount = interaction.options.getInteger('amount', false) ?? 1;
+				const user = await UserModel.findById(interaction.user.id);
 
-				if (!sellUser || (sellUser.inventory.get(sellItemName) ?? 0) < sellAmount) {
+				if (!user || (user.inventory.get(item) ?? 0) < amount) {
 					interaction.reply({
 						embeds: [
 							new Embed({
@@ -131,48 +130,42 @@ module.exports = {
 					return;
 				}
 
-				const sellPrice = Math.floor(sellItem.price * 0.75) * sellAmount;
+				const sellPrice = Math.floor(
+					shop.find(item => item.name == item).price * 0.75 * amount
+				);
 
 				interaction.reply({
 					embeds: [
 						new Embed({
 							color: EmbedColor.primary,
 							title: 'Sell',
-							description: `You sold **${sellAmount}x ${emojis[sellItemName]} ${sellItemName}** for ${sellPrice.toLocaleString()} ${emojis.coin}!`
+							description: `You sold **${amount}x ${emojis[item]} ${item}** for ${sellPrice.toLocaleString()} ${emojis.coin}!`
 						})
 					]
 				});
 
-				sellUser.inventory.set(
-					sellItemName,
-					(sellUser.inventory.get(sellItemName) ?? 0) - sellAmount
-				);
-				sellUser.balance += sellPrice;
-				sellUser.save();
+				user.inventory.set(item, (user.inventory.get(item) ?? 0) - amount);
+				user.balance += sellPrice;
+				user.save();
 				return;
 		}
 	},
 
 	async onAutocompleteInteraction(interaction: AutocompleteInteraction) {
-		const focusedOption = interaction.options.getFocused(true);
-		if (focusedOption.name === 'item') {
-			const user = await UserModel.findById(interaction.user.id);
-			if (!user) {
-				interaction.respond([]);
-				return;
-			}
+    const user = await UserModel.findById(interaction.user.id);
+    const option = interaction.options.getFocused(true);
+        
+    if (!user) {
+        interaction.respond([]);
+        return;
+    }
 
-			const inventoryItems = Array.from(user.inventory.keys());
-			const filteredItems = inventoryItems.filter(item =>
-				item.toLowerCase().includes(focusedOption.value.toLowerCase())
-			);
+    const results = Array.from(user.inventory.entries())
+        .filter(([item, quantity]) => quantity > 0)
+        .map(([item]) => item)
+        .filter(item => item.toLowerCase().includes(option.value.toLowerCase()))
+        .map(item => ({ name: item, value: item }));
 
-			const results = filteredItems.map(item => ({
-				name: item,
-				value: item
-			}));
-
-			interaction.respond(results);
-		}
+    interaction.respond(results);
 	}
 } satisfies Command;
