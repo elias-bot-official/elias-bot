@@ -6,27 +6,37 @@ import path from 'path';
 import fs from 'node:fs';
 
 module.exports = {
-	async execute(guild: Guild) {
-		if (process.env.NODE_ENV != 'production') return;
+    async execute(guild: Guild) {
+        if (process.env.NODE_ENV != 'production') return;
 
-		guild.client.rest.put(
-			Routes.applicationGuildCommands(process.env.id, guild.id),
-			{ body: [] }
-		);
+        if (!process.env.id) {
+            console.error('Application ID is not set in environment variables.');
+            return;
+        }
 
-		const dbGuild = await GuildModel.findById(guild.id);
-		if (!dbGuild) return;
+        guild.client.rest.put(
+            Routes.applicationGuildCommands(process.env.id, guild.id),
+            { body: [] }
+        );
 
-		dbGuild.plugins.forEach(name => {
-			const pluginPath = path.join(__dirname, '..', 'commands', name);
-			
-			if (!fs.existsSync(pluginPath))
-				return;
+        const dbGuild = await GuildModel.findById(guild.id);
+        if (!dbGuild) return;
 
-			fs.readdirSync(pluginPath).forEach(file => {
-				const command = require(path.join(pluginPath, file));
-				guild.commands.create(command.data);
-			});
-		});
-	}
+        if (!Array.isArray(dbGuild.plugins)) {
+            console.error('dbGuild.plugins is not an array.');
+            return;
+        }
+
+        dbGuild.plugins.forEach(name => {
+            const pluginPath = path.join(__dirname, '..', 'commands', name);
+            
+            if (!fs.existsSync(pluginPath))
+                return;
+
+            fs.readdirSync(pluginPath).forEach(file => {
+                const command = require(path.join(pluginPath, file));
+                guild.commands.create(command.data);
+            });
+        });
+    }
 } satisfies DiscordEvent;
