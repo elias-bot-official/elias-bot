@@ -23,9 +23,9 @@ module.exports = {
 				new Embed({
 					color: EmbedColor.primary,
 					title: `${(user ?? interaction.user).displayName}'s Balance`,
-					description: `${dbUser?.balance.toLocaleString() ?? 0} ${emojis.coin}`,
-				}),
-			],
+					description: `${dbUser?.balance.toLocaleString() ?? 0} ${emojis.coin}`
+				})
+			]
 		});
-	},
+	}
 } satisfies Command;

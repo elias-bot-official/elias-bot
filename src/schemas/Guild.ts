@@ -11,7 +11,7 @@ const WarnSchema = new Schema({
 const GuildSchema = new Schema({
 	_id: {
 		type: String,
-		required: true,
+		required: true
 	},
 	warns: [WarnSchema],
 	xp: {

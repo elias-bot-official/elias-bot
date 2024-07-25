@@ -18,10 +18,10 @@ module.exports = {
 				embeds: [
 					new Embed({
 						color: EmbedColor.danger,
-						description: 'You need a shovel in order to dig! Try using the shop to buy one.',
-					}),
+						description: 'You need a shovel in order to dig! Try using the shop to buy one.'
+					})
 				],
-				ephemeral: true,
+				ephemeral: true
 			});
 			return;
 		}
@@ -33,10 +33,10 @@ module.exports = {
 				embeds: [
 					new Embed({
 						color: EmbedColor.danger,
-						description: `You are on cooldown! Come back <t:${user.cooldowns.get('dig')}:R>`,
-					}),
+						description: `You are on cooldown! Come back <t:${user.cooldowns.get('dig')}:R>`
+					})
 				],
-				ephemeral: true,
+				ephemeral: true
 			});
 			return;
 		}
@@ -52,8 +52,8 @@ module.exports = {
 						color: EmbedColor.primary,
 						title: 'Dig',
 						description: `YOU FOUND A CHEST WITH ${money.toLocaleString()} ${emojis.coin} IN IT!!!!`
-					}),
-				],
+					})
+				]
 			});
 			user.balance += money;
 		}
@@ -67,9 +67,9 @@ module.exports = {
 						title: 'Dig',
 						description: outcomes.dig.success[
 							Math.floor(Math.random() * outcomes.dig.success.length)
-						].replace('{money}', `${money.toLocaleString()} ${emojis.coin}`),
-					}),
-				],
+						].replace('{money}', `${money.toLocaleString()} ${emojis.coin}`)
+					})
+				]
 			});
 			user.balance += money;
 		}
@@ -82,13 +82,13 @@ module.exports = {
 						description:
 							outcomes.dig.fail[
 								Math.floor(Math.random() * outcomes.dig.fail.length)
-							],
-					}),
-				],
+							]
+					})
+				]
 			});
 		}
 
 		user.cooldowns.set('dig', now + 45);
 		user.save();
-	},
+	}
 } satisfies Command;

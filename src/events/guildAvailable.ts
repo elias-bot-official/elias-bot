@@ -28,5 +28,5 @@ module.exports = {
 				guild.commands.create(command.data);
 			});
 		});
-	},
+	}
 } satisfies DiscordEvent;

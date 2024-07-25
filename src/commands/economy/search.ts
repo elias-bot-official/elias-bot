@@ -43,10 +43,10 @@ module.exports = {
 				embeds: [
 					new Embed({
 						color: EmbedColor.danger,
-						description: `You are on cooldown! Come back <t:${user.cooldowns.get('search')}:R>`,
-					}),
+						description: `You are on cooldown! Come back <t:${user.cooldowns.get('search')}:R>`
+					})
 				],
-				ephemeral: true,
+				ephemeral: true
 			});
 			return;
 		}
@@ -56,14 +56,14 @@ module.exports = {
 				new Embed({
 					color: EmbedColor.primary,
 					title: 'Search',
-					description: 'Select a place to search.',
-				}),
+					description: 'Select a place to search.'
+				})
 			],
 			components: [
 				new ActionRowBuilder<SelectMenuBuilder>().addComponents(
 					selectMenu.setDisabled(false)
-				),
-			],
+				)
+			]
 		});
 
 		user.cooldowns.set('search', Math.floor(Date.now() / 1000) + 30);
@@ -76,10 +76,10 @@ module.exports = {
 				embeds: [
 					new Embed({
 						color: EmbedColor.danger,
-						description: 'You are not allowed to use this select menu!',
-					}),
+						description: 'You are not allowed to use this select menu!'
+					})
 				],
-				ephemeral: true,
+				ephemeral: true
 			});
 			return;
 		}
@@ -88,8 +88,8 @@ module.exports = {
 			components: [
 				new ActionRowBuilder<SelectMenuBuilder>().addComponents(
 					selectMenu.setDisabled(true)
-				),
-			],
+				)
+			]
 		});
 
 		const random = Math.round(Math.random() * 100);
@@ -102,9 +102,9 @@ module.exports = {
 						title: 'Search',
 						description: outcomes.search.fail[Math.floor(
 							Math.random() * outcomes.search.fail.length
-						)],
-					}),
-				],
+						)]
+					})
+				]
 			});
 			return;
 		}
@@ -119,12 +119,12 @@ module.exports = {
 					title: 'Search',
 					description: outcomes.search.success[Math.floor(
 						Math.random() * outcomes.search.success.length
-					)].replace('{money}', `${money.toLocaleString()} ${emojis.coin}`),
-				}),
-			],
+					)].replace('{money}', `${money.toLocaleString()} ${emojis.coin}`)
+				})
+			]
 		});
 
 		user.balance += money;
 		user.save();
-	},
+	}
 } satisfies Command;

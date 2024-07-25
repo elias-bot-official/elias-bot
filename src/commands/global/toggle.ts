@@ -81,5 +81,5 @@ module.exports = {
 		}
 
 		guild.save();
-	},
+	}
 } satisfies Command;

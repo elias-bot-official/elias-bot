@@ -20,10 +20,10 @@ module.exports = {
 				embeds: [
 					new Embed({
 						color: EmbedColor.danger,
-						description: `You are on cooldown! Come back <t:${user.cooldowns.get('beg')}:R>`,
-					}),
+						description: `You are on cooldown! Come back <t:${user.cooldowns.get('beg')}:R>`
+					})
 				],
-				ephemeral: true,
+				ephemeral: true
 			});
 			return;
 		}
@@ -38,9 +38,9 @@ module.exports = {
 						title: 'Beg',
 						description: outcomes.beg.success[
 							Math.floor(Math.random() * outcomes.beg.success.length)
-						].replace('{money}', `${money} ${emojis.coin}`),
-					}),
-				],
+						].replace('{money}', `${money} ${emojis.coin}`)
+					})
+				]
 			});
 			user.balance += money;
 		}
@@ -53,13 +53,13 @@ module.exports = {
 						description:
 							outcomes.beg.fail[
 								Math.floor(Math.random() * outcomes.beg.fail.length)
-							],
-					}),
-				],
+							]
+					})
+				]
 			});
 		}
 
 		user.cooldowns.set('beg', now + 30);
 		user.save();
-	},
+	}
 } satisfies Command;

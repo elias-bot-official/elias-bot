@@ -44,11 +44,11 @@ module.exports = {
 					embeds: [
 						new Embed({
 							color: EmbedColor.danger,
-							description: 'This user is not banned.',
-						}),
+							description: 'This user is not banned.'
+						})
 					],
-					ephemeral: true,
+					ephemeral: true
 				})
 			);
-	},
+	}
 } satisfies Command;

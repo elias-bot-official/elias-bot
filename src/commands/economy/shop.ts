@@ -69,9 +69,9 @@ module.exports = {
 						new Embed({
 							color: EmbedColor.primary,
 							title: 'Shop',
-							description: description,
-						}),
-					],
+							description: description
+						})
+					]
 				});
 				return;
 
@@ -86,10 +86,10 @@ module.exports = {
 						embeds: [
 							new Embed({
 								color: EmbedColor.danger,
-								description: 'You do not have enough money!',
-							}),
+								description: 'You do not have enough money!'
+							})
 						],
-						ephemeral: true,
+						ephemeral: true
 					});
 					return;
 				}
@@ -99,9 +99,9 @@ module.exports = {
 						new Embed({
 							color: EmbedColor.primary,
 							title: 'Buy',
-							description: `You bought **${amount}x ${emojis[itemName]} ${itemName}**!`,
-						}),
-					],
+							description: `You bought **${amount}x ${emojis[itemName]} ${itemName}**!`
+						})
+					]
 				});
 
 				user.inventory.set(

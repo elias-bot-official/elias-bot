@@ -90,5 +90,5 @@ module.exports = {
 				user.save();
 				return;
 		}
-	},
+	}
 } satisfies Command;

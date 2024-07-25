@@ -20,10 +20,10 @@ module.exports = {
 				embeds: [
 					new Embed({
 						color: EmbedColor.danger,
-						description: `You are on cooldown! Come back <t:${dbUser.cooldowns.get('work')}:R>`,
-					}),
+						description: `You are on cooldown! Come back <t:${dbUser.cooldowns.get('work')}:R>`
+					})
 				],
-				ephemeral: true,
+				ephemeral: true
 			});
 			return;
 		}
@@ -64,10 +64,10 @@ module.exports = {
 				embeds: [
 					new Embed({
 						color: EmbedColor.danger,
-						description: 'You are not allowed to use this button!',
-					}),
+						description: 'You are not allowed to use this button!'
+					})
 				],
-				ephemeral: true,
+				ephemeral: true
 			});
 			return;
 		}
@@ -83,8 +83,8 @@ module.exports = {
 					new Embed({
 						color: EmbedColor.success,
 						title: 'Correct',
-						description: `Good job! You earned ${money.toLocaleString()} ${emojis.coin} for your work.`,
-					}),
+						description: `Good job! You earned ${money.toLocaleString()} ${emojis.coin} for your work.`
+					})
 				],
 				components: []
 			});
@@ -98,8 +98,8 @@ module.exports = {
 					new Embed({
 						color: EmbedColor.danger,
 						title: 'Incorrect',
-						description: `Terrible job. You earned ${money.toLocaleString()} ${emojis.coin} for your work.`,
-					}),
+						description: `Terrible job. You earned ${money.toLocaleString()} ${emojis.coin} for your work.`
+					})
 				],
 				components: []
 			});
@@ -107,7 +107,7 @@ module.exports = {
 		}
 		
 		dbUser.save();
-	},
+	}
 } satisfies Command;
 
 function showButtons(interaction: ChatInputCommandInteraction, emoji: string) {

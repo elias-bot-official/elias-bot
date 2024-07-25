@@ -3,11 +3,11 @@ import { model, Schema } from 'mongoose';
 const UserSchema = new Schema({
 	_id: {
 		type: String,
-		required: true,
+		required: true
 	},
 	balance: {
 		type: Number,
-		default: 0,
+		default: 0
 	},
 	cooldowns: {
 		type: Map,
@@ -17,7 +17,7 @@ const UserSchema = new Schema({
 	inventory: {
 		type: Map,
 		of: Number,
-		default: new Map(),
+		default: new Map()
 	},
 	settings: {
 		type: Map,

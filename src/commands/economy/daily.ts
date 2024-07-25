@@ -19,10 +19,10 @@ module.exports = {
 				embeds: [
 					new Embed({
 						color: EmbedColor.danger,
-						description: `You have already claimed today's coins! Come back <t:${user.cooldowns.get('daily')}:R>`,
-					}),
+						description: `You have already claimed today's coins! Come back <t:${user.cooldowns.get('daily')}:R>`
+					})
 				],
-				ephemeral: true,
+				ephemeral: true
 			});
 			return;
 		}
@@ -32,13 +32,13 @@ module.exports = {
 				new Embed({
 					color: EmbedColor.primary,
 					title: 'Daily',
-					description: `You got 10,000 ${emojis.coin}`,
-				}),
-			],
+					description: `You got 10,000 ${emojis.coin}`
+				})
+			]
 		});
 
 		user.balance += 10000;
 		user.cooldowns.set('daily', Math.ceil(now / 86400) * 86400);
 		user.save();
-	},
+	}
 } satisfies Command;

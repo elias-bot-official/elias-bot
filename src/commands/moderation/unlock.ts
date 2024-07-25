@@ -31,5 +31,5 @@ module.exports = {
 					.addField('Channel', channel.toString())
 			]
 		});
-	},
+	}
 } satisfies Command;

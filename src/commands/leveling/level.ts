@@ -24,10 +24,10 @@ module.exports = {
 				embeds: [
 					new Embed({
 						color: EmbedColor.danger,
-						description: 'This user has no XP.',
-					}),
+						description: 'This user has no XP.'
+					})
 				],
-				ephemeral: true,
+				ephemeral: true
 			});
 			return;
 		}
@@ -54,10 +54,10 @@ module.exports = {
 								xp: xp - getXP(level),
 								neededXP: getXP(level + 1) - getXP(level),
 								rank: rank,
-								level: level,
-							}),
-						},
-					],
+								level: level
+							})
+						}
+					]
 				});
 			})
 			.catch(() => {
@@ -65,13 +65,13 @@ module.exports = {
 					embeds: [
 						new Embed({
 							color: EmbedColor.danger,
-							description: 'Could not find this user in this server.',
-						}),
+							description: 'Could not find this user in this server.'
+						})
 					],
-					ephemeral: true,
+					ephemeral: true
 				});
 			});
-	},
+	}
 } satisfies Command;
 
 interface CardOptions {

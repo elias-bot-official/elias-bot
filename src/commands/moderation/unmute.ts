@@ -25,10 +25,10 @@ module.exports = {
 						embeds: [
 							new Embed({
 								color: EmbedColor.danger,
-								description: 'This user is not muted!',
-							}),
+								description: 'This user is not muted!'
+							})
 						],
-						ephemeral: true,
+						ephemeral: true
 					});
 					return;
 				}
@@ -39,10 +39,10 @@ module.exports = {
 							new Embed({
 								color: EmbedColor.danger,
 								description:
-									'I can not unmute a user with a higher or equal role.',
-							}),
+									'I can not unmute a user with a higher or equal role.'
+							})
 						],
-						ephemeral: true,
+						ephemeral: true
 					});
 					return;
 				}
@@ -53,7 +53,7 @@ module.exports = {
 					embeds: [
 						new Embed({ color: EmbedColor.primary, title: 'Unmute' })
 							.addField('User', user.toString())
-					],
+					]
 				});
 			})
 			.catch(() => {
@@ -61,12 +61,12 @@ module.exports = {
 					embeds: [
 						new Embed({
 							color: EmbedColor.danger,
-							description: 'Could not find this user in this server.',
-						}),
+							description: 'Could not find this user in this server.'
+						})
 					],
-					ephemeral: true,
+					ephemeral: true
 				});
 				return;
 			});
-	},
+	}
 } satisfies Command;

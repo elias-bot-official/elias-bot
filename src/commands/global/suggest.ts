@@ -23,15 +23,15 @@ module.exports = {
 					title: 'Suggestion',
 					author: {
 						name: interaction.user.displayName,
-						iconURL: interaction.user.avatarURL(),
+						iconURL: interaction.user.avatarURL()
 					},
-					description: interaction.options.getString('suggestion'),
-				}),
+					description: interaction.options.getString('suggestion')
+				})
 			],
-			fetchReply: true,
+			fetchReply: true
 		});
 
 		message.react(emojis.upvote);
 		message.react(emojis.downvote);
-	},
+	}
 } satisfies Command;

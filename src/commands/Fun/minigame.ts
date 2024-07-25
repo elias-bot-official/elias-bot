@@ -34,10 +34,10 @@ module.exports = {
 						new Embed({
 							color: EmbedColor.primary,
 							title: 'RPS',
-							description: 'Click your move.',
-						}),
+							description: 'Click your move.'
+						})
 					],
-					components: [row],
+					components: [row]
 				});
 				return;
 
@@ -55,7 +55,7 @@ module.exports = {
 					optionsRow.addComponents(
 						Button.primary({
 							custom_id: `${option}|${questionObject.answer}`,
-							label: letter,
+							label: letter
 						})
 					);
 				});
@@ -65,10 +65,10 @@ module.exports = {
 						new Embed({
 							color: EmbedColor.primary,
 							title: 'Trivia',
-							description: formattedQuestion,
-						}),
+							description: formattedQuestion
+						})
 					],
-					components: [optionsRow],
+					components: [optionsRow]
 				});
 				return;
 		}
@@ -80,10 +80,10 @@ module.exports = {
 				embeds: [
 					new Embed({
 						color: EmbedColor.danger,
-						description: 'You are not allowed to use this button!',
-					}),
+						description: 'You are not allowed to use this button!'
+					})
 				],
-				ephemeral: true,
+				ephemeral: true
 			});
 			return;
 		}
@@ -103,11 +103,11 @@ module.exports = {
 							description: message,
 							footer: {
 								text: outcome == 0? 'You Won' : 
-									outcome == 1? 'You Tied' : 'You Lost',
-							},
-						}),
+									outcome == 1? 'You Tied' : 'You Lost'
+							}
+						})
 					],
-					components: [],
+					components: []
 				});
 				return;
 
@@ -120,9 +120,9 @@ module.exports = {
 							new Embed({
 								color: EmbedColor.success,
 								title: 'Trivia',
-								description: 'That is the correct answer!',
-							}),
-						],
+								description: 'That is the correct answer!'
+							})
+						]
 					});
 				}
 				else {
@@ -131,9 +131,9 @@ module.exports = {
 							new Embed({
 								color: EmbedColor.danger,
 								title: 'Trivia',
-								description: `Incorrect. The correct answer is \`\`${segments[1]}\`\`.`,
-							}),
-						],
+								description: `Incorrect. The correct answer is \`\`${segments[1]}\`\`.`
+							})
+						]
 					});
 				}
 
@@ -150,14 +150,14 @@ module.exports = {
 								disabled: true,
 								style: segments[0] == segments[1]? ButtonStyle.Success :
 									interaction.customId == button.customId? ButtonStyle.Danger :
-										ButtonStyle.Secondary,
+										ButtonStyle.Secondary
 							})
 						);
 					});
 
 				interaction.message.edit({ components: [editedRow] });
 		}
-	},
+	}
 } satisfies Command;
 
 function shuffleOptions(array: string[]) {

@@ -5,41 +5,39 @@ import fs from 'fs';
 import path from 'path';
 
 module.exports = {
-    once: true,
+	once: true,
 
-    async execute(client: Client) {
-        if (process.env.NODE_ENV == 'production') {
-            const commands = [];
-        
-            fs.readdirSync(path.join(__dirname, '..', 'commands', 'global'))
-                .forEach(file =>
-                    commands.push(
-                        require(path.join(__dirname, '..', 'commands', 'global', file)).data
-                    )
-                );
+	async execute(client: Client) {
+		if (process.env.NODE_ENV == 'production') {
+			const commands = [];
 
-            // registers the global commands
-            client.rest.put(
-                Routes.applicationCommands(client.application!.id), { body: commands }
-            );
-        }
+			fs.readdirSync(path.join(__dirname, '..', 'commands', 'global'))
+				.forEach(file =>
+					commands.push(
+						require(path.join(__dirname, '..', 'commands', 'global', file)).data
+					)
+				);
 
-        // Function to update client's activity
-        const updateActivity = () => {
-            client.user.setActivity(
-                `${client.guilds.cache.size} servers`, { type: ActivityType.Watching }
-            );
-        };
+			// registers the global commands
+			client.rest.put(
+				Routes.applicationCommands(client.application!.id), { body: commands }
+			);
+		}
 
-        // Update activity on startup
-        updateActivity();
+		// Function to update client's activity
+		const updateActivity = () => {
+			client.user.setActivity(
+				`${client.guilds.cache.size} servers`, { type: ActivityType.Watching }
+			);
+		};
 
-        // Update activity when bot joins a new guild
-        client.on('guildCreate', updateActivity);
+		// Update activity on startup
+		updateActivity();
 
-        // Update activity when bot is removed from a guild
-        client.on('guildDelete', updateActivity);
+		// Update activity when bot joins or leaves a guild
+		client.on('guildCreate', updateActivity);
+		client.on('guildDelete', updateActivity);
 
-        console.log('Bot is ready!');
-    },
+		console.log('Bot is ready!');
+	}
 } satisfies DiscordEvent;

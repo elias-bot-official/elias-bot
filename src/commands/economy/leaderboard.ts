@@ -24,7 +24,7 @@ module.exports = {
 			embeds: [await getEmbed(page, interaction.client)],
 			components: [await getButtons(page)]
 		});
-	},
+	}
 } satisfies Command;
 
 async function getEmbed(page: number, client: Client) {

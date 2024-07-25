@@ -24,7 +24,7 @@ module.exports = {
 			embeds: [await getEmbed(page, interaction.guild)],
 			components: [await getActionRow(page, interaction.guild)]
 		});
-	},
+	}
 } satisfies Command;
 
 async function getEmbed(page: number, guild: Guild) {

@@ -31,10 +31,10 @@ module.exports = {
 						embeds: [
 							new Embed({
 								color: EmbedColor.danger,
-								description: 'I can not kick myself!',
-							}),
+								description: 'I can not kick myself!'
+							})
 						],
-						ephemeral: true,
+						ephemeral: true
 					});
 					return;
 				}
@@ -44,10 +44,10 @@ module.exports = {
 						embeds: [
 							new Embed({
 								color: EmbedColor.danger,
-								description: 'I can not kick a user with a higher or equal role.',
-							}),
+								description: 'I can not kick a user with a higher or equal role.'
+							})
 						],
-						ephemeral: true,
+						ephemeral: true
 					});
 					return;
 				}
@@ -71,11 +71,11 @@ module.exports = {
 					embeds: [
 						new Embed({
 							color: EmbedColor.danger,
-							description: 'Could not find this user in this server.',
-						}),
+							description: 'Could not find this user in this server.'
+						})
 					],
-					ephemeral: true,
+					ephemeral: true
 				});
 			});
-	},
+	}
 } satisfies Command;

@@ -52,10 +52,10 @@ module.exports = {
 						embeds: [
 							new Embed({
 								color: EmbedColor.danger,
-								description: 'I can not mute myself!',
-							}),
+								description: 'I can not mute myself!'
+							})
 						],
-						ephemeral: true,
+						ephemeral: true
 					});
 					return;
 				}
@@ -66,10 +66,10 @@ module.exports = {
 							new Embed({
 								color: EmbedColor.danger,
 								description:
-									'I can not mute a user with a higher or equal role.',
-							}),
+									'I can not mute a user with a higher or equal role.'
+							})
 						],
-						ephemeral: true,
+						ephemeral: true
 					});
 					return;
 				}
@@ -94,13 +94,13 @@ module.exports = {
 					embeds: [
 						new Embed({
 							color: EmbedColor.danger,
-							description: 'Could not find this user in this server.',
-						}),
+							description: 'Could not find this user in this server.'
+						})
 					],
-					ephemeral: true,
+					ephemeral: true
 				});
 			});
-	},
+	}
 } satisfies Command;
 
 function mapChoice(value: number) {

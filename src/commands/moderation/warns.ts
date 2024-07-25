@@ -82,10 +82,10 @@ module.exports = {
 								embeds: [
 									new Embed({
 										color: EmbedColor.danger,
-										description: 'I can not warn myself!',
-									}),
+										description: 'I can not warn myself!'
+									})
 								],
-								ephemeral: true,
+								ephemeral: true
 							});
 							return;
 						}
@@ -97,10 +97,10 @@ module.exports = {
 								embeds: [
 									new Embed({
 										color: EmbedColor.danger,
-										description: 'You do not have a higher role than the target member.',
-									}),
+										description: 'You do not have a higher role than the target member.'
+									})
 								],
-								ephemeral: true,
+								ephemeral: true
 							});
 							return;
 						}
@@ -140,10 +140,10 @@ module.exports = {
 							embeds: [
 								new Embed({
 									color: EmbedColor.danger,
-									description: 'Could not find this user in this server.',
-								}),
+									description: 'Could not find this user in this server.'
+								})
 							],
-							ephemeral: true,
+							ephemeral: true
 						});
 					});
 				return;
@@ -159,7 +159,7 @@ module.exports = {
 								description: 'User does not have a warning with this ID.'
 							})
 						],
-						ephemeral: true,
+						ephemeral: true
 					});
 					return;
 				}
@@ -182,5 +182,5 @@ module.exports = {
 				guild.warns.splice(id, 1);
 				guild.save();
 		}
-	},
+	}
 } satisfies Command;

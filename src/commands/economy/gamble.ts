@@ -37,10 +37,10 @@ module.exports = {
 					new Embed({
 						color: EmbedColor.danger,
 						description:
-							'You can not gamble more money than you own.',
-					}),
+							'You can not gamble more money than you own.'
+					})
 				],
-				ephemeral: true,
+				ephemeral: true
 			});
 			return;
 		}
@@ -51,11 +51,11 @@ module.exports = {
 					new Embed({
 						color: EmbedColor.primary,
 						title: 'Gamble',
-						description: `You won ${amount.toLocaleString()} ${emojis.coin}!`,
+						description: `You won ${amount.toLocaleString()} ${emojis.coin}!`
 					}).setThumbnail(
 						'https://cdn-icons-png.flaticon.com/512/3425/3425938.png'
-					),
-				],
+					)
+				]
 			});
 			user.balance += amount;
 		}
@@ -65,15 +65,15 @@ module.exports = {
 					new Embed({
 						color: EmbedColor.primary,
 						title: 'Gamble',
-						description: `You lost ${amount.toLocaleString()} ${emojis.coin}!`,
+						description: `You lost ${amount.toLocaleString()} ${emojis.coin}!`
 					}).setThumbnail(
 						'https://cdn-icons-png.flaticon.com/512/3425/3425938.png'
-					),
-				],
+					)
+				]
 			});
 			user.balance -= amount;
 		}
 
 		user.save();
-	},
+	}
 } satisfies Command;

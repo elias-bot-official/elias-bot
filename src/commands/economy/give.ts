@@ -30,10 +30,10 @@ module.exports = {
 				embeds: [
 					new Embed({
 						color: EmbedColor.danger,
-						description: 'You can not give money to a bot!',
-					}),
+						description: 'You can not give money to a bot!'
+					})
 				],
-				ephemeral: true,
+				ephemeral: true
 			});
 			return;
 		}
@@ -43,10 +43,10 @@ module.exports = {
 				embeds: [
 					new Embed({
 						color: EmbedColor.danger,
-						description: 'You can not give money to yourself!',
-					}),
+						description: 'You can not give money to yourself!'
+					})
 				],
-				ephemeral: true,
+				ephemeral: true
 			});
 			return;
 		}
@@ -59,10 +59,10 @@ module.exports = {
 				embeds: [
 					new Embed({
 						color: EmbedColor.danger,
-						description: 'You do not have this much money!',
-					}),
+						description: 'You do not have this much money!'
+					})
 				],
-				ephemeral: true,
+				ephemeral: true
 			});
 			return;
 		}
@@ -74,9 +74,9 @@ module.exports = {
 			embeds: [
 				new Embed({
 					color: EmbedColor.success,
-					description: `You gave ${receiver} ${transfer(dbUser, dbReceiver, amount).toLocaleString()} ${emojis.coin}.`,
-				}),
-			],
+					description: `You gave ${receiver} ${transfer(dbUser, dbReceiver, amount).toLocaleString()} ${emojis.coin}.`
+				})
+			]
 		});
 
 		receiver.send({
@@ -91,5 +91,5 @@ module.exports = {
 
 		dbReceiver.save();
 		dbUser.save();
-	},
+	}
 } satisfies Command;

@@ -13,7 +13,7 @@ export class Button extends ButtonBuilder {
 			custom_id: props.custom_id,
 			label: props.label,
 			emoji: props.emoji,
-			disabled: props.disabled ?? false,
+			disabled: props.disabled ?? false
 		});
 	}
 
@@ -23,7 +23,7 @@ export class Button extends ButtonBuilder {
 			custom_id: props.custom_id,
 			label: props.label,
 			emoji: props.emoji,
-			disabled: props.disabled ?? false,
+			disabled: props.disabled ?? false
 		});
 	}
 
@@ -33,7 +33,7 @@ export class Button extends ButtonBuilder {
 			custom_id: props.custom_id,
 			label: props.label,
 			emoji: props.emoji,
-			disabled: props.disabled ?? false,
+			disabled: props.disabled ?? false
 		});
 	}
 
@@ -43,7 +43,7 @@ export class Button extends ButtonBuilder {
 			custom_id: props.custom_id,
 			label: props.label,
 			emoji: props.emoji,
-			disabled: props.disabled ?? false,
+			disabled: props.disabled ?? false
 		});
 	}
 
@@ -52,7 +52,7 @@ export class Button extends ButtonBuilder {
 			style: ButtonStyle.Link,
 			label: props.label,
 			emoji: props.emoji,
-			url: props.url,
+			url: props.url
 		});
 	}
 }

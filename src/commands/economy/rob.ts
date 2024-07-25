@@ -81,10 +81,10 @@ module.exports = {
 				embeds: [
 					new Embed({
 						color: EmbedColor.danger,
-						description: `You are on cooldown! Come back <t:${dbUser.cooldowns.get('rob')}:R>`,
-					}),
+						description: `You are on cooldown! Come back <t:${dbUser.cooldowns.get('rob')}:R>`
+					})
 				],
-				ephemeral: true,
+				ephemeral: true
 			});
 			return;
 		}
@@ -131,7 +131,7 @@ module.exports = {
 		dbUser.cooldowns.set('rob', now + 35);
 		dbUser.save();
 		dbTarget.save();
-	},
+	}
 } satisfies Command;
 
 function success(interaction: ChatInputCommandInteraction, dbUser: UserDocument,

@@ -26,7 +26,7 @@ module.exports = {
 					new Embed({
 						color: EmbedColor.danger,
 						description: 'This user has no items.'
-					}),
+					})
 				],
 				ephemeral: true
 			});
@@ -45,9 +45,9 @@ module.exports = {
 				new Embed({
 					color: EmbedColor.primary,
 					title: `${(user ?? interaction.user).displayName}'s Inventory`,
-					description: description,
-				}),
-			],
+					description: description
+				})
+			]
 		});
-	},
+	}
 } satisfies Command;

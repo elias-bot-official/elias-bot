@@ -67,7 +67,7 @@ module.exports = {
 				.onAutocompleteInteraction(interaction)
 				.catch((error: Error) => console.log(error));
 		}
-	},
+	}
 } satisfies DiscordEvent;
 
 function reportError(error: Error, interaction: RepliableInteraction) {
@@ -76,10 +76,10 @@ function reportError(error: Error, interaction: RepliableInteraction) {
 			new Embed({
 				color: EmbedColor.danger,
 				title: 'Error',
-				description: `An unknown error has occurred. Please report this to the [devs](https://discord.gg/KCY2RERtxk).\`\`\`${error.message}\`\`\``,
-			}),
+				description: `An unknown error has occurred. Please report this to the [devs](https://discord.gg/KCY2RERtxk).\`\`\`${error.message}\`\`\``
+			})
 		],
-		ephemeral: true,
+		ephemeral: true
 	});
 	console.log(error);
 }
