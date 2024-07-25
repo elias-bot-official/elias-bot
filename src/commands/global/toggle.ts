@@ -8,7 +8,7 @@ import path from 'path';
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('toggle')
+		.setName('toggle')
         .setDescription('Toggles a plugin.')
         .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
         .setDMPermission(false)
@@ -31,11 +31,6 @@ module.exports = {
 
         const pluginName = interaction.options.getString('plugin');
         const guild = await GuildModel.findById(interaction.guild.id) ?? await GuildModel.create({ _id: interaction.guild.id });
-
-        // Ensure guild.plugins is an array
-        if (!Array.isArray(guild.plugins)) {
-            guild.plugins = [];
-        }
 
         if (guild.plugins.includes(pluginName)) {
             if (fs.existsSync(path.join(__dirname, '..', pluginName))) {
@@ -65,7 +60,8 @@ module.exports = {
                     })
                 ]
             });
-        } else {
+        }
+        else {
             if (fs.existsSync(path.join(__dirname, '..', pluginName))) {
                 fs.readdirSync(path.join(__dirname, '..', pluginName)).forEach(file => {
                     const command = require(path.join(__dirname, '..', pluginName, file));
