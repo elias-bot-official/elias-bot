@@ -11,9 +11,10 @@
 	},
 	"plugins": ["@typescript-eslint"],
 	"rules": {
-		"indent": ["warn", "tab", {"SwitchCase": 1}],
+		"indent": ["warn", "tab", { "SwitchCase": 1 }],
 		"linebreak-style": ["warn", "windows"],
 		"quotes": ["warn", "single"],
+		"comma-dangle": ["warn", "never"],
 		"semi": ["warn", "always"],
 		"no-unused-vars": ["warn", {}],
 		"no-case-declarations": "off",
