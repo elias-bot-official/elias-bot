@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, GuildMember, PermissionFlagsBits, SlashCommandBuilder, SlashCommandUserOption } from 'discord.js';
+import { ChatInputCommandInteraction, PermissionFlagsBits, SlashCommandBuilder, SlashCommandUserOption } from 'discord.js';
 import { Command } from '../../structure/Command';
 import { Embed, EmbedColor } from '../../structure/Embed';
 import emojis from '../../json/emojis.json';
@@ -26,56 +26,53 @@ module.exports = {
 
 				interaction.reply({
 					embeds: [
-						new Embed({ color: EmbedColor.primary, title: 'Whois' })
-							.addFields(
+						new Embed({
+							color: EmbedColor.primary,
+							title: 'Whois',
+							fields: [
 								{
 									name: 'Display Name',
 									value: member.displayName,
-									inline: true,
+									inline: true
 								},
 								{
 									name: 'Joined',
-									value: `<t:${Math.floor(
-										member.joinedTimestamp / 1000
-									)}:d>`,
-									inline: true,
+									value: `<t:${Math.floor(member.joinedTimestamp / 1000 )}:d>`,
+									inline: true
 								},
 								{
 									name: 'Registered',
-									value: `<t:${Math.floor(
-										user.createdTimestamp / 1000
-									)}:d>`,
-									inline: true,
+									value: `<t:${Math.floor(user.createdTimestamp / 1000)}:d>`,
+									inline: true
 								},
-								{
-									name: `Roles (${member.roles.cache.size})`,
-									value: getRoles(member),
-								},
+								... member.roles.cache.size - 1 > 0? [{
+									name: `Roles (${member.roles.cache.size - 1})`,
+									value: member.roles.cache
+										.filter(role => role.name != '@everyone')
+										.map(role => role.toString())
+										.join(' ')
+								}] : [],
 								{
 									name: 'Highest Role',
 									value: member.roles.highest.toString(),
-									inline: true,
+									inline: true
 								},
 								{
 									name: 'Warns',
 									value: dbGuild? dbGuild.warns
 										.filter(warn => warn.user_id == member.id)
-										.length.toLocaleString() :
+										.length.toString() :
 										'0',
-									inline: true,
+									inline: true
 								},
 								{
 									name: 'Status',
-									value: `${
-										member.presence? emojis[member.presence.status] : emojis.offline
-									} ${
-										member.presence? member.presence.status : 'offline'
-									}`,
-									inline: true,
+									value: `${emojis[member.presence.status ?? 'offline']} ${member.presence.status ?? 'offline'}`,
+									inline: true
 								}
-							)
-							.setThumbnail(member.displayAvatarURL()),
-					],
+							]
+						}).setThumbnail(member.displayAvatarURL())
+					]
 				});
 			})
 			.catch(() => {
@@ -83,18 +80,11 @@ module.exports = {
 					embeds: [
 						new Embed({
 							color: EmbedColor.danger,
-							description: 'Could not find this user in this server.',
-						}),
+							description: 'Could not find this user in this server.'
+						})
 					],
-					ephemeral: true,
+					ephemeral: true
 				});
 			});
-	},
+	}
 } satisfies Command;
-
-function getRoles(member: GuildMember) {
-	let result = '';
-	member.roles.cache.forEach(role => (result += role.toString() + ' '));
-
-	return result;
-}
