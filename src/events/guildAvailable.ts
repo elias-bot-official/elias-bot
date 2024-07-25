@@ -9,11 +9,6 @@ module.exports = {
     async execute(guild: Guild) {
         if (process.env.NODE_ENV != 'production') return;
 
-        if (!process.env.id) {
-            console.error('Application ID is not set in environment variables.');
-            return;
-        }
-
         guild.client.rest.put(
             Routes.applicationGuildCommands(process.env.id, guild.id),
             { body: [] }
@@ -22,16 +17,10 @@ module.exports = {
         const dbGuild = await GuildModel.findById(guild.id);
         if (!dbGuild) return;
 
-        if (!Array.isArray(dbGuild.plugins)) {
-            console.error('dbGuild.plugins is not an array.');
-            return;
-        }
-
         dbGuild.plugins.forEach(name => {
             const pluginPath = path.join(__dirname, '..', 'commands', name);
             
-            if (!fs.existsSync(pluginPath))
-                return;
+            if (!fs.existsSync(pluginPath)) return;
 
             fs.readdirSync(pluginPath).forEach(file => {
                 const command = require(path.join(pluginPath, file));
