@@ -5,7 +5,7 @@ import { Command } from '../../structure/Command';
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('ping')
-		.setDescription('Pings elias bot.'),
+		.setDescription('Pings elias bot'),
 
 	async onCommandInteraction(interaction) {
 		interaction.reply({
@@ -17,7 +17,7 @@ module.exports = {
 						inline: true,
 					},
 					{
-						name: 'Up Since',
+						name: 'Up since',
 						value: `<t:${Math.floor((Date.now() - interaction.client.uptime) / 1000)}:R>`,
 					}
 				),
