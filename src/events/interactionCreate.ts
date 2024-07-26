@@ -41,8 +41,13 @@ module.exports = {
 		}
 		else if (interaction.isButton()) {
 			interaction.client.commands
-				.find(command =>
-					interaction.message.interaction.commandName.split(' ')[0] == command.data.name)
+				.find(command => {
+					if (interaction.message.interaction)
+						return interaction.message.interaction.commandName
+							.split(' ')[0] == command.data.name;
+					else
+						return interaction.customId.split('|')[0] == command.data.name;
+				})
 				.onButtonInteraction(interaction)
 				.catch((error: Error) => reportError(error, interaction));
 		}
