@@ -46,7 +46,7 @@ module.exports = {
 					files: [
 						{
 							attachment: LevelCard.from({
-								background: dbUser?
+								background: dbUser.settings.get('background')?
 									await loadImage(dbUser.settings.get('background') as string) : null,
 								avatar: await loadImage(user.avatarURL({ extension: 'png' })),
 								name: member.displayName,
