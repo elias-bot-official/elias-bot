@@ -1,6 +1,7 @@
 import { ChatInputCommandInteraction, ButtonInteraction, ActionRowBuilder, ButtonBuilder, ButtonStyle, SlashCommandBuilder } from 'discord.js';
 import { Embed, EmbedColor } from '../../structure/Embed';
 import { Button } from '../../structure/Button';
+import { UserModel } from '../../schemas/User';
 
 const EPHEMERAL_MESSAGES = true; // Set this to false to disable ephemeral messages
 
@@ -62,10 +63,20 @@ module.exports = {
 				const seconds = parseTimeString(time);
 
 				if (seconds == null) {
-					interaction.reply('Invalid time format. Use h for hours, m for minutes, and s for seconds.');
+					interaction.reply({
+						embeds: [
+							new Embed({
+								color: EmbedColor.danger,
+								description: 'Invalid time format. Use `h` for hours, `m` for minutes, and `s` for seconds.'
+							})
+						]
+					});
 					return;
 				}
 
+				const user = await UserModel.findById(interaction.user.id) ??
+					await UserModel.create({ _id: interaction.user.id });
+				const now = Math.floor(Date.now() / 1000);
 				const reminder: Reminder = {
 					id: generateId(interaction.user.id),
 					userId: interaction.user.id,
@@ -75,11 +86,19 @@ module.exports = {
 				};
 
 				reminders.push(reminder);
-				const addReminderEmbed = new Embed()
-					.setColor(EmbedColor.success)
-					.setTitle('Reminder Set')
-					.setDescription(`Reminder set for ${time}.`);
-				interaction.reply({ embeds: [addReminderEmbed], ephemeral: EPHEMERAL_MESSAGES });
+				interaction.reply({
+					embeds: [
+						new Embed({
+							color: EmbedColor.success,
+							title: 'Reminder Created',
+							description: `Reminder successfully scheduled for ${now + seconds}`
+						})
+					],
+					ephemeral: true
+				});
+
+				user.reminders.push({ expiration: now + seconds });
+				user.save();
 
 				setTimeout(async () => {
 					interaction.user.send({

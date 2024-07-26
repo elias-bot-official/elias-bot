@@ -27,32 +27,28 @@ module.exports = {
 		),
 
 	async onCommandInteraction(interaction: ChatInputCommandInteraction) {
-		await interaction.deferReply();
-
 		const pluginName = interaction.options.getString('plugin');
-		const guild = await GuildModel.findById(interaction.guild.id) ?? await GuildModel.create({ _id: interaction.guild.id });
+		const guild = await GuildModel.findById(interaction.guild.id) ??
+			await GuildModel.create({ _id: interaction.guild.id });
 
 		if (guild.plugins.includes(pluginName)) {
 			if (fs.existsSync(path.join(__dirname, '..', pluginName))) {
 				const commandNames = [];
 
-				fs.readdirSync(path.join(__dirname, '..', pluginName)).forEach(file => {
-					commandNames.push(file.split('.')[0]);
-				});
+				fs.readdirSync(path.join(__dirname, '..', pluginName)).forEach(file =>
+					commandNames.push(file.split('.')[0]));
 
-				const guildCommands = await interaction.guild.commands.fetch();
-
-				for (const entry of guildCommands) {
-					if (entry[1].client.application.id == interaction.client.application.id &&
-							commandNames.includes(entry[1].name)) {
-						interaction.guild.commands.delete(entry[1].id);
+				(await interaction.guild.commands.fetch()).forEach(command => {
+					if (command[1].client.application.id == interaction.client.application.id &&
+						commandNames.includes(command[1].name)) {
+						interaction.guild.commands.delete(command[1].id);
 					}
-				}
+				});
 			}
 
 			guild.plugins.splice(guild.plugins.indexOf(pluginName), 1);
 
-			await interaction.editReply({
+			interaction.reply({
 				embeds: [
 					new Embed({
 						color: EmbedColor.primary,
@@ -71,7 +67,7 @@ module.exports = {
 
 			guild.plugins.push(pluginName);
 
-			await interaction.editReply({
+			interaction.reply({
 				embeds: [
 					new Embed({
 						color: EmbedColor.primary,
@@ -81,6 +77,6 @@ module.exports = {
 			});
 		}
 
-		await guild.save();
+		guild.save();
 	}
 } satisfies Command;

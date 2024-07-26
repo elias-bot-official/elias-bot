@@ -1,5 +1,9 @@
 import { model, Schema } from 'mongoose';
 
+const ReminderSchema = new Schema({
+	expiration: Number
+});
+
 const UserSchema = new Schema({
 	_id: {
 		type: String,
@@ -19,6 +23,7 @@ const UserSchema = new Schema({
 		of: Number,
 		default: new Map()
 	},
+	reminders: [ReminderSchema],
 	settings: {
 		type: Map,
 		of: Object,
@@ -30,10 +35,11 @@ export const UserModel = model<UserDocument>('User', UserSchema);
 
 export interface UserDocument {
 	_id: string;
-	balance?: number;
-	cooldowns?: Map<string, number>;
-	inventory?: Map<string, number>;
-	settings?: Map<string, unknown>;
+	balance: number;
+	cooldowns: Map<string, number>;
+	inventory: Map<string, number>;
+	reminders: [{ expiration: number }];
+	settings: Map<string, unknown>;
 }
 
 export function transfer(giver: UserDocument, receiver: UserDocument, amount: number) {
