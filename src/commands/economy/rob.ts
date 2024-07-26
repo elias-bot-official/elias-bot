@@ -139,7 +139,7 @@ function success(interaction: ChatInputCommandInteraction, dbUser: UserDocument,
 	const money = transfer(
 		dbTarget,
 		dbUser,
-		Math.floor(Math.random() * (dbUser.balance * .25 - 5000)) + 5000
+		Math.floor(Math.random() * (dbTarget.balance * .25 - 5000)) + 5000
 	).toLocaleString();
 
 	interaction.reply({
