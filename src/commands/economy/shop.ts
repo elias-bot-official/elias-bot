@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandIntegerOption, SlashCommandStringOption, SlashCommandSubcommandBuilder } from 'discord.js';
+import { ChatInputCommandInteraction, AutocompleteInteraction, SlashCommandBuilder, SlashCommandIntegerOption, SlashCommandStringOption, SlashCommandSubcommandBuilder } from 'discord.js';
 import { Command } from '../../structure/Command';
 import shop from '../../json/shop.json';
 import { Embed, EmbedColor } from '../../structure/Embed';
@@ -37,24 +37,24 @@ module.exports = {
 						.setMinValue(1)
 				)
 		)
-		// .addSubcommand(
-		// 	new SlashCommandSubcommandBuilder()
-		// 		.setName('sell')
-		// 		.setDescription('Sell and item in your inventory.')
-		// 		.addStringOption(
-		// 			new SlashCommandStringOption()
-		// 				.setName('item')
-		// 				.setDescription('The item you want to sell.')
-		// 				.setAutocomplete(true)
-		// 		)
-		// 		.addIntegerOption(
-		// 			new SlashCommandIntegerOption()
-		// 				.setName('amount')
-		// 				.setDescription('The number of items you want to sell.')
-		// 				.setMinValue(1)
-		// 		)
-		// )
-	,
+		.addSubcommand(
+			new SlashCommandSubcommandBuilder()
+				.setName('sell')
+				.setDescription('Sell an item in your inventory.')
+				.addStringOption(
+					new SlashCommandStringOption()
+						.setName('item')
+						.setDescription('The item you want to sell.')
+						.setAutocomplete(true)
+						.setRequired(true)
+				)
+				.addIntegerOption(
+					new SlashCommandIntegerOption()
+						.setName('amount')
+						.setDescription('The number of items you want to sell (defaults to 1).')
+						.setMinValue(1)
+				)
+		),
 
 	async onCommandInteraction(interaction: ChatInputCommandInteraction) {
 		switch (interaction.options.getSubcommand()) {
@@ -113,11 +113,59 @@ module.exports = {
 				return;
 
 			case 'sell':
+				const item = interaction.options.getString('item');
+				const amount = interaction.options.getInteger('amount', false) ?? 1;
+				const user = await UserModel.findById(interaction.user.id);
 
+				if (!user || (user.inventory.get(item) ?? 0) < amount) {
+					interaction.reply({
+						embeds: [
+							new Embed({
+								color: EmbedColor.danger,
+								description: 'You do not have enough items to sell!'
+							})
+						],
+						ephemeral: true
+					});
+					return;
+				}
+
+				const sellPrice = Math.floor(
+					shop.find(item => item.name == item).price * 0.75 * amount
+				);
+
+				interaction.reply({
+					embeds: [
+						new Embed({
+							color: EmbedColor.primary,
+							title: 'Sell',
+							description: `You sold **${amount}x ${emojis[item]} ${item}** for ${sellPrice.toLocaleString()} ${emojis.coin}!`
+						})
+					]
+				});
+
+				user.inventory.set(item, (user.inventory.get(item) ?? 0) - amount);
+				user.balance += sellPrice;
+				user.save();
+				return;
 		}
 	},
 
-	async onAutocompleteInteraction() {
-		
+	async onAutocompleteInteraction(interaction: AutocompleteInteraction) {
+    const user = await UserModel.findById(interaction.user.id);
+    const option = interaction.options.getFocused(true);
+        
+    if (!user) {
+        interaction.respond([]);
+        return;
+    }
+
+    const results = Array.from(user.inventory.entries())
+        .filter(([item, quantity]) => quantity > 0)
+        .map(([item]) => item)
+        .filter(item => item.toLowerCase().includes(option.value.toLowerCase()))
+        .map(item => ({ name: item, value: item }));
+
+    interaction.respond(results);
 	}
 } satisfies Command;
