@@ -2,7 +2,7 @@ import { ChatInputCommandInteraction, ButtonInteraction, ActionRowBuilder, Butto
 import { Embed, EmbedColor } from '../../structure/Embed';
 import { Button } from '../../structure/Button';
 
-const EPHEMERAL_MESSAGES = false; // Set this to false to disable ephemeral messages
+const EPHEMERAL_MESSAGES = true; // Set this to false to disable ephemeral messages
 
 module.exports = {
 	data: new SlashCommandBuilder()
