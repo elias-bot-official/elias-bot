@@ -2,6 +2,8 @@ import { ChatInputCommandInteraction, ButtonInteraction, ActionRowBuilder, Butto
 import { Embed, EmbedColor } from '../../structure/Embed';
 import { Button } from '../../structure/Button';
 
+const EPHEMERAL_MESSAGES = false; // Set this to false to disable ephemeral messages
+
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('reminders')
@@ -9,7 +11,7 @@ module.exports = {
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('view')
-				.setDescription('View yuor current reminders.')
+				.setDescription('View your current reminders.')
 		)
 		.addSubcommand(subcommand =>
 			subcommand
@@ -38,11 +40,20 @@ module.exports = {
 				const userReminders = reminders
 					.filter(reminder => reminder.userId == interaction.user.id);
 
-				if (userReminders.length == 0)
-					interaction.reply('You have no reminders.');
+				if (userReminders.length == 0) {
+					const noRemindersEmbed = new Embed()
+						.setColor(EmbedColor.danger)
+						.setTitle('No Reminders')
+						.setDescription('You have no reminders.');
+					interaction.reply({ embeds: [noRemindersEmbed], ephemeral: EPHEMERAL_MESSAGES });
+				}
 				else {
 					const reminderList = userReminders.map(reminder => `ID: ${reminder.id}, Time: ${new Date(reminder.createdAt + reminder.time).toLocaleString()}`).join('\n');
-					await interaction.reply(`Your reminders:\n${reminderList}`);
+					const remindersEmbed = new Embed()
+						.setColor(EmbedColor.success)
+						.setTitle('Your Reminders')
+						.setDescription(reminderList);
+					await interaction.reply({ embeds: [remindersEmbed], ephemeral: EPHEMERAL_MESSAGES });
 				}
 				return;
 
@@ -56,7 +67,7 @@ module.exports = {
 				}
 
 				const reminder: Reminder = {
-					id: generateId(),
+					id: generateId(interaction.user.id),
 					userId: interaction.user.id,
 					channelId: interaction.channelId,
 					time: seconds,
@@ -64,7 +75,11 @@ module.exports = {
 				};
 
 				reminders.push(reminder);
-				interaction.reply(`Reminder set for ${time}.`);
+				const addReminderEmbed = new Embed()
+					.setColor(EmbedColor.success)
+					.setTitle('Reminder Set')
+					.setDescription(`Reminder set for ${time}.`);
+				interaction.reply({ embeds: [addReminderEmbed], ephemeral: EPHEMERAL_MESSAGES });
 
 				setTimeout(async () => {
 					interaction.user.send({
@@ -92,9 +107,19 @@ module.exports = {
 					.findIndex(reminder => reminder.id == id && reminder.userId == interaction.user.id);
 				if (index != -1) {
 					reminders.splice(index, 1);
-					interaction.reply('Reminder removed.');
+					const removeReminderEmbed = new Embed()
+						.setColor(EmbedColor.success)
+						.setTitle('Reminder Removed')
+						.setDescription('Reminder removed successfully.');
+					interaction.reply({ embeds: [removeReminderEmbed], ephemeral: EPHEMERAL_MESSAGES });
 				}
-				else interaction.reply('Reminder not found.');
+				else {
+					const notFoundEmbed = new Embed()
+						.setColor(EmbedColor.danger)
+						.setTitle('Reminder Not Found')
+						.setDescription('Reminder not found.');
+					interaction.reply({ embeds: [notFoundEmbed], ephemeral: EPHEMERAL_MESSAGES });
+				}
 		}
 	},
 
@@ -136,8 +161,9 @@ module.exports = {
 				reminders.splice(index, 1);
 				interaction.reply({ content: 'Reminder dismissed.', ephemeral: true });
 			}
-			else
+			else {
 				interaction.reply({ content: 'Reminder not found.', ephemeral: true });
+			}
 		}
 	}
 };
@@ -157,17 +183,22 @@ function parseTimeString(timeString: string): number | null {
 	}
 }
 
-function generateId(): string {
-	return Math.random().toString(36)
-		.substring(2, 9);
+const userReminderCount: { [userId: string]: number } = {};
+
+function generateId(userId: string): string {
+	if (!userReminderCount[userId]) {
+		userReminderCount[userId] = 0;
+	}
+	userReminderCount[userId]++;
+	return userReminderCount[userId].toString();
 }
 
 interface Reminder {
-  id: string;
-  userId: string;
-  channelId: string;
-  time: number;
-  createdAt: number;
+    id: string;
+    userId: string;
+    channelId: string;
+    time: number;
+    createdAt: number;
 }
 
 const reminders: Reminder[] = [];
