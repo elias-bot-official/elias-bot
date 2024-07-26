@@ -1,0 +1,173 @@
+import { ChatInputCommandInteraction, ButtonInteraction, ActionRowBuilder, ButtonBuilder, ButtonStyle, SlashCommandBuilder, TextChannel, User } from 'discord.js';
+import { Embed, EmbedColor } from '../../structure/Embed';
+import { Button } from '../../structure/Button';
+
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName('reminders')
+		.setDescription('Commands related to the reminder system.')
+		.addSubcommand(subcommand =>
+			subcommand
+				.setName('view')
+				.setDescription('View yuor current reminders.')
+		)
+		.addSubcommand(subcommand =>
+			subcommand
+				.setName('add')
+				.setDescription('Adds a new reminder.')
+				.addStringOption(option =>
+					option.setName('time')
+						.setDescription('Time until the reminder (e.g., 1h, 30m).')
+						.setRequired(true)
+				)
+		)
+		.addSubcommand(subcommand =>
+			subcommand
+				.setName('remove')
+				.setDescription('Removes an existing reminder.')
+				.addStringOption(option =>
+					option.setName('id')
+						.setDescription('The ID of the reminder.')
+						.setRequired(true)
+				)
+		),
+
+	async onCommandInteraction(interaction: ChatInputCommandInteraction) {
+		switch (interaction.options.getSubcommand()) {
+			case 'view':
+				const userReminders = reminders
+					.filter(reminder => reminder.userId == interaction.user.id);
+
+				if (userReminders.length == 0)
+					interaction.reply('You have no reminders.');
+				else {
+					const reminderList = userReminders.map(reminder => `ID: ${reminder.id}, Time: ${new Date(reminder.createdAt + reminder.time).toLocaleString()}`).join('\n');
+					await interaction.reply(`Your reminders:\n${reminderList}`);
+				}
+				return;
+
+			case 'add':
+				const time = interaction.options.getString('time');
+				const seconds = parseTimeString(time);
+
+				if (seconds == null) {
+					interaction.reply('Invalid time format. Use h for hours, m for minutes, and s for seconds.');
+					return;
+				}
+
+				const reminder: Reminder = {
+					id: generateId(),
+					userId: interaction.user.id,
+					channelId: interaction.channelId,
+					time: seconds,
+					createdAt: Date.now()
+				};
+
+				reminders.push(reminder);
+				interaction.reply(`Reminder set for ${time}.`);
+
+				setTimeout(async () => {
+					interaction.user.send({
+						content: `Reminder: ${time} has passed!`,
+						components: [
+							new ActionRowBuilder<ButtonBuilder>()
+								.addComponents(
+									Button.primary({
+										custom_id: `reminders|dismiss|${reminder.id}`,
+										label: 'Dismiss'
+									}),
+									Button.secondary({
+										custom_id: `reminders|snooze|${reminder.id}`,
+										label: 'Snooze'
+									})
+								)
+						]
+					});
+				}, seconds);
+				return;
+
+			case 'remove':
+				const id = interaction.options.getString('id', true);
+				const index = reminders
+					.findIndex(reminder => reminder.id == id && reminder.userId == interaction.user.id);
+				if (index != -1) {
+					reminders.splice(index, 1);
+					interaction.reply('Reminder removed.');
+				}
+				else interaction.reply('Reminder not found.');
+		}
+	},
+
+	async onButtonInteraction(interaction: ButtonInteraction) {
+		const [, action, id] = interaction.customId.split('|');
+		const reminder = reminders.find(reminder => reminder.id === id);
+
+		if (!reminder) {
+			interaction.reply({ content: 'Reminder not found.', ephemeral: true });
+			return;
+		}
+
+		if (action == 'snooze') {
+			const snoozeTime = reminder.time / 2;
+			await interaction.reply({ content: `Snoozed for ${snoozeTime / 1000} seconds.`, ephemeral: true });
+
+			setTimeout(async () => {
+				interaction.user.send({
+					content: `Reminder: ${snoozeTime / 1000} seconds have passed!`,
+					components: [
+						new ActionRowBuilder<ButtonBuilder>()
+							.addComponents(
+								new ButtonBuilder()
+									.setCustomId(`reminders|dismiss|${reminder.id}`)
+									.setLabel('Dismiss')
+									.setStyle(ButtonStyle.Primary),
+								new ButtonBuilder()
+									.setCustomId(`reminders|snooze|${reminder.id}`)
+									.setLabel('Snooze')
+									.setStyle(ButtonStyle.Secondary)
+							)
+					]
+				});
+			}, snoozeTime);
+		}
+		else if (action == 'dismiss') {
+			const index = reminders.findIndex(r => r.id === id);
+			if (index !== -1) {
+				reminders.splice(index, 1);
+				interaction.reply({ content: 'Reminder dismissed.', ephemeral: true });
+			}
+			else
+				interaction.reply({ content: 'Reminder not found.', ephemeral: true });
+		}
+	}
+};
+
+function parseTimeString(timeString: string): number | null {
+	const match = timeString.match(/(\d+)([hms])/);
+	if (!match) return null;
+
+	const value = parseInt(match[1]);
+	const unit = match[2];
+
+	switch (unit) {
+		case 'h': return value * 60 * 60 * 1000;
+		case 'm': return value * 60 * 1000;
+		case 's': return value * 1000;
+		default: return null;
+	}
+}
+
+function generateId(): string {
+	return Math.random().toString(36)
+		.substring(2, 9);
+}
+
+interface Reminder {
+  id: string;
+  userId: string;
+  channelId: string;
+  time: number;
+  createdAt: number;
+}
+
+const reminders: Reminder[] = [];
