@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, ButtonInteraction, ActionRowBuilder, ButtonBuilder, ButtonStyle, SlashCommandBuilder, TextChannel, User } from 'discord.js';
+import { ChatInputCommandInteraction, ButtonInteraction, ActionRowBuilder, ButtonBuilder, ButtonStyle, SlashCommandBuilder } from 'discord.js';
 import { Embed, EmbedColor } from '../../structure/Embed';
 import { Button } from '../../structure/Button';
 
