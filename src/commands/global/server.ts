@@ -23,35 +23,35 @@ module.exports = {
 						{
 							name: 'Owner',
 							value: (await interaction.guild.fetchOwner()).toString(),
-							inline: true,
+							inline: true
 						},
 						{
 							name: 'Members',
 							inline: true,
 							value: `${interaction.guild.memberCount.toString()}\n${await formatStatuses(
 								interaction.guild
-							)}`,
+							)}`
 						},
 						{
 							name: 'Created',
 							value: `<t:${Math.floor(interaction.guild.createdTimestamp / 1000)}:d>`,
-							inline: true,
+							inline: true
 						},
 						{
 							name: 'Boost Tier',
 							value: interaction.guild.premiumTier.toString(),
-							inline: true,
+							inline: true
 						},
 						{
 							name: 'Boosts',
 							value: interaction.guild.premiumSubscriptionCount.toLocaleString(),
-							inline: true,
+							inline: true
 						}
 					)
-					.setThumbnail(interaction.guild.iconURL()),
-			],
+					.setThumbnail(interaction.guild.iconURL())
+			]
 		});
-	},
+	}
 } satisfies Command;
 
 async function formatStatuses(guild: Guild) {

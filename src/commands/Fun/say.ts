@@ -14,5 +14,5 @@ module.exports = {
 
 	async onCommandInteraction(interaction: ChatInputCommandInteraction) {
 		interaction.reply(interaction.options.getString('text'));
-	},
+	}
 } satisfies Command;

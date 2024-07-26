@@ -23,9 +23,9 @@ module.exports = {
 		interaction.reply({
 			embeds: [
 				new Embed({ color: EmbedColor.primary, title: 'Purge' })
-					.addField('Amount', amount.toString()),
+					.addField('Amount', amount.toString())
 			],
-			ephemeral: true,
+			ephemeral: true
 		});
-	},
+	}
 } satisfies Command;
