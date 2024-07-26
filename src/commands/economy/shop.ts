@@ -76,12 +76,12 @@ module.exports = {
 				return;
 
 			case 'buy':
-				const itemName = interaction.options.getString('item');
-				const amount = interaction.options.getInteger('amount', false) ?? 1;
-				const item = shop.filter(item => item.name == itemName)[0];
-				const user = await UserModel.findById(interaction.user.id);
+				const buyItemName = interaction.options.getString('item');
+				const buyAmount = interaction.options.getInteger('amount', false) ?? 1;
+				const buyItem = shop.find(item => item.name == buyItemName);
+				const buyUser = await UserModel.findById(interaction.user.id);
 
-				if (!user || item.price * amount > user.balance) {
+				if (!buyUser || buyItem.price * buyAmount > buyUser.balance) {
 					interaction.reply({
 						embeds: [
 							new Embed({
@@ -99,25 +99,25 @@ module.exports = {
 						new Embed({
 							color: EmbedColor.primary,
 							title: 'Buy',
-							description: `You bought **${amount}x ${emojis[itemName]} ${itemName}**!`
+							description: `You bought **${buyAmount}x ${emojis[buyItemName]} ${buyItemName}**!`
 						})
 					]
 				});
 
-				user.inventory.set(
-					itemName,
-					(user.inventory.get(itemName) ?? 0) + amount
+				buyUser.inventory.set(
+					buyItemName,
+					(buyUser.inventory.get(buyItemName) ?? 0) + buyAmount
 				);
-				user.balance -= item.price * amount;
-				user.save();
+				buyUser.balance -= buyItem.price * buyAmount;
+				buyUser.save();
 				return;
 
 			case 'sell':
-				const item = interaction.options.getString('item');
-				const amount = interaction.options.getInteger('amount', false) ?? 1;
-				const user = await UserModel.findById(interaction.user.id);
+				const sellItem = interaction.options.getString('item');
+				const sellAmount = interaction.options.getInteger('amount', false) ?? 1;
+				const sellUser = await UserModel.findById(interaction.user.id);
 
-				if (!user || (user.inventory.get(item) ?? 0) < amount) {
+				if (!sellUser || (sellUser.inventory.get(sellItem) ?? 0) < sellAmount) {
 					interaction.reply({
 						embeds: [
 							new Embed({
@@ -131,7 +131,7 @@ module.exports = {
 				}
 
 				const sellPrice = Math.floor(
-					shop.find(item => item.name == item).price * 0.75 * amount
+					shop.find(item => item.name == sellItem).price * 0.75 * sellAmount
 				);
 
 				interaction.reply({
@@ -139,33 +139,35 @@ module.exports = {
 						new Embed({
 							color: EmbedColor.primary,
 							title: 'Sell',
-							description: `You sold **${amount}x ${emojis[item]} ${item}** for ${sellPrice.toLocaleString()} ${emojis.coin}!`
+							description: `You sold **${sellAmount}x ${emojis[sellItem]} ${sellItem}** for ${sellPrice.toLocaleString()} ${emojis.coin}!`
 						})
 					]
 				});
 
-				user.inventory.set(item, (user.inventory.get(item) ?? 0) - amount);
-				user.balance += sellPrice;
-				user.save();
-				return;
+				sellUser.inventory.set(
+					sellItem,
+					sellUser.inventory.get(sellItem) - sellAmount
+				);
+				sellUser.balance += sellPrice;
+				sellUser.save();
 		}
 	},
 
 	async onAutocompleteInteraction(interaction: AutocompleteInteraction) {
-    const user = await UserModel.findById(interaction.user.id);
-    const option = interaction.options.getFocused(true);
+		const user = await UserModel.findById(interaction.user.id);
+		const option = interaction.options.getFocused(true);
         
-    if (!user) {
-        interaction.respond([]);
-        return;
-    }
+		if (!user) {
+			interaction.respond([]);
+			return;
+		}
 
-    const results = Array.from(user.inventory.entries())
-        .filter(([item, quantity]) => quantity > 0)
-        .map(([item]) => item)
-        .filter(item => item.toLowerCase().includes(option.value.toLowerCase()))
-        .map(item => ({ name: item, value: item }));
+		const results = Array.from(user.inventory.entries())
+			.filter(([, quantity]) => quantity > 0)
+			.map(([item]) => item)
+			.filter(item => item.toLowerCase().includes(option.value.toLowerCase()))
+			.map(item => ({ name: item, value: item }));
 
-    interaction.respond(results);
+		interaction.respond(results);
 	}
 } satisfies Command;
