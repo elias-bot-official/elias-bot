@@ -91,7 +91,7 @@ module.exports = {
 						new Embed({
 							color: EmbedColor.success,
 							title: 'Reminder Created',
-							description: `Reminder successfully scheduled for ${now + seconds}`
+							description: `Reminder successfully scheduled for <t:${now + seconds}:R>.`
 						})
 					],
 					ephemeral: true
