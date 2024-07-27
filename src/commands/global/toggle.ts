@@ -39,9 +39,9 @@ module.exports = {
 					commandNames.push(file.split('.')[0]));
 
 				(await interaction.guild.commands.fetch()).forEach(command => {
-					if (command[1].client.application.id == interaction.client.application.id &&
-						commandNames.includes(command[1].name)) {
-						interaction.guild.commands.delete(command[1].id);
+					if (command.client.application.id == interaction.client.application.id &&
+						commandNames.includes(command.name)) {
+						interaction.guild.commands.delete(command.id);
 					}
 				});
 			}
