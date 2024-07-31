@@ -15,12 +15,13 @@ module.exports = {
 				new Embed({
 					color: EmbedColor.primary,
 					title: 'Coin Flip',
-					description: `The coin is ${side == 0 ? 'heads' : 'tails'}!`,
+					description: `The coin is ${side == 0 ? 'heads' : 'tails'}!`
 				}).setThumbnail(
 					side == 0? 'https://i.imgur.com/WwIZMNe.png' :
 						'https://i.imgur.com/3Pvhkka.png'
-				),
-			],
+				)
+			]
 		});
-	},
+	}
 } satisfies Command;
+
