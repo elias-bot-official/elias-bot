@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import { Client, GatewayIntentBits, REST, Message, SlashCommandBuilder, ChatInputCommandInteraction, SlashCommandBooleanOption, SlashCommandChannelOption, TextChannel, GuildMember } from 'discord.js';
+import { Client, GatewayIntentBits, REST, Message, GuildMember } from 'discord.js';
 import { config } from 'dotenv';
 import path from 'path';
 import fs from 'fs';
