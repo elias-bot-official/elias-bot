@@ -1,6 +1,7 @@
-import { ChatInputCommandInteraction, PermissionFlagsBits, SlashCommandBuilder, SlashCommandChannelOption, SlashCommandStringOption, TextChannel, ChannelType } from 'discord.js';
+import { SlashCommandBuilder, PermissionFlagsBits, SlashCommandChannelOption, ChannelType, SlashCommandStringOption, ChatInputCommandInteraction, TextChannel } from 'discord.js';
 import { Command } from '../../structure/Command';
-// import { Embed, EmbedColor } from '../../structure/Embed';
+//import { Embed } from '../../structure/Embed';
+
 
 module.exports = {
 	data: new SlashCommandBuilder()
