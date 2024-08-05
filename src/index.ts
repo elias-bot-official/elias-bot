@@ -76,7 +76,7 @@ client.on('messageCreate', async (message: Message) => {
 		// Remove AFK role and clear AFK status
 		await member.roles.remove(afkRoleId);
 		member.user.afk_status = undefined;
-		await message.channel.send({ content: 'You are now marked as AFK for the whole server.', ephemeral: true });
+		await message.channel.send({ content: 'You are now marked as AFK for the whole server.'});
 	}
 
 	if (message.mentions.members?.size) {
