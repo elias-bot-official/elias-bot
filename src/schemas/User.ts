@@ -1,6 +1,7 @@
 import { model, Schema } from 'mongoose';
 
 const ReminderSchema = new Schema({
+	_id: String,
 	expiration: Number
 });
 
@@ -38,7 +39,7 @@ export interface UserDocument {
 	balance: number;
 	cooldowns: Map<string, number>;
 	inventory: Map<string, number>;
-	reminders: [{ expiration: number }];
+	reminders: { _id: string, expiration: number }[];
 	settings: Map<string, unknown>;
 }
 

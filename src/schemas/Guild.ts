@@ -20,7 +20,11 @@ const GuildSchema = new Schema({
 		default: new Map()
 	},
 	plugins: [String],
-	salutes_channel: String
+	leveling_channel: String,
+	leveling_message: String,
+	salutes_channel: String,
+	join_message: String,
+	leave_message: String
 }, { versionKey: false });
 
 export const GuildModel = model('Guild', GuildSchema);

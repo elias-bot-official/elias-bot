@@ -14,14 +14,14 @@ module.exports = {
 					{
 						name: 'Bot Ping',
 						value: `${interaction.client.ws.ping}ms`,
-						inline: true,
+						inline: true
 					},
 					{
 						name: 'Up since',
-						value: `<t:${Math.floor((Date.now() - interaction.client.uptime) / 1000)}:R>`,
+						value: `<t:${Math.floor((Date.now() - interaction.client.uptime) / 1000)}:R>`
 					}
-				),
-			],
+				)
+			]
 		});
-	},
+	}
 } satisfies Command;

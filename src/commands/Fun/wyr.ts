@@ -14,9 +14,9 @@ module.exports = {
 				new Embed({
 					color: EmbedColor.primary,
 					title: 'Would You Rather',
-					description: wyr[Math.floor(Math.random() * wyr.length)],
-				}),
-			],
+					description: wyr[Math.floor(Math.random() * wyr.length)]
+				})
+			]
 		});
-	},
+	}
 } satisfies Command;

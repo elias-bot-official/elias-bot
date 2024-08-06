@@ -1,61 +1,73 @@
-import { ChatInputCommandInteraction, ButtonInteraction, ActionRowBuilder, ButtonBuilder, ButtonStyle, SlashCommandBuilder } from 'discord.js';
+import { ChatInputCommandInteraction, ButtonInteraction, ActionRowBuilder, ButtonBuilder, SlashCommandBuilder, SlashCommandSubcommandBuilder, SlashCommandStringOption } from 'discord.js';
 import { Embed, EmbedColor } from '../../structure/Embed';
 import { Button } from '../../structure/Button';
 import { UserModel } from '../../schemas/User';
-
-const EPHEMERAL_MESSAGES = true; // Set this to false to disable ephemeral messages
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('reminders')
 		.setDescription('Commands related to the reminder system.')
-		.addSubcommand(subcommand =>
-			subcommand
+		.addSubcommand(
+			new SlashCommandSubcommandBuilder()
 				.setName('view')
 				.setDescription('View your current reminders.')
 		)
-		.addSubcommand(subcommand =>
-			subcommand
+		.addSubcommand(
+			new SlashCommandSubcommandBuilder()
 				.setName('add')
 				.setDescription('Adds a new reminder.')
-				.addStringOption(option =>
-					option.setName('time')
+				.addStringOption(
+					new SlashCommandStringOption()
+						.setName('time')
 						.setDescription('Time until the reminder (e.g., 1h, 30m).')
 						.setRequired(true)
 				)
 		)
-		.addSubcommand(subcommand =>
-			subcommand
+		.addSubcommand(
+			new SlashCommandSubcommandBuilder()
 				.setName('remove')
 				.setDescription('Removes an existing reminder.')
-				.addStringOption(option =>
-					option.setName('id')
+				.addStringOption(
+					new SlashCommandStringOption()
+						.setName('id')
 						.setDescription('The ID of the reminder.')
 						.setRequired(true)
 				)
 		),
 
 	async onCommandInteraction(interaction: ChatInputCommandInteraction) {
+		const user = await UserModel.findById(interaction.user.id) ??
+			await UserModel.create({ _id: interaction.user.id });
+
 		switch (interaction.options.getSubcommand()) {
 			case 'view':
-				const userReminders = reminders
-					.filter(reminder => reminder.userId == interaction.user.id);
+				if (user.reminders.length == 0) {
+					interaction.reply({
+						embeds: [
+							new Embed()
+								.setColor(EmbedColor.danger)
+								.setDescription('You have no reminders.')
+						],
+						ephemeral: true
+					});
+					return;
+				}
 
-				if (userReminders.length == 0) {
-					const noRemindersEmbed = new Embed()
-						.setColor(EmbedColor.danger)
-						.setTitle('No Reminders')
-						.setDescription('You have no reminders.');
-					interaction.reply({ embeds: [noRemindersEmbed], ephemeral: EPHEMERAL_MESSAGES });
-				}
-				else {
-					const reminderList = userReminders.map(reminder => `ID: ${reminder.id}, Time: ${new Date(reminder.createdAt + reminder.time).toLocaleString()}`).join('\n');
-					const remindersEmbed = new Embed()
-						.setColor(EmbedColor.success)
-						.setTitle('Your Reminders')
-						.setDescription(reminderList);
-					await interaction.reply({ embeds: [remindersEmbed], ephemeral: EPHEMERAL_MESSAGES });
-				}
+				const embed = new Embed({ color: EmbedColor.primary, title: 'Reminders' });
+
+				user.reminders.forEach(reminder => {
+					embed.addFields(
+						{ name: '\u200b', value: '\u200b' },
+						{ name: 'ID', value: reminder._id, inline: true },
+						{
+							name: 'Expiration',
+							value: `<t:${reminder.expiration}:R>`,
+							inline: true
+						}
+					);
+				});
+
+				interaction.reply({ embeds: [embed.spliceFields(0, 1)] });
 				return;
 
 			case 'add':
@@ -69,23 +81,15 @@ module.exports = {
 								color: EmbedColor.danger,
 								description: 'Invalid time format. Use `h` for hours, `m` for minutes, and `s` for seconds.'
 							})
-						]
+						],
+						ephemeral: true
 					});
 					return;
 				}
 
-				const user = await UserModel.findById(interaction.user.id) ??
-					await UserModel.create({ _id: interaction.user.id });
 				const now = Math.floor(Date.now() / 1000);
-				const reminder: Reminder = {
-					id: generateId(interaction.user.id),
-					userId: interaction.user.id,
-					channelId: interaction.channelId,
-					time: seconds,
-					createdAt: Date.now()
-				};
+				const addReminder = { _id: base64(Date.now()), expiration: now + seconds };
 
-				reminders.push(reminder);
 				interaction.reply({
 					embeds: [
 						new Embed({
@@ -97,92 +101,162 @@ module.exports = {
 					ephemeral: true
 				});
 
-				user.reminders.push({ expiration: now + seconds });
+				user.reminders.push(addReminder);
 				user.save();
 
 				setTimeout(async () => {
+					if ((await UserModel.findById(interaction.user.id)).reminders
+						.findIndex(r => r._id == addReminder._id) == -1) return;
+
 					interaction.user.send({
-						content: `Reminder: ${time} has passed!`,
+						embeds: [
+							new Embed({
+								color: EmbedColor.primary,
+								title: 'Reminder',
+								description: `⏰ ${time} has passed!`
+							})
+						],
 						components: [
 							new ActionRowBuilder<ButtonBuilder>()
 								.addComponents(
 									Button.primary({
-										custom_id: `reminders|dismiss|${reminder.id}`,
+										custom_id: `reminders|dismiss|${addReminder._id}`,
 										label: 'Dismiss'
 									}),
 									Button.secondary({
-										custom_id: `reminders|snooze|${reminder.id}`,
+										custom_id: `reminders|snooze|${addReminder._id}`,
 										label: 'Snooze'
 									})
 								)
 						]
 					});
-				}, seconds);
+				}, seconds * 1000);
 				return;
 
 			case 'remove':
-				const id = interaction.options.getString('id', true);
-				const index = reminders
-					.findIndex(reminder => reminder.id == id && reminder.userId == interaction.user.id);
-				if (index != -1) {
-					reminders.splice(index, 1);
-					const removeReminderEmbed = new Embed()
-						.setColor(EmbedColor.success)
-						.setTitle('Reminder Removed')
-						.setDescription('Reminder removed successfully.');
-					interaction.reply({ embeds: [removeReminderEmbed], ephemeral: EPHEMERAL_MESSAGES });
+				const id = interaction.options.getString('id');
+				const removeReminder = user.reminders.find(reminder => reminder._id == id);
+
+				if (!removeReminder) {
+					interaction.reply({
+						embeds: [
+							new Embed({
+								color: EmbedColor.danger,
+								description: 'You do not have a reminder with that ID.'
+							})
+						],
+						ephemeral: true
+					});
+					return;
 				}
-				else {
-					const notFoundEmbed = new Embed()
-						.setColor(EmbedColor.danger)
-						.setTitle('Reminder Not Found')
-						.setDescription('Reminder not found.');
-					interaction.reply({ embeds: [notFoundEmbed], ephemeral: EPHEMERAL_MESSAGES });
-				}
+
+				interaction.reply({
+					embeds: [
+						new Embed({
+							color: EmbedColor.success,
+							title: 'Reminder Removed',
+							fields: [
+								{ name: 'ID', value: removeReminder._id },
+								{ name: 'Expiration', value: `<t:${removeReminder.expiration}:R>` }
+							]
+						})
+					],
+					ephemeral: true
+				});
+
+				user.reminders.splice(user.reminders.indexOf(removeReminder), 1);
+				user.save();
 		}
 	},
 
 	async onButtonInteraction(interaction: ButtonInteraction) {
+		const user = await UserModel.findById(interaction.user.id);
 		const [, action, id] = interaction.customId.split('|');
-		const reminder = reminders.find(reminder => reminder.id === id);
+		const reminder = user.reminders.find(reminder => reminder._id == id);
+
+		interaction.message.edit({
+			components: [
+				new ActionRowBuilder<ButtonBuilder>()
+					.addComponents(
+						Button.primary({
+							custom_id: `reminders|dismiss|${reminder._id}`,
+							label: 'Dismiss',
+							disabled: true
+						}),
+						Button.secondary({
+							custom_id: `reminders|snooze|${reminder._id}`,
+							label: 'Snooze',
+							disabled: true
+						})
+					)
+			]
+		});
 
 		if (!reminder) {
-			interaction.reply({ content: 'Reminder not found.', ephemeral: true });
-			return;
+			interaction.reply({
+				embeds: [
+					new Embed({
+						color: EmbedColor.danger,
+						description: 'Reminder not found.'
+					})
+				],
+				ephemeral: true
+			});
 		}
+		else if (action == 'dismiss') {
+			interaction.reply({
+				embeds: [
+					new Embed({
+						color: EmbedColor.success,
+						description: 'Reminder dissmissed.'
+					})
+				],
+				ephemeral: true
+			});
+			user.reminders.splice(user.reminders.indexOf(reminder), 1);
+			user.save();
+		}
+		else if (action == 'snooze') {
+			interaction.reply({
+				embeds: [
+					new Embed({
+						color: EmbedColor.success,
+						description: 'Snoozeed for 5m.'
+					})
+				],
+				ephemeral: true
+			});
 
-		if (action == 'snooze') {
-			const snoozeTime = reminder.time / 2;
-			await interaction.reply({ content: `Snoozed for ${snoozeTime / 1000} seconds.`, ephemeral: true });
+			reminder.expiration = Math.floor((Date.now() + 300000) / 1000);
+			user.save();
 
 			setTimeout(async () => {
+				if ((await UserModel.findById(interaction.user.id)).reminders
+					.findIndex(r => r._id == reminder._id)) return;
+
 				interaction.user.send({
-					content: `Reminder: ${snoozeTime / 1000} seconds have passed!`,
+					embeds: [
+						new Embed({
+							color: EmbedColor.primary,
+							title: 'Reminder',
+							description: '⏰ 5m has passed!'
+						})
+					],
 					components: [
 						new ActionRowBuilder<ButtonBuilder>()
 							.addComponents(
-								new ButtonBuilder()
-									.setCustomId(`reminders|dismiss|${reminder.id}`)
-									.setLabel('Dismiss')
-									.setStyle(ButtonStyle.Primary),
-								new ButtonBuilder()
-									.setCustomId(`reminders|snooze|${reminder.id}`)
-									.setLabel('Snooze')
-									.setStyle(ButtonStyle.Secondary)
+								Button.primary({
+									custom_id: `reminders|dismiss|${reminder._id}`,
+									label: 'Dismiss'
+								}),
+								Button.secondary({
+									custom_id: `reminders|snooze|${reminder._id}`,
+									label: 'Snooze'
+								})
 							)
 					]
 				});
-			}, snoozeTime);
-		}
-		else if (action == 'dismiss') {
-			const index = reminders.findIndex(r => r.id === id);
-			if (index !== -1) {
-				reminders.splice(index, 1);
-				interaction.reply({ content: 'Reminder dismissed.', ephemeral: true });
-			}
-			else {
-				interaction.reply({ content: 'Reminder not found.', ephemeral: true });
-			}
+			}, 300000);
 		}
 	}
 };
@@ -195,29 +269,21 @@ function parseTimeString(timeString: string): number | null {
 	const unit = match[2];
 
 	switch (unit) {
-		case 'h': return value * 60 * 60 * 1000;
-		case 'm': return value * 60 * 1000;
-		case 's': return value * 1000;
+		case 'h': return value * 60 * 60;
+		case 'm': return value * 60;
+		case 's': return value;
 		default: return null;
 	}
 }
 
-const userReminderCount: { [userId: string]: number } = {};
+function base64(num: number) {
+	const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+,';
+	let encoded = '';
 
-function generateId(userId: string): string {
-	if (!userReminderCount[userId]) {
-		userReminderCount[userId] = 0;
+	while (num > 0) {
+		encoded = alphabet[num % 64] + encoded;
+		num = Math.floor(num / 64);
 	}
-	userReminderCount[userId]++;
-	return userReminderCount[userId].toString();
-}
 
-interface Reminder {
-    id: string;
-    userId: string;
-    channelId: string;
-    time: number;
-    createdAt: number;
+	return encoded;
 }
-
-const reminders: Reminder[] = [];
