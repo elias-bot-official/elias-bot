@@ -1,5 +1,6 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandStringOption } from 'discord.js';
 import { Command } from '../../structure/Command';
+import { Embed, EmbedColor } from '../../structure/Embed';
 import fetch from 'node-fetch';
 
 module.exports = {
@@ -16,21 +17,38 @@ module.exports = {
 	async onCommandInteraction(interaction: ChatInputCommandInteraction) {
 		const word = interaction.options.getString('word');
 
-		await interaction.deferReply();
-
 		try {
 			const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
-			
+            
 			if (!response.ok)
 				throw new Error('Word not found');
 
 			const data = await response.json();
 			const definition = data[0].meanings[0].definitions[0].definition;
+			const example = data[0].meanings[0].definitions[0].example || 'No example available';
+			const partOfSpeech = data[0].meanings[0].partOfSpeech;
 
-			await interaction.editReply(`**Definition for ${word}:**\n${definition}`);
+			const embed = new Embed()
+				.setColor(EmbedColor.primary)
+				.setTitle(`Definition for "${word}"`)
+				.addFields(
+					{ name: 'Definition', value: definition },
+					{ name: 'Part of Speech', value: partOfSpeech, inline: true },
+					{ name: 'Example', value: example, inline: true }
+				)
+				.setFooter({ text: 'Powered by dictionaryapi.dev' });
+
+			await interaction.reply({ embeds: [embed] });
 		}
 		catch (error) {
-			await interaction.editReply(`Error: ${error.message}`);
+			const errorEmbed = new Embed()
+				.setColor(EmbedColor.danger)
+				.setDescription(error.message + '.');
+
+			await interaction.reply({
+				embeds: [errorEmbed],
+				ephemeral: true
+			});
 		}
 	}
 } satisfies Command;
