@@ -1,49 +1,45 @@
-import { SlashCommandBuilder, PermissionFlagsBits, SlashCommandChannelOption, ChannelType, SlashCommandStringOption, ChatInputCommandInteraction, TextChannel } from 'discord.js';
+import { SlashCommandBuilder, PermissionFlagsBits, SlashCommandChannelOption, ChannelType, ChatInputCommandInteraction, TextChannel, SlashCommandIntegerOption } from 'discord.js';
 import { Command } from '../../structure/Command';
-//import { Embed } from '../../structure/Embed';
-
+import { Embed, EmbedColor } from '../../structure/Embed';
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('slowmode')
-		.setDescription('Turn on slowmode for a specific channel. Set *length to 0 seconds to cancel slowmode*.')
-		.setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels) 
+		.setDescription('Turn on slowmode for a channel (defaults to the current channel).')
+		.setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
+		.addIntegerOption(
+			new SlashCommandIntegerOption()
+				.setName('duration')
+				.setDescription('The duration of slowmode in seconds. Set to 0 to cancel slowmode.')
+				.setMinValue(0)
+				.setMaxValue(21600)
+				.setRequired(true)
+		)
 		.addChannelOption(
 			new SlashCommandChannelOption()
 				.setName('channel')
 				.setDescription('The channel to turn on slowmode for.')
-				.setRequired(true)
 				.addChannelTypes(ChannelType.GuildText)
-		)
-		.addStringOption(
-			new SlashCommandStringOption()
-				.setName('length')
-				.setDescription('The duration of slowmode in seconds. Set to 0 to cancel slowmode.')
-				.setRequired(true)
 		),
 
 	async onCommandInteraction(interaction: ChatInputCommandInteraction): Promise<void> {
-		const channel = interaction.options.getChannel('channel') as TextChannel;
-		const length = interaction.options.getString('length');
+		const channel = interaction.options.getChannel('channel') as TextChannel ??
+			interaction.channel;
+		const duration = interaction.options.getInteger('duration');
 
-		if (!channel || !length) {
-			await interaction.reply({ content: 'Invalid channel or length.', ephemeral: true });
-			return;
-		}
+		channel.setRateLimitPerUser(duration);
 
-		const slowmodeDuration = parseInt(length, 10);
-		if (isNaN(slowmodeDuration) || slowmodeDuration < 0) {
-			await interaction.reply({ content: 'Please provide a valid number for the slowmode duration.', ephemeral: true });
-			return;
-		}
-
-		try {
-			await channel.setRateLimitPerUser(slowmodeDuration);
-			await interaction.reply({ content: `Slowmode has been set to ${slowmodeDuration} seconds for ${channel.name}.`, ephemeral: true });
-		}
-		catch (error) {
-			console.error(error);
-			await interaction.reply({ content: 'An error occurred while setting the slowmode.', ephemeral: true });
-		}
+		interaction.reply({
+			embeds: [
+				new Embed({
+					color: EmbedColor.success,
+					title: 'Slowmode Set',
+					fields: [
+						{ name: 'Duration', value: `${duration}s` },
+						{ name: 'Channel', value: `<#${channel.id}>` }
+					]
+				})
+			]
+		});
 	}
 } satisfies Command;
