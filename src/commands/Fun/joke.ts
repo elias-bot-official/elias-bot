@@ -14,9 +14,9 @@ module.exports = {
 				new Embed({
 					color: EmbedColor.primary,
 					title: 'Joke',
-					description: jokes[Math.floor(Math.random() * jokes.length)],
-				}),
-			],
+					description: jokes[Math.floor(Math.random() * jokes.length)]
+				})
+			]
 		});
-	},
+	}
 } satisfies Command;
