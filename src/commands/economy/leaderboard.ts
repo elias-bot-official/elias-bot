@@ -13,7 +13,7 @@ module.exports = {
 	async onCommandInteraction(interaction) {
 		interaction.reply({
 			embeds: [await getEmbed(1, interaction.client)],
-			components: [await getButtons(1)]
+			components: [await getActionRow(1)]
 		});
 	},
 
@@ -22,7 +22,7 @@ module.exports = {
 
 		interaction.update({
 			embeds: [await getEmbed(page, interaction.client)],
-			components: [await getButtons(page)]
+			components: [await getActionRow(page)]
 		});
 	}
 } satisfies Command;
@@ -49,9 +49,7 @@ async function getEmbed(page: number, client: Client) {
 	});
 }
 
-async function getButtons(page: number) {
-	const userCount = await UserModel.countDocuments();
-
+async function getActionRow(page: number) {
 	return new ActionRowBuilder<ButtonBuilder>().addComponents(
 		Button.primary({
 			custom_id: String(page - 1),
@@ -65,7 +63,7 @@ async function getButtons(page: number) {
 		Button.primary({
 			custom_id: String(page + 1),
 			emoji: emojis.forward,
-			disabled: page == 5 || userCount <= page * 10
+			disabled: page == 5 || await UserModel.countDocuments() <= page * 10
 		})
 	);
 }
