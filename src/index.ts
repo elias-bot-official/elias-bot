@@ -11,23 +11,22 @@ config(); // configures dotenv module to be able to use env variables
 
 // merges a Client interface with the Client class
 declare module 'discord.js' {
-    interface Client {
-        commands: Command[];
-    }
-    interface User {
-        afk_status?: string;
-    }
+	interface Client {
+		commands: Command[];
+	}
+	interface User {
+		afk_status?: string;
+	}
 }
 
 // creates the discord client
 const client = new Client({
-	intents:
-        GatewayIntentBits.GuildMembers |
-        GatewayIntentBits.GuildPresences |
-        GatewayIntentBits.Guilds |
-        GatewayIntentBits.GuildMessageReactions |
-        GatewayIntentBits.MessageContent |
-        GatewayIntentBits.GuildMessages
+	intents: GatewayIntentBits.GuildMembers |
+    GatewayIntentBits.GuildPresences |
+    GatewayIntentBits.Guilds |
+    GatewayIntentBits.GuildMessageReactions |
+    GatewayIntentBits.MessageContent |
+    GatewayIntentBits.GuildMessages
 });
 client.rest = new REST(); // creates a rest client
 client.commands = []; // initializes the client's commands
@@ -76,11 +75,11 @@ client.on('messageCreate', async (message: Message) => {
 		// Remove AFK role and clear AFK status
 		await member.roles.remove(afkRoleId);
 		member.user.afk_status = undefined;
-		await message.channel.send({ content: 'You are now marked as AFK for the whole server.'});
+		await message.channel.send({ content: 'You are now marked as AFK for the whole server.' });
 	}
 
 	if (message.mentions.members?.size) {
-		for (const [id, member] of message.mentions.members) {
+		for (const [, member] of message.mentions.members) {
 			if (member.user.bot) continue;
 
 			if (member.user.afk_status) {
