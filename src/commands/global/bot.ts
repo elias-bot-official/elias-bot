@@ -23,51 +23,51 @@ module.exports = {
 					{
 						name: 'Servers',
 						value: interaction.client.guilds.cache.size.toLocaleString(),
-						inline: true,
+						inline: true
 					},
 					{
 						name: 'Commands',
 						value: interaction.client.commands.length.toString(),
-						inline: true,
+						inline: true
 					},
 					{
 						name: 'Ping',
 						value: interaction.client.ws.ping.toString(),
-						inline: true,
+						inline: true
 					},
 					{
 						name: 'Jokes',
 						value: jokes.length.toString(),
-						inline: true,
+						inline: true
 					},
 					{
 						name: 'Trivia Questions',
 						value: trivia.length.toString(),
-						inline: true,
+						inline: true
 					},
 					{
 						name: 'WYR Questions',
 						value: wyr.length.toString(),
-						inline: true,
+						inline: true
 					}
-				),
+				)
 			],
 			components: [
 				new ActionRowBuilder<ButtonBuilder>().addComponents(
 					Button.link({
 						label: 'Invite',
-						url: 'https://discord.com/oauth2/authorize?client_id=904730769929429072&permissions=8&scope=bot',
+						url: 'https://discord.com/oauth2/authorize?client_id=904730769929429072&permissions=8&scope=bot'
 					}),
 					Button.link({
 						label: 'Vote',
-						url: 'https://top.gg/bot/904730769929429072/vote',
+						url: 'https://top.gg/bot/904730769929429072/vote'
 					}),
 					Button.link({
 						label: 'Review',
-						url: 'https://top.gg/bot/904730769929429072#reviews',
+						url: 'https://top.gg/bot/904730769929429072#reviews'
 					})
-				),
-			],
+				)
+			]
 		});
-	},
+	}
 } satisfies Command;
