@@ -10,7 +10,7 @@ module.exports = {
 				.onCommandInteraction(interaction)
 				.catch((error: Error) => reportError(error, interaction));
 
-			const random = Math.round(Math.random() * 30);
+			const random = Math.round(Math.random() * 50);
 
 			if (random == 0) {
 				await interaction.fetchReply();
@@ -70,7 +70,8 @@ module.exports = {
 			interaction.client.commands
 				.find(command => interaction.commandName == command.data.name)
 				.onAutocompleteInteraction(interaction)
-				.catch((error: Error) => console.log(error));
+				.catch((error: Error) =>
+					console.log(`[${new Date().toISOString}] ${error}`));
 		}
 	}
 } satisfies DiscordEvent;
@@ -86,5 +87,5 @@ function reportError(error: Error, interaction: RepliableInteraction) {
 		],
 		ephemeral: true
 	});
-	console.log(error);
+	console.log(`[${new Date().toISOString}] ${error}`);
 }

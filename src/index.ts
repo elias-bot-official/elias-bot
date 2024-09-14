@@ -1,11 +1,14 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import { Client, GatewayIntentBits, REST, Message, GuildMember } from 'discord.js';
+import { Client, GatewayIntentBits, REST } from 'discord.js';
 import { config } from 'dotenv';
 import path from 'path';
 import fs from 'fs';
 import { Command } from './structure/Command';
 import mongoose from 'mongoose';
-import { Embed, EmbedColor } from './structure/Embed';
+
+// catches any uncaught exceptions
+process.on('uncaughtException',
+	exception => console.log(`[${new Date().toISOString()}] ${exception}`));
 
 config(); // configures dotenv module to be able to use env variables
 
@@ -13,9 +16,6 @@ config(); // configures dotenv module to be able to use env variables
 declare module 'discord.js' {
 	interface Client {
 		commands: Command[];
-	}
-	interface User {
-		afk_status?: string;
 	}
 }
 
@@ -49,9 +49,6 @@ fs.readdirSync(path.join(__dirname, 'events')).forEach(file => {
 	else client.on(file.split(/\./g)[0], event.execute);
 });
 
-// catches any uncaught exceptions
-process.on('uncaughtException', exception => console.log(exception));
-
 // starts the bot and rest client
 client.login(process.env.token);
 client.rest.setToken(process.env.token);
@@ -59,41 +56,4 @@ client.rest.setToken(process.env.token);
 // connects to the database
 mongoose
 	.connect(process.env.db)
-	.then(() => console.log('Connected to MongoDB!'))
-	.catch(error => console.log(error));
-
-// Listener for mentions and pings
-client.on('messageCreate', async (message: Message) => {
-	// Ignore messages from the bot itself
-	if (message.author.bot) return;
-
-	const member = message.member as GuildMember;
-	const afkRoleId = '1270108233234776137';
-
-	// Check if the user has an AFK status
-	if (member.user.afk_status) {
-		// Remove AFK role and clear AFK status
-		await member.roles.remove(afkRoleId);
-		member.user.afk_status = undefined;
-		await message.channel.send({ content: 'You are now marked as AFK for the whole server.' });
-	}
-
-	if (message.mentions.members?.size) {
-		for (const [, member] of message.mentions.members) {
-			if (member.user.bot) continue;
-
-			if (member.user.afk_status) {
-				const afkMessage = member.user.afk_status.includes('channel')
-					? `is currently AFK in <#${member.user.afk_status.split(' ')[3]}>.`
-					: 'is currently AFK for the whole server.';
-                
-				const embed = new Embed()
-					.setColor(EmbedColor.primary)
-					.setTitle('AFK Status')
-					.setDescription(`${member.toString()} ${afkMessage}`);
-
-				await message.reply({ embeds: [embed] });
-			}
-		}
-	}
-});
+	.then(() => console.log(`[${new Date().toISOString()}] Established connection with MongoDB`));
