@@ -31,7 +31,7 @@ module.exports = {
 	async onCommandInteraction(interaction: ChatInputCommandInteraction) {
 		const user = await UserModel.findById(interaction.user.id) ??
 			await UserModel.create({ _id: interaction.user.id });
-		switch(interaction.options.getSubcommand()) {
+		switch (interaction.options.getSubcommand()) {
 			case 'accent':
 				const color = interaction.options.getString('color', false);
 

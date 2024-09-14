@@ -21,7 +21,8 @@ module.exports = {
 					{ name: 'Fun', value: 'Fun' },
 					{ name: 'Leveling', value: 'Leveling' },
 					{ name: 'Moderation', value: 'Moderation' },
-					{ name: 'Saluter', value: 'Saluter' }
+					{ name: 'Saluter', value: 'Saluter' },
+					{ name: 'Ticketing', value: 'Ticketing' }
 				)
 				.setRequired(true)
 		),

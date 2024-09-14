@@ -1,12 +1,35 @@
 import { Message, TextChannel } from 'discord.js';
 import { DiscordEvent } from '../structure/DiscordEvent';
 import { GuildModel, getLevel, getXP } from '../schemas/Guild';
+import { UserModel } from '../schemas/User';
+import { Embed, EmbedColor } from '../structure/Embed';
 
 module.exports = {
 	async execute(message: Message) {
-		const guild = await GuildModel.findById(message.guild.id);
+		if (message.author.bot) return;
 
-		if (message.author.bot || !guild?.plugins.includes('Leveling')) return;
+		const mentioned = await UserModel
+			.find({ _id: { $in: Array.from(message.mentions.members.keys()) } });
+
+		for (const mention of mentioned) {
+			if (mention.afk_status) {
+				message.reply({
+					embeds: [
+						new Embed({
+							color: EmbedColor.primary,
+							title: 'This user is afk.',
+							fields: [
+								{ name: 'Reason', value: mention.afk_status }
+							]
+						})
+					]
+				});
+			}
+		}
+
+		const guild = await GuildModel.findById(message.guild.id);
+		
+		if (!guild?.plugins.includes('Leveling')) return;
 
 		const xp = guild.xp.get(message.author.id) as number ?? 0;
 		const bonus = Math.round(Math.random() * 20 + 10);

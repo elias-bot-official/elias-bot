@@ -10,6 +10,7 @@ const UserSchema = new Schema({
 		type: String,
 		required: true
 	},
+	afk_status: String,
 	balance: {
 		type: Number,
 		default: 0
@@ -36,6 +37,7 @@ export const UserModel = model<UserDocument>('User', UserSchema);
 
 export interface UserDocument {
 	_id: string;
+	afk_status: string;
 	balance: number;
 	cooldowns: Map<string, number>;
 	inventory: Map<string, number>;

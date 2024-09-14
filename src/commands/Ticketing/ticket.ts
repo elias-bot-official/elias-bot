@@ -84,7 +84,7 @@ module.exports = {
 			.fetch(TICKETS_CHANNEL_ID)
 			.then((channel: TextChannel) => channel.threads.fetch(threadId));
 
-		switch(action) {
+		switch (action) {
 			case 'claim':
 				thread.members.add(interaction.user);
 

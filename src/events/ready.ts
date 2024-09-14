@@ -38,6 +38,6 @@ module.exports = {
 		client.on('guildCreate', updateActivity);
 		client.on('guildDelete', updateActivity);
 
-		console.log('Bot is ready!');
+		console.log(`[${new Date().toISOString()}] Bot logged in`);
 	}
 } satisfies DiscordEvent;
