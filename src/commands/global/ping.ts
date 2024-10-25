@@ -5,7 +5,7 @@ import { Command } from '../../structure/Command';
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('ping')
-		.setDescription('Pings elias bot'),
+		.setDescription('Pings elias bot.'),
 
 	async onCommandInteraction(interaction) {
 		interaction.reply({
