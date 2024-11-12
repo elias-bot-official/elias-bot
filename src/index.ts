@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { Client, GatewayIntentBits, REST } from 'discord.js';
 import { config } from 'dotenv';
-import path from 'path';
-import fs from 'fs';
+import path from 'node:path';
+import fs from 'node:fs';
 import { Command } from './structure/Command';
 import mongoose from 'mongoose';
 

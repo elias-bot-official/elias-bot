@@ -46,11 +46,11 @@ module.exports = {
 					files: [
 						{
 							attachment: LevelCard.from({
-								background: dbUser?.settings.get('background')?
-									await loadImage(dbUser.settings.get('background') as string) : null,
+								background: dbUser.background?
+									await loadImage(dbUser.background) : null,
 								avatar: await loadImage(user.avatarURL({ extension: 'png' })),
 								name: member.displayName,
-								accent: dbUser?.settings.get('accent') as string,
+								accent: dbUser.accent,
 								xp: xp - getXP(level),
 								neededXP: getXP(level + 1) - getXP(level),
 								rank: rank,

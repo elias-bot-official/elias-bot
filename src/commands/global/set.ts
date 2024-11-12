@@ -57,7 +57,7 @@ module.exports = {
 					]
 				});
 
-				user.settings.set('accent', color);
+				user.accent = color;
 				user.save();
 				return;
 
@@ -86,7 +86,7 @@ module.exports = {
 					]
 				});
 
-				user.settings.set('background', url);
+				user.background = url;
 				user.save();
 				return;
 		}

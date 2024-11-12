@@ -10,39 +10,37 @@ const UserSchema = new Schema({
 		type: String,
 		required: true
 	},
-	afk_status: String,
-	balance: {
-		type: Number,
-		default: 0
-	},
 	cooldowns: {
 		type: Map,
 		of: Number,
 		default: new Map()
+	},
+	reminders: [ReminderSchema],
+	balance: {
+		type: Number,
+		default: 0
 	},
 	inventory: {
 		type: Map,
 		of: Number,
 		default: new Map()
 	},
-	reminders: [ReminderSchema],
-	settings: {
-		type: Map,
-		of: Object,
-		default: new Map()
-	}
+	afk_status: String,
+	background: String,
+	accent: String
 }, { versionKey: false });
 
 export const UserModel = model<UserDocument>('User', UserSchema);
 
 export interface UserDocument {
 	_id: string;
-	afk_status: string;
-	balance: number;
 	cooldowns: Map<string, number>;
-	inventory: Map<string, number>;
 	reminders: { _id: string, expiration: number }[];
-	settings: Map<string, unknown>;
+	balance: number;
+	inventory: Map<string, number>;
+	afk_status: string;
+	background: string,
+	accent: string
 }
 
 export function transfer(giver: UserDocument, receiver: UserDocument, amount: number) {
