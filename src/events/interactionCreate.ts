@@ -70,22 +70,22 @@ module.exports = {
 			interaction.client.commands
 				.find(command => interaction.commandName == command.data.name)
 				.onAutocompleteInteraction(interaction)
-				.catch((error: Error) =>
-					console.log(`[${new Date().toISOString}] ${error}`));
+				.catch((e: Error) =>
+					console.error(`[${new Date().toISOString()}] ${e.stack}`));
 		}
 	}
 } satisfies DiscordEvent;
 
-function reportError(error: Error, interaction: RepliableInteraction) {
+function reportError(e: Error, interaction: RepliableInteraction) {
 	interaction.reply({
 		embeds: [
 			new Embed({
 				color: EmbedColor.danger,
 				title: 'Error',
-				description: `An unknown error has occurred. Please report this to the [devs](https://discord.gg/KCY2RERtxk).\`\`\`${error.message}\`\`\``
+				description: `An unknown error has occurred. You can report this error by using </report:1306353943042986016> or by joining our [Discord server](https://discord.gg/KCY2RERtxk).\`\`\`${e.message}\`\`\``
 			})
 		],
 		ephemeral: true
 	});
-	console.log(`[${new Date().toISOString}] ${error}`);
+	console.error(`[${new Date().toISOString()}] ${e.stack}`);
 }

@@ -8,7 +8,7 @@ import mongoose from 'mongoose';
 
 // catches any uncaught exceptions
 process.on('uncaughtException',
-	exception => console.log(`[${new Date().toISOString()}] ${exception}`));
+	e => console.error(`[${new Date().toISOString()}] ${e.stack}`));
 
 config(); // configures dotenv module to be able to use env variables
 
