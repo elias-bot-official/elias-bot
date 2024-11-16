@@ -86,6 +86,18 @@ module.exports = {
 					});
 					return;
 				}
+				else if (user.reminders.length >= 5) {
+					interaction.reply({
+						embeds: [
+							new Embed({
+								color: EmbedColor.danger,
+								description: 'You have reached your limit of 5 simultaneous reminders.'
+							})
+						],
+						ephemeral: true
+					});
+					return;
+				}
 
 				const now = Math.floor(Date.now() / 1000);
 				const addReminder = { _id: base64(Date.now()), expiration: now + seconds };
@@ -208,7 +220,7 @@ module.exports = {
 				embeds: [
 					new Embed({
 						color: EmbedColor.success,
-						description: 'Reminder dissmissed.'
+						description: 'Reminder dismissed.'
 					})
 				],
 				ephemeral: true
@@ -221,7 +233,7 @@ module.exports = {
 				embeds: [
 					new Embed({
 						color: EmbedColor.success,
-						description: 'Snoozeed for 5m.'
+						description: 'Snoozed for 5m.'
 					})
 				],
 				ephemeral: true
