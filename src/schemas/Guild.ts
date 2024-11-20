@@ -24,7 +24,9 @@ const GuildSchema = new Schema({
 	leveling_message: String,
 	salutes_channel: String,
 	join_message: String,
-	leave_message: String
+	leave_message: String,
+	ticket_channel: String,
+	ticket_logs_channel: String
 }, { versionKey: false });
 
 export const GuildModel = model('Guild', GuildSchema);
