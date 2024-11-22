@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-unused-vars */
-export interface DiscordEvent {
+export interface Listener {
 	once?: boolean;
 	execute(...params: any): Promise<void>;
 }

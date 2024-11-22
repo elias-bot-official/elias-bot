@@ -1,5 +1,5 @@
 import { GuildMember, TextChannel } from 'discord.js';
-import { DiscordEvent } from '../structure/DiscordEvent';
+import { Listener } from '../structure/Listener';
 import { GuildModel } from '../schemas/Guild';
 
 module.exports = {
@@ -17,4 +17,4 @@ module.exports = {
 					.replaceAll('{server}', member.guild.name)))
 			.catch(() => {});
 	}
-} satisfies DiscordEvent;
+} satisfies Listener;

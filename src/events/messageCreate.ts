@@ -1,5 +1,5 @@
 import { Message, TextChannel } from 'discord.js';
-import { DiscordEvent } from '../structure/DiscordEvent';
+import { Listener } from '../structure/Listener';
 import { GuildModel, getLevel, getXP } from '../schemas/Guild';
 import { UserModel } from '../schemas/User';
 import { Embed, EmbedColor } from '../structure/Embed';
@@ -48,4 +48,4 @@ module.exports = {
 		guild.xp.set(message.author.id, xp + bonus);
 		guild.save();
 	}
-} satisfies DiscordEvent;
+} satisfies Listener;

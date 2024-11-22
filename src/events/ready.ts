@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { ActivityType, Client, Routes } from 'discord.js';
-import { DiscordEvent } from '../structure/DiscordEvent';
+import { Listener } from '../structure/Listener';
 import fs from 'fs';
 import path from 'path';
 
@@ -18,7 +18,7 @@ module.exports = {
 					)
 				);
 
-			// registers the global commands
+			// Registers the global commands
 			client.rest.put(
 				Routes.applicationCommands(client.application!.id), { body: commands }
 			);
@@ -40,4 +40,4 @@ module.exports = {
 
 		console.log(`[${new Date().toISOString()}] Bot logged in`);
 	}
-} satisfies DiscordEvent;
+} satisfies Listener;

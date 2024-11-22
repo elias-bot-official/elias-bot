@@ -1,5 +1,5 @@
 import { Interaction, RepliableInteraction } from 'discord.js';
-import { DiscordEvent } from '../structure/DiscordEvent';
+import { Listener } from '../structure/Listener';
 import { Embed, EmbedColor } from '../structure/Embed';
 
 module.exports = {
@@ -74,7 +74,7 @@ module.exports = {
 					console.error(`[${new Date().toISOString()}] ${e.stack}`));
 		}
 	}
-} satisfies DiscordEvent;
+} satisfies Listener;
 
 function reportError(e: Error, interaction: RepliableInteraction) {
 	interaction.reply({

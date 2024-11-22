@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { Guild, Routes } from 'discord.js';
-import { DiscordEvent } from '../structure/DiscordEvent';
+import { Listener } from '../structure/Listener';
 import { GuildModel } from '../schemas/Guild';
 import path from 'path';
 import fs from 'node:fs';
@@ -28,4 +28,4 @@ module.exports = {
 			});
 		});
 	}
-} satisfies DiscordEvent;
+} satisfies Listener;
