@@ -11,7 +11,7 @@
     "elias-bot",
     "discord-bot"
   ],
-  "author": "eliasciur",
+  "author": "exceptionee",
   "license": "ISC",
   "dependencies": {
     "canvas": "^2.11.2",

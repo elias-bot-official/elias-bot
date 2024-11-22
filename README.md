@@ -17,7 +17,7 @@ With this elias bot plugin you can easily moderate members, channels, and messag
 Run the following command to clone the repository.
 
 ```shell
-git clone https://github.com/eliasciur/elias-bot
+git clone https://github.com/exceptionee/elias-bot
 ```
 
 Then install the needed dependencies.
