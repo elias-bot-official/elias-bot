@@ -9,7 +9,6 @@ module.exports = {
 		.setDescription('Trade on the elias bot exchange.'),
 
 	async onCommandInteraction(interaction: ChatInputCommandInteraction) {
-		throw new Error('test');
 		interaction.reply(getMessage());
 	},
 

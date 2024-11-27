@@ -18,7 +18,7 @@ module.exports = {
 						embeds: [
 							new Embed({
 								color: EmbedColor.danger,
-								description: 'I can not warn myself!'
+								description: 'I cannot warn myself!'
 							})
 						],
 						ephemeral: true

@@ -30,7 +30,7 @@ module.exports = {
 				embeds: [
 					new Embed({
 						color: EmbedColor.danger,
-						description: 'You can not give money to a bot!'
+						description: 'You cannot give money to a bot!'
 					})
 				],
 				ephemeral: true
@@ -43,7 +43,7 @@ module.exports = {
 				embeds: [
 					new Embed({
 						color: EmbedColor.danger,
-						description: 'You can not give money to yourself!'
+						description: 'You cannot give money to yourself!'
 					})
 				],
 				ephemeral: true

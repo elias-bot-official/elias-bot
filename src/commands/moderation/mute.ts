@@ -52,7 +52,7 @@ module.exports = {
 						embeds: [
 							new Embed({
 								color: EmbedColor.danger,
-								description: 'I can not mute myself!'
+								description: 'I cannot mute myself!'
 							})
 						],
 						ephemeral: true
@@ -66,7 +66,7 @@ module.exports = {
 							new Embed({
 								color: EmbedColor.danger,
 								description:
-									'I can not mute a user with a higher or equal role.'
+									'I cannot mute a user with a higher or equal role.'
 							})
 						],
 						ephemeral: true

@@ -31,7 +31,7 @@ module.exports = {
 						embeds: [
 							new Embed({
 								color: EmbedColor.danger,
-								description: 'I can not kick myself!'
+								description: 'I cannot kick myself!'
 							})
 						],
 						ephemeral: true
@@ -44,7 +44,7 @@ module.exports = {
 						embeds: [
 							new Embed({
 								color: EmbedColor.danger,
-								description: 'I can not kick a user with a higher or equal role.'
+								description: 'I cannot kick a user with a higher or equal role.'
 							})
 						],
 						ephemeral: true

@@ -23,7 +23,7 @@ module.exports = {
 				embeds: [
 					new Embed({
 						color: EmbedColor.danger,
-						description: 'You can not rob yourself.'
+						description: 'You cannot rob yourself.'
 					})
 				],
 				ephemeral: true
@@ -36,7 +36,7 @@ module.exports = {
 				embeds: [
 					new Embed({
 						color: EmbedColor.danger,
-						description: 'You can not rob a bot.'
+						description: 'You cannot rob a bot.'
 					})
 				],
 				ephemeral: true
@@ -66,7 +66,7 @@ module.exports = {
 				embeds: [
 					new Embed({
 						color: EmbedColor.danger,
-						description: `You can not rob a user with less than 10,000 ${emojis.coin}`
+						description: `You cannot rob a user with less than 10,000 ${emojis.coin}`
 					})
 				],
 				ephemeral: true

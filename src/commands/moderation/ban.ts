@@ -39,7 +39,7 @@ module.exports = {
 						embeds: [
 							new Embed({
 								color: EmbedColor.danger,
-								description: 'I can not ban myself!'
+								description: 'I cannot ban myself!'
 							})
 						],
 						ephemeral: true
@@ -52,7 +52,7 @@ module.exports = {
 						embeds: [
 							new Embed({
 								color: EmbedColor.danger,
-								description: 'I can not ban a user with a higher or equal role.'
+								description: 'I cannot ban a user with a higher or equal role.'
 							})
 						],
 						ephemeral: true

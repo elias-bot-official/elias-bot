@@ -39,7 +39,7 @@ module.exports = {
 							new Embed({
 								color: EmbedColor.danger,
 								description:
-									'I can not unmute a user with a higher or equal role.'
+									'I cannot unmute a user with a higher or equal role.'
 							})
 						],
 						ephemeral: true
