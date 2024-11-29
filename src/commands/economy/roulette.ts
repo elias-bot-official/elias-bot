@@ -10,10 +10,10 @@ module.exports = {
 		.setDescription('Play a game of roulette.')
 		.addIntegerOption(
 			new SlashCommandIntegerOption()
-				.setName('amount')
-				.setDescription('The amount you want to bet.')
+				.setName('bet')
+				.setDescription('The amount of money you want to bet.')
 				.setMinValue(1)
-				.setMaxValue(50_000)
+				.setMaxValue(100_000)
 				.setRequired(true)
 		)
 		.addStringOption(
@@ -29,9 +29,9 @@ module.exports = {
 
 	async onCommandInteraction(interaction: ChatInputCommandInteraction) {
 		const user = await UserModel.findById(interaction.user.id);
-		const amount = interaction.options.getInteger('amount');
+		const bet = interaction.options.getInteger('bet');
 
-		if (!user || user.balance < amount) {
+		if (!user || user.balance < bet) {
 			interaction.reply({
 				embeds: [
 					new Embed({
@@ -44,35 +44,19 @@ module.exports = {
 			return;
 		}
 
-		if (Math.round(Math.random()) == 0) {
-			interaction.reply({
-				embeds: [
-					new Embed({
-						color: EmbedColor.primary,
-						title: 'Roulette',
-						description: `You won ${amount.toLocaleString()} ${emojis.coin}!`
-					}).setThumbnail(
-						'https://cdn-icons-png.flaticon.com/512/3425/3425938.png'
-					)
-				]
-			});
-			user.balance += amount;
-		}
-		else {
-			interaction.reply({
-				embeds: [
-					new Embed({
-						color: EmbedColor.primary,
-						title: 'Roulette',
-						description: `You lost ${amount.toLocaleString()} ${emojis.coin}!`
-					}).setThumbnail(
-						'https://cdn-icons-png.flaticon.com/512/3425/3425938.png'
-					)
-				]
-			});
-			user.balance -= amount;
-		}
+		const won = Math.round(Math.random()) == 0;
 
+		interaction.reply({
+			embeds: [
+				new Embed({
+					color: EmbedColor.primary,
+					title: 'Roulette',
+					description: `You ${won? 'won' : 'lost'} ${bet.toLocaleString()} ${emojis.coin}!`
+				}).setThumbnail('https://cdn-icons-png.flaticon.com/512/3425/3425938.png')
+			]
+		});
+
+		user.balance += won? bet : -bet;
 		user.save();
 	}
 } satisfies Command;
