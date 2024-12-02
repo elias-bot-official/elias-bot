@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ButtonBuilder, ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandSubcommandBuilder } from 'discord.js';
+import { ActionRowBuilder, ApplicationIntegrationType, ButtonBuilder, ChatInputCommandInteraction, InteractionContextType, SlashCommandBuilder, SlashCommandSubcommandBuilder } from 'discord.js';
 import { Command } from '../../structure/Command';
 import { Embed, EmbedColor } from '../../structure/Embed';
 import jokes from '../../json/jokes.json';
@@ -10,6 +10,15 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('bot')
 		.setDescription('Commands related to elias bot.')
+		.setContexts(
+			InteractionContextType.BotDM,
+			InteractionContextType.Guild,
+			InteractionContextType.PrivateChannel
+		)
+		.setIntegrationTypes(
+			ApplicationIntegrationType.GuildInstall,
+			ApplicationIntegrationType.UserInstall
+		)
 		.addSubcommand(
 			new SlashCommandSubcommandBuilder()
 				.setName('info')

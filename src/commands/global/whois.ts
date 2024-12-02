@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, PermissionFlagsBits, SlashCommandBuilder, SlashCommandUserOption } from 'discord.js';
+import { ChatInputCommandInteraction, InteractionContextType, PermissionFlagsBits, SlashCommandBuilder, SlashCommandUserOption } from 'discord.js';
 import { Command } from '../../structure/Command';
 import { Embed, EmbedColor } from '../../structure/Embed';
 import emojis from '../../json/emojis.json';
@@ -9,7 +9,7 @@ module.exports = {
 		.setName('whois')
 		.setDescription('Shows information about a user.')
 		.setDefaultMemberPermissions(PermissionFlagsBits.UseApplicationCommands)
-		.setDMPermission(false)
+		.setContexts(InteractionContextType.Guild)
 		.addUserOption(
 			new SlashCommandUserOption()
 				.setName('user')

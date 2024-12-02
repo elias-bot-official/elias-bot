@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, Guild, PresenceStatus, SlashCommandBuilder, SlashCommandSubcommandBuilder } from 'discord.js';
+import { ChatInputCommandInteraction, Guild, InteractionContextType, PresenceStatus, SlashCommandBuilder, SlashCommandSubcommandBuilder } from 'discord.js';
 import { Command } from '../../structure/Command';
 import { Embed, EmbedColor } from '../../structure/Embed';
 import emojis from '../../json/emojis.json';
@@ -7,7 +7,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('server')
 		.setDescription('Commands related to this server.')
-		.setDMPermission(false)
+		.setContexts(InteractionContextType.Guild)
 		.addSubcommand(
 			new SlashCommandSubcommandBuilder()
 				.setName('info')

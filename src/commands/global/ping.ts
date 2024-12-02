@@ -1,11 +1,20 @@
-import { SlashCommandBuilder } from 'discord.js';
+import { ApplicationIntegrationType, InteractionContextType, SlashCommandBuilder } from 'discord.js';
 import { Embed, EmbedColor } from '../../structure/Embed';
 import { Command } from '../../structure/Command';
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('ping')
-		.setDescription('Pings elias bot.'),
+		.setDescription('Pings elias bot.')
+		.setContexts(
+			InteractionContextType.BotDM,
+			InteractionContextType.Guild,
+			InteractionContextType.PrivateChannel
+		)
+		.setIntegrationTypes(
+			ApplicationIntegrationType.GuildInstall,
+			ApplicationIntegrationType.UserInstall
+		),
 
 	async onCommandInteraction(interaction) {
 		interaction.reply({

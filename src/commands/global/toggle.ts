@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import { ChatInputCommandInteraction, PermissionFlagsBits, SlashCommandBuilder, SlashCommandStringOption } from 'discord.js';
+import { ChatInputCommandInteraction, InteractionContextType, PermissionFlagsBits, SlashCommandBuilder, SlashCommandStringOption } from 'discord.js';
 import { Command } from '../../structure/Command';
 import { GuildModel } from '../../schemas/Guild';
 import { Embed, EmbedColor } from '../../structure/Embed';
@@ -11,7 +11,7 @@ module.exports = {
 		.setName('toggle')
 		.setDescription('Toggles a plugin.')
 		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
-		.setDMPermission(false)
+		.setContexts(InteractionContextType.Guild)
 		.addStringOption(
 			new SlashCommandStringOption()
 				.setName('plugin')

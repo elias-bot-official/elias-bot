@@ -2,8 +2,8 @@ import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandUserOptio
 import { Command } from '../../structure/Command';
 import { GuildModel, getLevel, getXP } from '../../schemas/Guild';
 import { Embed, EmbedColor } from '../../structure/Embed';
-import { Image, createCanvas, loadImage } from 'canvas';
 import { UserModel } from '../../schemas/User';
+import sharp from 'sharp';
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -45,17 +45,16 @@ module.exports = {
 				interaction.reply({
 					files: [
 						{
-							attachment: LevelCard.from({
-								background: dbUser.background?
-									await loadImage(dbUser.background) : null,
-								avatar: await loadImage(user.avatarURL({ extension: 'png' })),
+							attachment: await LevelCard.from({
+								background: dbUser.background,
+								avatar: user.avatarURL({ extension: 'png' }),
 								name: member.displayName,
 								accent: dbUser.accent,
 								xp: xp - getXP(level),
 								neededXP: getXP(level + 1) - getXP(level),
 								rank: rank,
 								level: level
-							})
+							}).catch(e => console.log(e)) as Buffer
 						}
 					]
 				});
@@ -75,8 +74,8 @@ module.exports = {
 } satisfies Command;
 
 interface CardOptions {
-	background?: Image;
-	avatar: Image;
+	background?: string;
+	avatar: string;
 	name: string;
 	accent?: string;
 	xp: number;
@@ -86,79 +85,44 @@ interface CardOptions {
 }
 
 class LevelCard {
-	static from(options: CardOptions) {
-		const canvas = createCanvas(550, 150);
-		const ctx = canvas.getContext('2d');
+	static async from(options: CardOptions) {
+		const background = options.background?
+			Buffer.from(await fetch(options.background).then(res => res.arrayBuffer())).toString('base64') :
+			null;
+		const avatar = Buffer.from(await fetch(options.avatar).then(res => res.arrayBuffer()))
+			.toString('base64');
 		const formatter = Intl.NumberFormat('en', { notation: 'compact' });
 
-		// background
-		if (options.background) ctx.drawImage(options.background, 0, 0, 550, 150);
-		else {
-			ctx.beginPath();
-			ctx.fillStyle = '#2b2d30';
-			ctx.fillRect(0, 0, 550, 150);
-			ctx.closePath();
-		}
+		const svg = `
+			<svg width="550" height="150">
+				<defs>
+					<clipPath id="avatar">
+						<circle cx="75" cy="75" r="50" />
+					</clipPath>
+					<clipPath id="progress-bar">
+						<rect x="135" y="90" width="385" height="20" rx="10" fill="white" />
+					</clipPath>
+				</defs>
+				<rect width="550" height="150" fill="#2b2d30" />
+				${options.background? `<image href="data:image/${options.background.split('.').reverse()[0]};base64,${background}" width="550" height="150" preserveAspectRatio="xMidYMid slice" />` : ''}
+				<image href="data:image/png;base64,${avatar}" x="25" y="25" width="100" height="100" clip-path="url(#avatar)" />
+				<rect x="135" y="90" width="385" height="20" rx="10" fill="white" />
+				<rect x="0" y="90" width="${(options.xp / options.neededXP) * 385 + 135}" height="20" rx="10" fill="${options.accent ?? '#04a0fb'}" clip-path="url(#progress-bar)" />
+				<text x="135" y="80" font-family="Geist, sans-serif" font-size="25" fill="#ffffff">${options.name}</text>
+				<text x="520" y="80" font-family="Geist, sans-serif" font-size="15" fill="#ffffff" text-anchor="end">
+					${formatter.format(options.xp)} / ${formatter.format(options.neededXP)}
+				</text>
+				<text x="395" y="45" font-family="Geist, sans-serif" font-size="22" fill="#f5d131" text-anchor="end">
+					RANK ${options.rank}
+				</text>
+				<text x="520" y="45" font-family="Geist, sans-serif" font-size="22" fill="${options.accent ?? '#04a0fb'}" text-anchor="end">
+					LEVEL ${options.level}
+				</text>
+			</svg>
+		`;
 
-		// avatar
-		ctx.beginPath();
-		ctx.arc(75, 75, 50, 0, Math.PI * 2, true);
-		ctx.closePath();
-		ctx.save();
-		ctx.clip();
-		ctx.drawImage(options.avatar, 25, 25, 100, 100);
-		ctx.restore();
-
-		// white part of progress bar
-		ctx.beginPath();
-		ctx.fillStyle = '#ffff';
-		ctx.roundRect(135, 90, 385, 20, 10);
-		ctx.fill();
-		ctx.closePath();
-		ctx.save();
-		ctx.clip();
-
-		// colored part of progress bar
-		ctx.beginPath();
-		ctx.fillStyle = options.accent ?? '#04a0fb';
-		ctx.roundRect(0, 90, (options.xp / options.neededXP) * 385 + 135, 20, 10);
-		ctx.fill();
-		ctx.closePath();
-		ctx.restore();
-
-		// name
-		ctx.beginPath();
-		ctx.fillStyle = '#ffff';
-		ctx.textBaseline = 'bottom';
-		ctx.font = '25px Geist';
-		ctx.fillText(options.name, 135, 85);
-		ctx.closePath();
-
-		// xp
-		ctx.beginPath();
-		ctx.textAlign = 'end';
-		ctx.font = '15px Geist';
-		ctx.fillText(
-			`${formatter.format(options.xp)} / ${formatter.format(options.neededXP)}`,
-			520,
-			85
-		);
-		ctx.closePath();
-
-		// rank
-		ctx.beginPath();
-		ctx.fillStyle = '#f5d131';
-		ctx.font = '22px Geist';
-		ctx.textBaseline = 'top';
-		ctx.fillText(`RANK ${options.rank}`, 395, 25);
-		ctx.closePath();
-
-		// level
-		ctx.beginPath();
-		ctx.fillStyle = options.accent ?? '#04a0fb';
-		ctx.fillText(`LEVEL ${options.level}`, 520, 25);
-		ctx.closePath();
-
-		return canvas.toBuffer();
+		return sharp(Buffer.from(svg))
+			.png()
+			.toBuffer();
 	}
 }

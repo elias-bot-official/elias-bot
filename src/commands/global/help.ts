@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import { ApplicationCommandOptionBase, SlashCommandBuilder, SlashCommandSubcommandBuilder } from 'discord.js';
+import { ApplicationCommandOptionBase, ApplicationIntegrationType, InteractionContextType, SlashCommandBuilder, SlashCommandSubcommandBuilder } from 'discord.js';
 import { Command } from '../../structure/Command';
 import fs from 'fs';
 import path from 'path';
@@ -9,7 +9,16 @@ import { Embed, EmbedColor } from '../../structure/Embed';
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('help')
-		.setDescription('Provides help information.'),
+		.setDescription('Provides help information.')
+		.setContexts(
+			InteractionContextType.BotDM,
+			InteractionContextType.Guild,
+			InteractionContextType.PrivateChannel
+		)
+		.setIntegrationTypes(
+			ApplicationIntegrationType.GuildInstall,
+			ApplicationIntegrationType.UserInstall
+		),
 
 	async onCommandInteraction(interaction) {
 		const dbGuild = await GuildModel.findById(interaction.guild?.id);

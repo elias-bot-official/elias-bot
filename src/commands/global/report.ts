@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, SlashCommandAttachmentOption, SlashCommandBuilder, SlashCommandStringOption, TextChannel } from 'discord.js';
+import { ApplicationIntegrationType, ChatInputCommandInteraction, InteractionContextType, SlashCommandAttachmentOption, SlashCommandBuilder, SlashCommandStringOption, TextChannel } from 'discord.js';
 import { Command } from '../../structure/Command';
 import { Embed, EmbedColor } from '../../structure/Embed';
 
@@ -6,6 +6,15 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('report')
 		.setDescription('Reports a bug to the team.')
+		.setContexts(
+			InteractionContextType.BotDM,
+			InteractionContextType.Guild,
+			InteractionContextType.PrivateChannel
+		)
+		.setIntegrationTypes(
+			ApplicationIntegrationType.GuildInstall,
+			ApplicationIntegrationType.UserInstall
+		)
 		.addStringOption(
 			new SlashCommandStringOption()
 				.setName('description')

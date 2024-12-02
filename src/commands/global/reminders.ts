@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, ButtonInteraction, ActionRowBuilder, ButtonBuilder, SlashCommandBuilder, SlashCommandSubcommandBuilder, SlashCommandStringOption } from 'discord.js';
+import { ChatInputCommandInteraction, ButtonInteraction, ActionRowBuilder, ButtonBuilder, SlashCommandBuilder, SlashCommandSubcommandBuilder, SlashCommandStringOption, InteractionContextType, ApplicationIntegrationType } from 'discord.js';
 import { Embed, EmbedColor } from '../../structure/Embed';
 import { Button } from '../../structure/Button';
 import { UserModel } from '../../schemas/User';
@@ -7,6 +7,15 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('reminders')
 		.setDescription('Commands related to the reminder system.')
+		.setContexts(
+			InteractionContextType.BotDM,
+			InteractionContextType.Guild,
+			InteractionContextType.PrivateChannel
+		)
+		.setIntegrationTypes(
+			ApplicationIntegrationType.GuildInstall,
+			ApplicationIntegrationType.UserInstall
+		)
 		.addSubcommand(
 			new SlashCommandSubcommandBuilder()
 				.setName('view')

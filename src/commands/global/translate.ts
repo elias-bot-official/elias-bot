@@ -1,13 +1,35 @@
-import { ApplicationCommandType, ContextMenuCommandBuilder, MessageContextMenuCommandInteraction } from 'discord.js';
+import { ApplicationCommandType, ApplicationIntegrationType, ContextMenuCommandBuilder, InteractionContextType, MessageContextMenuCommandInteraction } from 'discord.js';
 import { Command } from '../../structure/Command';
 import { load } from 'cheerio';
+import { Embed, EmbedColor } from '../../structure/Embed';
 
 module.exports = {
 	data: new ContextMenuCommandBuilder()
 		.setType(ApplicationCommandType.Message)
-		.setName('Translate'),
+		.setName('Translate')
+		.setContexts(
+			InteractionContextType.BotDM,
+			InteractionContextType.Guild,
+			InteractionContextType.PrivateChannel
+		)
+		.setIntegrationTypes(
+			ApplicationIntegrationType.GuildInstall,
+			ApplicationIntegrationType.UserInstall
+		),
 
 	async onCommandInteraction(interaction: MessageContextMenuCommandInteraction) {
+		if (interaction.targetMessage.content.length == 0) {
+			interaction.reply({
+				embeds: [
+					new Embed()
+						.setColor(EmbedColor.danger)
+						.setDescription('Cannot translate an empty message.')
+				],
+				ephemeral: true
+			});
+			return;
+		}
+
 		const res = await fetch(`https://translate.google.com/m?hl=${interaction.locale}&sl=auto&q=${interaction.targetMessage.content}`);
 
 		interaction.reply({

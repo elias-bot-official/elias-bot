@@ -58,7 +58,7 @@
 	},
 	"dig": {
 		"success": [
-			"You found an old purse with {money} in it",
+			"You found an old purse with {money} in it.",
 			"You found {money} buried in the ground.",
 			"You found a time capsule with {money} in it."
 		],

@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandStringOption } from 'discord.js';
+import { ChatInputCommandInteraction, InteractionContextType, SlashCommandBuilder, SlashCommandStringOption } from 'discord.js';
 import { Command } from '../../structure/Command';
 import { Embed, EmbedColor } from '../../structure/Embed';
 import emojis from '../../json/emojis.json';
@@ -7,7 +7,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('suggest')
 		.setDescription('Creates a suggestion.')
-		.setDMPermission(false)
+		.setContexts(InteractionContextType.Guild)
 		.addStringOption(
 			new SlashCommandStringOption()
 				.setName('suggestion')
