@@ -1,7 +1,6 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandStringOption } from 'discord.js';
 import { Command } from '../../structure/Command';
 import { Embed, EmbedColor } from '../../structure/Embed';
-import fetch from 'node-fetch';
 
 module.exports = {
 	data: new SlashCommandBuilder()

@@ -95,7 +95,7 @@ module.exports = {
 					Math.floor(Math.random() * outcomes.rps[outcome].length)
 				];
 
-				interaction.message.edit({
+				interaction.update({
 					embeds: [
 						new Embed({
 							color: EmbedColor.primary,

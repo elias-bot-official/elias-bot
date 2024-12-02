@@ -37,7 +37,7 @@ module.exports = {
 		if (xp + bonus >= getXP(getLevel(xp) + 1) && guild.leveling_message) {
 			const channel = guild.leveling_channel?
 				await message.guild.channels.fetch(guild.leveling_channel) as TextChannel :
-				message.channel;
+				message.channel as TextChannel;
 
 			channel.send(guild.leveling_message
 				.replaceAll('{user}', message.author.toString())
